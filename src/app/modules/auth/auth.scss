@@ -1,0 +1,96 @@
+@import "../../../variables";
+
+::ng-deep .auth-panel {
+  background-color: white;
+  width: 480px;
+  height: fit-content;
+  padding: 50px 80px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba($color: #000000, $alpha: 0.25);
+
+  .title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 48px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 32px;
+
+      .input-label {
+        color: $neutral-500;
+        margin-bottom: 12px;
+        font-size: 12px;
+      }
+
+      .input {
+        padding: 12px 16px;
+        border: 1px solid $neutral-400;
+        border-radius: 8px;
+        font-size: 16px;
+        color: $neutral-900;
+      }
+    }
+
+    .continue-button {
+      padding: 16px 64px;
+      width: 240px;
+      align-self: center;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      cursor: pointer;
+      background-color: #b0bcff;
+      color: #2d0377;
+    }
+
+    .alt-info {
+      color: $neutral-600;
+      align-self: center;
+      font-size: 12px;
+      margin-bottom: 16px;
+
+      .alt-link {
+        font-weight: 600;
+        color: $neutral-900;
+        cursor: pointer;
+      }
+    }
+
+    .divider-container {
+      position: relative;
+      text-align: center;
+      margin-bottom: 16px;
+      .divider {
+        font-size: 12px;
+
+        &::before,
+        &::after {
+          content: "";
+          border-top: 1px solid $neutral-800;
+          position: absolute;
+          top: 6px;
+        }
+      }
+
+      .divider::before {
+        left: 0;
+        right: 190px;
+      }
+
+      .divider::after {
+        left: 190px;
+        right: 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+<app-auth-panel title="Log in">
+  <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <label for="email" class="input-label">Email</label>
+      <input
+        type="email"
+        name="email"
+        class="input"
+        formControlName="email"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <label for="password" class="input-label">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="input"
+        formControlName="password"
+        required
+      />
+    </div>
+
+    <button type="submit" class="continue-button">Continue</button>
+    <div class="alt-info">
+      Don't have an account? <a routerLink="/signup" class="alt-link">Sign up</a>
+    </div>
+  </form>
+</app-auth-panel>

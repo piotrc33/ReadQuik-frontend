@@ -1,0 +1,40 @@
+<app-auth-panel title="Sign up">
+  <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <label for="email" class="input-label">Email</label>
+      <input
+        type="email"
+        name="email"
+        class="input"
+        formControlName="email"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <label for="username" class="input-label">Username</label>
+      <input
+        type="username"
+        name="username"
+        class="input"
+        formControlName="username"
+        required
+      />
+    </div>
+    <div class="input-container">
+      <label for="password" class="input-label">Password</label>
+      <input
+        type="password"
+        name="password"
+        class="input"
+        formControlName="password"
+        required
+      />
+    </div>
+
+    <button type="submit" class="continue-button">Continue</button>
+    <div class="alt-info">
+      Already have an account?
+      <a routerLink="/login" class="alt-link">Log in</a>
+    </div>
+  </form>
+</app-auth-panel>
