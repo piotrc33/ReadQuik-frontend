@@ -8,7 +8,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  signupUser(user: User): Observable<any> {
+  signup(user: User): Observable<any> {
     const url = 'http://localhost:3001/signup';
     const headers = {'content-type': 'application/json'}
     const body = JSON.stringify(user);

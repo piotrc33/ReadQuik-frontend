@@ -30,12 +30,22 @@
         font-size: 12px;
       }
 
+      .error-info {
+        color: red;
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
       .input {
         padding: 12px 16px;
         border: 1px solid $neutral-400;
         border-radius: 8px;
         font-size: 16px;
         color: $neutral-900;
+
+        &.error {
+          border-color: red;
+        }
       }
     }
 
@@ -51,6 +61,21 @@
       cursor: pointer;
       background-color: #b0bcff;
       color: #2d0377;
+      box-shadow: 0 3px 5px hsla(0, 0%, 0, .2);
+
+      &:active {
+        box-shadow: 0 1px 3px hsla(0, 0%, 0, .2);
+      }
+
+      &:focus {
+        box-shadow: 0 1px 3px hsla(0, 0%, 0, .2);
+      }
+
+      &.disabled {
+        color: #523c78;
+        background-color: #cfd6fe;
+        cursor: default;
+      }
     }
 
     .alt-info {
