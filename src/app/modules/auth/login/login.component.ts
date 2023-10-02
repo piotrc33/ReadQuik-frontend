@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,19 +15,22 @@ export class LoginComponent {
   });
   constructor(
     private fb: FormBuilder,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   onSubmit() {
-    // console.log('submitted', this.loginForm.value);
-    // this.authService.signupUser(this.loginForm.value).subscribe({
-    //   next: (response) => {
-    //     console.log('Registration successful');
-    //   },
-    //   error: (error) => {
-    //     console.log('Registration failed');
-    //   },
-    // });
-    // LOGIN
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        console.log('Login successful', res);
+        if(res.loginSuccessful) {
+          this.authService.saveToken(res.jwtToken);
+          this.router.navigate(['']);
+        }
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+      },
+    });
   }
 }
