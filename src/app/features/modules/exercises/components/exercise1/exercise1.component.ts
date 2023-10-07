@@ -1,13 +1,11 @@
-import { Component, HostListener } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
-import { Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss'],
+  selector: 'exercise1',
+  templateUrl: './exercise1.component.html',
+  styleUrls: ['./exercise1.component.scss'],
 })
-export class MainComponent {
+export class Exercise1Component implements OnInit {
   phraseNumber: number = 0;
 
   bookFragments: string[] = [
@@ -21,12 +19,7 @@ export class MainComponent {
     'a dokąd to wędrujecie, co?',
   ];
 
-  phrasesArray: string[] = []
-
-  constructor(
-    private readonly authService: AuthService,
-    private router: Router
-  ) {}
+  phrasesArray: string[] = [];
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -35,10 +28,9 @@ export class MainComponent {
     }
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
+  constructor() {}
+
+  ngOnInit(): void {}
 
   nextFragment() {
     this.phraseNumber++;

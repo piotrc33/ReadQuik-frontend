@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainComponent } from './main/main.component';
-import { AuthService } from '../auth/auth.service';
+import { MainComponent } from './components/main/main.component';
+import { AuthService } from '../auth/services/auth.service';
+import { ExercisesModule } from '../exercises/exercises.module';
 
 
 
@@ -10,7 +11,8 @@ import { AuthService } from '../auth/auth.service';
     MainComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ExercisesModule
   ],
   providers: [
     AuthService

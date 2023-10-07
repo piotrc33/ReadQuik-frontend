@@ -3,25 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './modules/auth/auth.module';
+import { AuthModule } from './features/modules/auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './api/interceptors/auth-interceptor.service';
 import { AuthGuard } from './api/guards/auth.guard';
+import { ExercisesModule } from './features/modules/exercises/exercises.module';
+import { MainModule } from './features/modules/main/main.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule, AuthModule, ExercisesModule, MainModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+    AuthGuard,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthModule,
-  ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }, AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
