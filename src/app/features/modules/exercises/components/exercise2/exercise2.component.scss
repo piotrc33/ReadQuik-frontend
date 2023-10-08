@@ -1,0 +1,21 @@
+@import '../../../../../../variables';
+
+.exercise2 {
+  width: 500px;
+  overflow: hidden;
+  background-color: lime;
+  padding: 10px 0;
+  white-space: nowrap;
+
+  .inactive {
+    color: $neutral-400; 
+  }
+
+  .active {
+    color: $neutral-950;
+  }
+
+  .phrase {
+    position: relative;
+  }
+}

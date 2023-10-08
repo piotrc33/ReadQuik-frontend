@@ -12,7 +12,13 @@ import { MainModule } from './features/modules/main/main.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, AuthModule, ExercisesModule, MainModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AuthModule,
+    ExercisesModule,
+    MainModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

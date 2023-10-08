@@ -19,8 +19,6 @@ export class Exercise1Component implements OnInit {
     'a dokąd to wędrujecie, co?',
   ];
 
-  phrasesArray: string[] = [];
-
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === ' ') {
