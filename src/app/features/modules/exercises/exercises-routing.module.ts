@@ -4,8 +4,8 @@ import { Exercise1Component } from './components/exercise1/exercise1.component';
 import { Exercise2Component } from './components/exercise2/exercise2.component';
 
 const routes: Routes = [
-  { path: 'ex1', component: Exercise1Component },
-  { path: 'ex2', component: Exercise2Component },
+  { path: '1', component: Exercise1Component },
+  { path: '2', component: Exercise2Component },
 ];
 
 @NgModule({
