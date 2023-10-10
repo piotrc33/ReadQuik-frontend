@@ -1,0 +1,7 @@
+<div class="exercise3">
+  <span 
+  *ngFor="let item of bookFragments; index as i"
+  class="phrase"
+  [ngClass]="phraseNumber === i ? 'active' : 'inactive'"
+  [ngStyle]="{ 'left.px': leftOffset }">{{item}} </span>
+</div>
