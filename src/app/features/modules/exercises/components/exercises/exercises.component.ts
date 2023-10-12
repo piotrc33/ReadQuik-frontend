@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ExercisesStateService } from '../../services/exercises-state.service';
 
 @Component({
   selector: 'exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss']
 })
-export class ExercisesComponent implements OnInit {
+export class ExercisesComponent {
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor(public state: ExercisesStateService) { }
 }

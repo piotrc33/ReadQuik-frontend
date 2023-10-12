@@ -22,6 +22,10 @@ export abstract class Exercise implements OnDestroy {
     this.keyboardSubscription.unsubscribe();
   }
 
+  get finished(): boolean {
+    return this.phraseNumber === this.bookFragments.length;
+  }
+
   abstract nextFragment(): void;
 
   abstract handleForwardingKey(): void;

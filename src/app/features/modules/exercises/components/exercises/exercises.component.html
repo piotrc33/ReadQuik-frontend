@@ -3,8 +3,12 @@
     <a class="exercise-link" routerLink="./1">1</a>
     <a class="exercise-link" routerLink="./2">2</a>
     <a class="exercise-link" routerLink="./3">3</a>
+    <a class="exercise-link" routerLink="./4">4</a> 
   </div>
   <div class="exercise">
-    <router-outlet></router-outlet>
+    <button *ngIf="!state.started" (click)="state.started = true">start</button>
+    <ng-template [ngIf]="state.started">
+      <router-outlet></router-outlet>
+    </ng-template>
   </div>
 </div>

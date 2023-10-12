@@ -1,7 +1,12 @@
-import { AfterViewChecked, Component, ElementRef, HostListener } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+} from '@angular/core';
 import { TextService } from '../../services/text.service';
 import { Exercise } from '../../model/exercise';
 import { KeyboardService } from '../../services/keyboard.service';
+import { ExercisesStateService } from '../../services/exercises-state.service';
 
 @Component({
   selector: 'exercise2',
@@ -12,7 +17,12 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
   leftOffset: number = 180;
   phraseWidth?: number;
 
-  constructor(private el: ElementRef, textService: TextService, keyboardService: KeyboardService) {
+  constructor(
+    private el: ElementRef,
+    private state: ExercisesStateService,
+    textService: TextService,
+    keyboardService: KeyboardService,
+  ) {
     super(textService, keyboardService);
   }
 
@@ -23,14 +33,13 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
 
   override handleForwardingKey(): void {
     this.nextFragment();
+    this.leftOffset -= this.phraseWidth!;
+    if (this.finished) {
+      this.state.started = false;
+    }
   }
 
   nextFragment() {
     this.phraseNumber++;
-    this.leftOffset -= this.phraseWidth!;
-    if (this.phraseNumber === this.bookFragments.length) {
-      this.phraseNumber = 0;
-      this.leftOffset = 180;
-    }
   }
 }
