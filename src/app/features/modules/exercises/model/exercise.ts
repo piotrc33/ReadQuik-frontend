@@ -11,8 +11,8 @@ export abstract class Exercise implements OnDestroy {
 
   constructor(textService: TextService, keyService: KeyboardService) {
     this.bookFragments = textService.bookFragments;
-    this.keyboardSubscription = keyService.spacePress.subscribe(
-      (spacePressed) => {
+    this.keyboardSubscription = keyService.forwardingPress.subscribe(
+      () => {
         this.handleForwardingKey();
       }
     );

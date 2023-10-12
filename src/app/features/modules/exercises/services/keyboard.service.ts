@@ -5,13 +5,15 @@ import { Observable, Subject, Subscription, fromEvent } from 'rxjs';
   providedIn: 'root',
 })
 export class KeyboardService {
-  spacePress = new Subject<boolean>();
+  forwardingPress = new Subject<boolean>();
 
   constructor() {
-    fromEvent<KeyboardEvent>(document, 'keypress').subscribe((e: KeyboardEvent) => {
-      if(e.key === ' ') {
-        this.spacePress.next(true);
+    fromEvent<KeyboardEvent>(document, 'keydown').subscribe(
+      (e: KeyboardEvent) => {
+        if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          this.forwardingPress.next(true);
+        }
       }
-    })
+    );
   }
 }
