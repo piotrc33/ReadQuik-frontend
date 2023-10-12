@@ -5,6 +5,7 @@ import { Exercise2Component } from './components/exercise2/exercise2.component';
 import { ExercisesComponent } from './components/exercises/exercises.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { Exercise3Component } from './components/exercise3/exercise3.component';
+import { TextService } from './services/text.service';
 
 
 
@@ -22,6 +23,9 @@ import { Exercise3Component } from './components/exercise3/exercise3.component';
   exports: [
     Exercise1Component,
     Exercise2Component,
+  ],
+  providers: [
+    TextService
   ]
 })
 export class ExercisesModule { }

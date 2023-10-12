@@ -1,34 +1,22 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { KeyboardService } from './../../services/keyboard.service';
+import { Component } from '@angular/core';
+import { TextService } from '../../services/text.service';
+import { Exercise } from '../../model/exercise';
 
 @Component({
   selector: 'exercise1',
   templateUrl: './exercise1.component.html',
   styleUrls: ['./exercise1.component.scss'],
 })
-export class Exercise1Component implements OnInit {
-  phraseNumber: number = 0;
+export class Exercise1Component extends Exercise {
 
-  bookFragments: string[] = [
-    'Miriamowi',
-    '(Zenonowi Przesmyckiemu)',
-    'I',
-    '— Niech będzie pochwalony',
-    'Jezus Chrystus!',
-    '— Na wieki wieków,',
-    '—moja Agato,',
-    'a dokąd to wędrujecie, co?',
-  ];
-
-  @HostListener('document:keypress', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === ' ') {
-      this.nextFragment();
-    }
+  constructor(textService: TextService, keyService: KeyboardService) {
+    super(textService, keyService);
   }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  override handleForwardingKey(): void {
+      this.nextFragment();
+  }
 
   nextFragment() {
     this.phraseNumber++;
