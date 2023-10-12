@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, Subscription, fromEvent } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class KeyboardService {
   forwardingPress = new Subject<boolean>();
 
