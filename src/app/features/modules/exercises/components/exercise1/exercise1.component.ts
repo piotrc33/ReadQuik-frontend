@@ -11,18 +11,18 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
 })
 export class Exercise1Component extends Exercise {
 
-  constructor(textService: TextService, keyService: KeyboardService, private state: ExercisesStateService) {
-    super(textService, keyService);
+  constructor(textService: TextService, keyService: KeyboardService, state: ExercisesStateService) {
+    super(textService, keyService, state);
   }
 
   override handleForwardingKey(): void {
       this.nextFragment();
-      if(this.finished) {
+      if(this.state.finished) {
         this.state.started = false;
       }
   }
 
   nextFragment() {
-    this.phraseNumber++;
+    this.state.phraseNumber++;
   }
 }

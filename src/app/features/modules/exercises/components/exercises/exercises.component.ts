@@ -9,4 +9,11 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
 export class ExercisesComponent {
 
   constructor(public state: ExercisesStateService) { }
+
+  nextPhrase(): void {
+    this.state.phraseNumber++;
+    if(this.state.finished) {
+      this.state.started = false;
+    }
+  }
 }

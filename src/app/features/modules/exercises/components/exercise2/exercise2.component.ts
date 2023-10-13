@@ -19,11 +19,11 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
 
   constructor(
     private el: ElementRef,
-    private state: ExercisesStateService,
+    state: ExercisesStateService,
     textService: TextService,
     keyboardService: KeyboardService,
   ) {
-    super(textService, keyboardService);
+    super(textService, keyboardService, state);
   }
 
   ngAfterViewChecked(): void {
@@ -34,12 +34,12 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
   override handleForwardingKey(): void {
     this.nextFragment();
     this.leftOffset -= this.phraseWidth!;
-    if (this.finished) {
+    if (this.state.finished) {
       this.state.started = false;
     }
   }
 
   nextFragment() {
-    this.phraseNumber++;
+    this.state.phraseNumber++;
   }
 }

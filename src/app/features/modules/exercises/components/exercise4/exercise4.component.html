@@ -1,7 +1,7 @@
 <div class="exercise4">
   <span 
-  *ngFor="let item of bookFragments; index as i"
+  *ngFor="let item of state.bookFragments; index as i"
   class="phrase"
-  [ngClass]="phraseNumber === i ? 'active' : 'inactive'">{{item}} </span>
+  [ngClass]="state.phraseNumber === i ? 'active' : 'inactive'">{{item}} </span>
 </div>
 

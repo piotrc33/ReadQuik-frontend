@@ -10,18 +10,18 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
   styleUrls: ['./exercise4.component.scss'],
 })
 export class Exercise4Component extends Exercise {
-  constructor(private state: ExercisesStateService, textService: TextService, keyService: KeyboardService) {
-    super(textService, keyService);
+  constructor(state: ExercisesStateService, textService: TextService, keyService: KeyboardService) {
+    super(textService, keyService, state);
   }
 
   override handleForwardingKey(): void {
     this.nextFragment();
-    if(this.finished) {
+    if(this.state.finished) {
       this.state.started = false;
     }
   }
 
   override nextFragment(): void {
-    this.phraseNumber++;
+    this.state.phraseNumber++;
   }
 }

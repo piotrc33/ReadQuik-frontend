@@ -1,3 +1,5 @@
+@import '../../../../../../variables';
+
 .exercises {
   height: 150px;
   display: flex;
@@ -9,5 +11,19 @@
     .exercise-link {
       padding: 10px;
     }
+  }
+
+  .exercises-overlay {
+    position: absolute;
+    background: rgba($neutral-950, 0.7);
+    inset: 0;
+  }
+
+  .panel {
+    background-color: white;
+    width: 600px;
+    height: 400px;
+    z-index: $panel-z-index;
+    position: relative
   }
 }

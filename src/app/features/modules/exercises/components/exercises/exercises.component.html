@@ -8,7 +8,12 @@
   <div class="exercise">
     <button *ngIf="!state.started" (click)="state.started = true">start</button>
     <ng-template [ngIf]="state.started">
-      <router-outlet></router-outlet>
+      <div class="panel">
+        <router-outlet></router-outlet>
+        <button (click)="nextPhrase()">next phrase</button>
+      </div>
     </ng-template>
   </div>
+
+  <div *ngIf="state.started" class="exercises-overlay"></div>
 </div>

@@ -22,11 +22,11 @@ export class Exercise3Component
 
   constructor(
     private el: ElementRef,
-    private state: ExercisesStateService,
+    state: ExercisesStateService,
     textService: TextService,
     keyService: KeyboardService
   ) {
-    super(textService, keyService);
+    super(textService, keyService, state);
   }
 
   ngAfterViewChecked(): void {
@@ -45,7 +45,7 @@ export class Exercise3Component
       this.nextFragment();
       this.leftOffset -= this.phraseWidth!;
 
-      if (this.finished) {
+      if (this.state.finished) {
         this.state.started = false;
       }
     }
@@ -54,30 +54,30 @@ export class Exercise3Component
   start(): void {
     setTimeout(
       () => this.autoNextFragment(),
-      getTimeoutMs(this.bookFragments[this.phraseNumber].length, 200)
+      getTimeoutMs(this.state.bookFragments[this.state.phraseNumber].length, 200)
     );
   }
 
   autoNextFragment(): void {
-    this.phraseNumber++;
+    this.state.phraseNumber++;
     this.leftOffset -= this.phraseWidth!;
-    if (this.finished) {
+    if (this.state.finished) {
       this.reset();
       this.mode = 'manual';
     } else {
       setTimeout(
         () => this.autoNextFragment(),
-        getTimeoutMs(this.bookFragments[this.phraseNumber].length, 200)
+        getTimeoutMs(this.state.bookFragments[this.state.phraseNumber].length, 200)
       );
     }
   }
 
   reset(): void {
-    this.phraseNumber = 0;
+    this.state.phraseNumber = 0;
     this.leftOffset = 180;
   }
 
   nextFragment() {
-    this.phraseNumber++;
+    this.state.phraseNumber++;
   }
 }
