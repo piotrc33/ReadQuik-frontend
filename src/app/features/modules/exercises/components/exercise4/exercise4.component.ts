@@ -13,15 +13,4 @@ export class Exercise4Component extends Exercise {
   constructor(state: ExercisesStateService, textService: TextService, keyService: KeyboardService) {
     super(textService, keyService, state);
   }
-
-  override handleForwardingKey(): void {
-    this.nextFragment();
-    if(this.state.finished) {
-      this.state.started = false;
-    }
-  }
-
-  override nextFragment(): void {
-    this.state.phraseNumber++;
-  }
 }

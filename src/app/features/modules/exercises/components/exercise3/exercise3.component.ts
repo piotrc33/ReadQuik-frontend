@@ -36,48 +36,46 @@ export class Exercise3Component
 
   ngOnInit(): void {
     if (this.mode === 'auto') {
-      this.start();
+      this.nextFragmentTimeout();
     }
   }
 
   override handleForwardingKey(): void {
     if (this.mode === 'manual') {
-      this.nextFragment();
-      this.leftOffset -= this.phraseWidth!;
+      this.handleNextFragment();
+    }
+  }
 
+  handleNextFragment(): void {
+    this.nextFragment();
+    this.leftOffset -= this.phraseWidth!;
+
+    if (this.mode === 'auto') {
       if (this.state.finished) {
-        this.state.started = false;
+        this.reset();
+        this.mode = 'manual';
+      } else {
+        this.nextFragmentTimeout();
       }
     }
-  }
-
-  start(): void {
-    setTimeout(
-      () => this.autoNextFragment(),
-      getTimeoutMs(this.state.bookFragments[this.state.phraseNumber].length, 200)
-    );
-  }
-
-  autoNextFragment(): void {
-    this.state.phraseNumber++;
-    this.leftOffset -= this.phraseWidth!;
-    if (this.state.finished) {
-      this.reset();
-      this.mode = 'manual';
-    } else {
-      setTimeout(
-        () => this.autoNextFragment(),
-        getTimeoutMs(this.state.bookFragments[this.state.phraseNumber].length, 200)
-      );
+    
+    if (this.mode === 'manual' && this.state.finished) {
+      this.state.end();
     }
+  }
+
+  nextFragmentTimeout(): void {
+    setTimeout(
+      () => this.handleNextFragment(),
+      getTimeoutMs(
+        this.state.bookFragments[this.state.phraseNumber].length,
+        200
+      )
+    );
   }
 
   reset(): void {
     this.state.phraseNumber = 0;
     this.leftOffset = 180;
-  }
-
-  nextFragment() {
-    this.state.phraseNumber++;
   }
 }

@@ -32,14 +32,7 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
   }
 
   override handleForwardingKey(): void {
-    this.nextFragment();
+    super.handleForwardingKey();
     this.leftOffset -= this.phraseWidth!;
-    if (this.state.finished) {
-      this.state.started = false;
-    }
-  }
-
-  nextFragment() {
-    this.state.phraseNumber++;
   }
 }

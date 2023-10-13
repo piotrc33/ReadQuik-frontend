@@ -19,7 +19,7 @@ export abstract class Exercise implements OnDestroy {
       this.handleForwardingKey();
     });
     this.exitSub = keyService.exitPress.subscribe(() => {
-      state.started = false;
+      state.end();
     });
   }
 
@@ -29,7 +29,14 @@ export abstract class Exercise implements OnDestroy {
     this.state.phraseNumber = 0;
   }
 
-  abstract nextFragment(): void;
+  nextFragment(): void {
+    this.state.nextFragment();
+  }
 
-  abstract handleForwardingKey(): void;
+  handleForwardingKey(): void {
+    this.nextFragment();
+    if (this.state.finished) {
+      this.state.end();
+    }
+  }
 }

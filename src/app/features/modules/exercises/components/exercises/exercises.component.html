@@ -6,7 +6,7 @@
     <a class="exercise-link" routerLink="./4">4</a> 
   </div>
   <div class="exercise">
-    <button *ngIf="!state.started" (click)="state.started = true">start</button>
+    <button *ngIf="!state.started" (click)="state.start()">start</button>
     <ng-template [ngIf]="state.started">
       <div class="panel">
         <router-outlet></router-outlet>

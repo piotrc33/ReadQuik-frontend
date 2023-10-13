@@ -13,7 +13,7 @@ export class ExercisesComponent {
   nextPhrase(): void {
     this.state.phraseNumber++;
     if(this.state.finished) {
-      this.state.started = false;
+      this.state.end();
     }
   }
 }
