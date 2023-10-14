@@ -14,7 +14,10 @@ import { MainRoutingModule } from './main-routing.module';
   imports: [
     MainRoutingModule,
     CommonModule,
-    ExercisesModule
+    ExercisesModule,
+  ],
+  exports: [
+    MainComponent
   ],
   providers: [
     AuthService

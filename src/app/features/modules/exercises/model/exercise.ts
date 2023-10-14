@@ -15,10 +15,10 @@ export abstract class Exercise implements OnDestroy {
     public state: ExercisesStateService
   ) {
     this.state.bookFragments = textService.bookFragments;
-    this.forwardSub = keyService.forwardingPress.subscribe(() => {
+    this.forwardSub = keyService.forwardingPress$.subscribe(() => {
       this.handleForwardingKey();
     });
-    this.exitSub = keyService.exitPress.subscribe(() => {
+    this.exitSub = keyService.exitPress$.subscribe(() => {
       state.end();
     });
   }

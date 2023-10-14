@@ -40,10 +40,14 @@ export class Exercise3Component
     }
   }
 
-  override handleForwardingKey(): void {
-    if (this.mode === 'manual') {
-      this.handleNextFragment();
-    }
+  nextFragmentTimeout(): void {
+    setTimeout(
+      () => this.handleNextFragment(),
+      getTimeoutMs(
+        this.state.bookFragments[this.state.phraseNumber].length,
+        200
+      )
+    );
   }
 
   handleNextFragment(): void {
@@ -58,20 +62,16 @@ export class Exercise3Component
         this.nextFragmentTimeout();
       }
     }
-    
+
     if (this.mode === 'manual' && this.state.finished) {
       this.state.end();
     }
   }
 
-  nextFragmentTimeout(): void {
-    setTimeout(
-      () => this.handleNextFragment(),
-      getTimeoutMs(
-        this.state.bookFragments[this.state.phraseNumber].length,
-        200
-      )
-    );
+  override handleForwardingKey(): void {
+    if (this.mode === 'manual') {
+      this.handleNextFragment();
+    }
   }
 
   reset(): void {
