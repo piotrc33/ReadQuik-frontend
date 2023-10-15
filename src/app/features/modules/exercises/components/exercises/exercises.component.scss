@@ -1,18 +1,10 @@
-@import '../../../../../../variables';
+@import "../../../../../../variables";
 
 .exercises {
   height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .exercises-nav {
-    margin: 30px 0;
-    
-    .exercise-link {
-      padding: 10px;
-    }
-  }
 
   .exercises-overlay {
     position: absolute;
@@ -25,6 +17,6 @@
     width: 600px;
     height: 400px;
     z-index: $panel-z-index;
-    position: relative
+    position: relative;
   }
 }

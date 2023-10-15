@@ -1,10 +1,6 @@
 <div class="exercises">
-  <div class="exercises-nav">
-    <a class="exercise-link" routerLink="./1">1</a>
-    <a class="exercise-link" routerLink="./2">2</a>
-    <a class="exercise-link" routerLink="./3">3</a>
-    <a class="exercise-link" routerLink="./4">4</a> 
-  </div>
+  <app-exercise-nav></app-exercise-nav>
+  
   <div class="exercise">
     <button *ngIf="!state.started" (click)="state.start()">start</button>
     <ng-template [ngIf]="state.started">

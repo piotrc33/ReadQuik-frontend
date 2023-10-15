@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 
 @Component({
