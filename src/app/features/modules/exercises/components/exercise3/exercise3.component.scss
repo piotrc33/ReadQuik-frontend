@@ -1,14 +1,2 @@
 @import '../../../../../../variables';
 @import '../../exercises.module.scss';
-
-.exercise3 {
-  width: 500px;
-  overflow: hidden;
-  border: 1px solid $neutral-700;
-  padding: 10px 0;
-  white-space: nowrap;
-
-  .phrase {
-    position: relative;
-  }
-}

@@ -1,13 +1,12 @@
 <div class="exercises">
   <app-exercise-nav></app-exercise-nav>
-  
+
   <div class="exercise">
     <button *ngIf="!state.started" (click)="state.start()">start</button>
     <ng-template [ngIf]="state.started">
-      <div class="panel">
+      <app-exercise-panel>
         <router-outlet></router-outlet>
-        <button (click)="nextPhrase()">next phrase</button>
-      </div>
+      </app-exercise-panel>
     </ng-template>
   </div>
 

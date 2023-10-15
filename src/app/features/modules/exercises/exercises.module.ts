@@ -10,6 +10,7 @@ import { Exercise4Component } from './components/exercise4/exercise4.component';
 import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.component';
+import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
 
 
 
@@ -20,7 +21,8 @@ import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.
     ExercisesComponent,
     Exercise3Component,
     Exercise4Component,
-    ExerciseNavComponent
+    ExerciseNavComponent,
+    ExercisePanelComponent
   ],
   imports: [
     CommonModule,

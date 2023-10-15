@@ -16,5 +16,9 @@
         color: white;
         font-weight: bold;
       }
+
+      &.locked {
+        color: $neutral-400;
+      }
     }
   }

@@ -1,0 +1,37 @@
+@import '../../../../../../../variables';
+
+.exercise-panel {
+    background-color: white;
+    width: 600px;
+    height: 400px;
+    z-index: $panel-z-index;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .panel-header {
+      // background-color: lightcoral;
+      height: 50px;
+      display: flex;
+
+      .close-icon {
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
+        margin-right: $spacing-04;
+        cursor: pointer;
+      }
+    }
+
+    .panel-content {
+      // background-color: lightgreen;
+      height: 100%;
+      padding: $spacing-05;
+    }
+
+    .panel-footer {
+      margin-top: auto;
+      padding: $spacing-06 0;
+      // background-color: lightblue;
+    }
+  }

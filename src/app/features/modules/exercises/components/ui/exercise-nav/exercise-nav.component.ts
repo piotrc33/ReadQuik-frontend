@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-exercise-nav',
   templateUrl: './exercise-nav.component.html',
   styleUrls: ['./exercise-nav.component.scss']
 })
-export class ExerciseNavComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class ExerciseNavComponent {
+  unlocked = [1, 2, 3, 4];
 }

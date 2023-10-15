@@ -11,12 +11,4 @@
     background: rgba($neutral-950, 0.7);
     inset: 0;
   }
-
-  .panel {
-    background-color: white;
-    width: 600px;
-    height: 400px;
-    z-index: $panel-z-index;
-    position: relative;
-  }
 }
