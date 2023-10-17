@@ -6,6 +6,7 @@ export class ExercisesStateService {
   private _started: boolean = false;
   phraseNumber: number = 0;
   bookFragments: string[];
+  lastPracticed: number = 1;
 
   constructor(private readonly text: TextService) {
     this.bookFragments = text.bookFragments;
