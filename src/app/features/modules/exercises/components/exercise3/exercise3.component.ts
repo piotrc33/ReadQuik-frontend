@@ -2,9 +2,9 @@ import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 import { TextService } from '../../services/text.service';
 import { Exercise } from '../../model/exercise';
 import { KeyboardService } from '../../services/keyboard.service';
-import { ExerciseModeT } from '../../model/exercise-mode.type';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { getTimeoutMs } from 'src/app/utils/utils';
+import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'exercise3',
@@ -18,7 +18,8 @@ export class Exercise3Component
   leftOffset: number = 180;
   phraseWidth?: number;
 
-  mode: ExerciseModeT = 'auto';
+  wpmSpeed: number = 200;
+  private timerSub?: Subscription;
 
   constructor(
     private el: ElementRef,
@@ -31,29 +32,29 @@ export class Exercise3Component
   }
 
   ngAfterViewChecked(): void {
-    const activeElement = this.el.nativeElement.querySelector('.active');
-    this.phraseWidth = activeElement.offsetWidth;
+    if(!this.state.finished) {
+      const activeElement = this.el.nativeElement.querySelector('.active');
+      this.phraseWidth = activeElement.offsetWidth;
+    }
   }
 
   ngOnInit(): void {
-    if (this.mode === 'auto') {
-      this.nextFragmentTimeout();
-    }
+    this.startAutoTimer();
   }
 
   override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.state.exerciseMode = 'manual';
+    this.timerSub?.unsubscribe();
   }
 
-  nextFragmentTimeout(): void {
-    setTimeout(
-      () => this.handleAutoNextFragment(),
-      getTimeoutMs(
-        this.state.bookFragments[this.state.phraseNumber].length,
-        200
-      )
-    );
+  startAutoTimer(): void {
+    this.timerSub?.unsubscribe();
+    this.timerSub = timer(
+      getTimeoutMs(this.state.currentPhrase.length, this.wpmSpeed)
+    ).subscribe(() => {
+      this.handleAutoNextFragment();
+    });
   }
 
   handleAutoNextFragment(): void {
@@ -61,20 +62,16 @@ export class Exercise3Component
     this.leftOffset -= this.phraseWidth!;
     if (this.state.finished) {
       this.reset();
-      this.mode = 'manual';
       this.state.exerciseMode = 'manual';
     } else {
-      this.nextFragmentTimeout();
+      this.startAutoTimer();
     }
   }
 
   override handleNextFragment(): void {
-    if(this.mode === 'manual') {
-      this.nextFragment();
+    if (this.state.exerciseMode === 'manual') {
+      super.handleNextFragment();
       this.leftOffset -= this.phraseWidth!;
-      if(this.state.finished) {
-        this.state.end();
-      }
     }
   }
 

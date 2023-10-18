@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, fromEvent } from 'rxjs';
-import { ExercisesStateService } from './exercises-state.service';
+import { filter, fromEvent, map } from 'rxjs';
 
 @Injectable()
 export class KeyboardService {
@@ -13,6 +12,7 @@ export class KeyboardService {
       (e: KeyboardEvent) =>
         e.key === ' ' || e.key === 'ArrowRight' || e.key === 'ArrowDown'
     ),
+    map(() => undefined)
   );
 
   exitPress$ = this.keyDown$.pipe(

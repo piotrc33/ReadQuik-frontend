@@ -21,6 +21,10 @@ export class ExercisesStateService {
     return this._started;
   }
 
+  get currentPhrase(): string {
+    return this.bookFragments[this.phraseNumber];
+  }
+
   private set started(val: boolean) {
     this._started = val;
   }

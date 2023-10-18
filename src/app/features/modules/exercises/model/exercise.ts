@@ -1,19 +1,18 @@
 import { Component, OnDestroy } from '@angular/core';
 import { TextService } from '../services/text.service';
-import {
-  Subscription,
-  merge,
-} from 'rxjs';
+import { Observable, Subscription, filter, merge, takeUntil, tap } from 'rxjs';
 import { KeyboardService } from '../services/keyboard.service';
 import { ExercisesStateService } from '../services/exercises-state.service';
 
 @Component({
   selector: 'app-exercise',
-  template: ''
+  template: '',
 })
-export abstract class Exercise implements OnDestroy {
+export class Exercise implements OnDestroy {
   nextSub: Subscription;
   exitSub: Subscription;
+  finished$: Observable<void>;
+  finishSub: Subscription;
 
   constructor(
     textService: TextService,
@@ -25,15 +24,23 @@ export abstract class Exercise implements OnDestroy {
       state.end();
     });
 
-    this.nextSub = merge(keyService.forwardingPress$, state.next$)
-      .subscribe(() => {
-        this.handleNextFragment();
-      });
+    this.nextSub = merge(keyService.forwardingPress$, state.next$).subscribe(
+      () => {
+        this.handleNextFragment(); 
+      }
+    );
+
+    this.finished$ = merge(keyService.forwardingPress$, state.next$).pipe(
+      filter(() => this.state.finished)
+    );
+
+    this.finishSub = this.finished$.subscribe(() => this.state.end());
   }
 
   ngOnDestroy(): void {
     this.nextSub.unsubscribe();
     this.exitSub.unsubscribe();
+    this.finishSub.unsubscribe();
     this.state.phraseNumber = 0;
   }
 
@@ -43,8 +50,5 @@ export abstract class Exercise implements OnDestroy {
 
   handleNextFragment(): void {
     this.nextFragment();
-    if (this.state.finished) {
-      this.state.end();
-    }
   }
 }

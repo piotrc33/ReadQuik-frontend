@@ -19,11 +19,4 @@ export class ExercisesComponent implements OnInit {
       }
     })
   }
-
-  nextPhrase(): void {
-    this.state.phraseNumber++;
-    if(this.state.finished) {
-      this.state.end();
-    }
-  }
 }

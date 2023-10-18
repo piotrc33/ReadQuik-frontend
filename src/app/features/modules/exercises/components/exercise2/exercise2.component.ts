@@ -27,8 +27,10 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    const activeElement = this.el.nativeElement.querySelector('.active');
-    this.phraseWidth = activeElement.offsetWidth;
+    if(!this.state.finished) {
+      const activeElement = this.el.nativeElement.querySelector('.active');
+      this.phraseWidth = activeElement.offsetWidth;
+    }
   }
 
   override handleNextFragment(): void {
