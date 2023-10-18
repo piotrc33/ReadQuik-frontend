@@ -1,12 +1,17 @@
+import { Subject } from 'rxjs';
 import { TextService } from './text.service';
 import { Injectable } from '@angular/core';
+import { ExerciseModeT } from '../model/exercise-mode.type';
 
 @Injectable()
 export class ExercisesStateService {
+  next$ = new Subject<void>();
+
   private _started: boolean = false;
   phraseNumber: number = 0;
   bookFragments: string[];
   lastPracticed: number = 1;
+  exerciseMode: ExerciseModeT = 'manual';
 
   constructor(private readonly text: TextService) {
     this.bookFragments = text.bookFragments;

@@ -31,8 +31,8 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
     this.phraseWidth = activeElement.offsetWidth;
   }
 
-  override handleForwardingKey(): void {
-    super.handleForwardingKey();
+  override handleNextFragment(): void {
+    super.handleNextFragment();
     this.leftOffset -= this.phraseWidth!;
   }
 }

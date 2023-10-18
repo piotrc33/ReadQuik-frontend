@@ -27,6 +27,7 @@ export class Exercise3Component
     keyService: KeyboardService
   ) {
     super(textService, keyService, state);
+    this.state.exerciseMode = 'auto';
   }
 
   ngAfterViewChecked(): void {
@@ -40,9 +41,14 @@ export class Exercise3Component
     }
   }
 
+  override ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.state.exerciseMode = 'manual';
+  }
+
   nextFragmentTimeout(): void {
     setTimeout(
-      () => this.handleNextFragment(),
+      () => this.handleAutoNextFragment(),
       getTimeoutMs(
         this.state.bookFragments[this.state.phraseNumber].length,
         200
@@ -50,27 +56,25 @@ export class Exercise3Component
     );
   }
 
-  handleNextFragment(): void {
+  handleAutoNextFragment(): void {
     this.nextFragment();
     this.leftOffset -= this.phraseWidth!;
-
-    if (this.mode === 'auto') {
-      if (this.state.finished) {
-        this.reset();
-        this.mode = 'manual';
-      } else {
-        this.nextFragmentTimeout();
-      }
-    }
-
-    if (this.mode === 'manual' && this.state.finished) {
-      this.state.end();
+    if (this.state.finished) {
+      this.reset();
+      this.mode = 'manual';
+      this.state.exerciseMode = 'manual';
+    } else {
+      this.nextFragmentTimeout();
     }
   }
 
-  override handleForwardingKey(): void {
-    if (this.mode === 'manual') {
-      this.handleNextFragment();
+  override handleNextFragment(): void {
+    if(this.mode === 'manual') {
+      this.nextFragment();
+      this.leftOffset -= this.phraseWidth!;
+      if(this.state.finished) {
+        this.state.end();
+      }
     }
   }
 
