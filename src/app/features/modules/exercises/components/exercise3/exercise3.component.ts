@@ -53,6 +53,7 @@ export class Exercise3Component
     if (this.state.finished) {
       this.reset();
       this.state.exerciseMode = 'manual';
+      this.state.startTime = Date.now();
     } else {
       this.startAutoTimer();
     }

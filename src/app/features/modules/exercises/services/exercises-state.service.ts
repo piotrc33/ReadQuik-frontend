@@ -22,6 +22,9 @@ export class ExercisesStateService {
   panelContentElement?: HTMLElement;
   activeElement?: HTMLElement;
 
+  startTime!: number;
+  speed?: number;
+
   constructor(private readonly text: TextService) {
     this.bookFragments = text.getBookFragments();
     this.wordFragments = text.getWordFragments();
@@ -42,10 +45,22 @@ export class ExercisesStateService {
 
   start(): void {
     this.started = true;
+    this.startTime = Date.now();
   }
 
   end(): void {
     this.started = false;
+    this.speed = this.calculateSpeed(this.startTime, this.wordFragments);
+    console.log(this.speed, 'wpm');
+  }
+
+  calculateSpeed(startTime: number, wordFragments: string[]): number {
+    const totalCharacters: number = wordFragments.reduce(
+      (total, currentWord) => total + currentWord.length,
+      0
+    );
+    const elapsedTimeMin =  (Date.now() - startTime) / (1000 * 60);
+    return Math.floor((totalCharacters / 5.5) / elapsedTimeMin);
   }
 
   get finished(): boolean {

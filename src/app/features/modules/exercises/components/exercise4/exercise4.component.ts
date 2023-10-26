@@ -27,6 +27,11 @@ export class Exercise4Component extends Exercise implements AfterViewChecked {
     }
   }
 
+  override ngOnDestroy(): void {
+    super.ngOnDestroy();
+    this.state.pageYPosition = 0;
+  }
+
   getPhraseIndex(phrase: string): number {
     return this.state.wordFragments.indexOf(phrase);
   }
