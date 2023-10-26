@@ -1,7 +1,21 @@
 <div class="exercise4">
-  <span 
-  *ngFor="let item of state.bookFragments; index as i"
-  class="phrase"
-  [ngClass]="state.phraseNumber === i ? 'active' : 'inactive'">{{item}} </span>
-</div>
+  <div class="original text" [style.top.px]="state.pageYPosition">
+    <ng-container *ngFor="let phrase of state.bookFragments; index as i">
+      <ng-container *ngIf="!textService.isNewline(phrase); else newline">
+        <span
+          class="phrase"
+          [ngClass]="
+            state.phraseNumber === getPhraseIndex(phrase)
+              ? 'active'
+              : 'inactive'
+          "
+          >{{ phrase }}</span
+        >
+      </ng-container>
 
+      <ng-template #newline>
+        <span class="phrase">{{ phrase }}</span>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

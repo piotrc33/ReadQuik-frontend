@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ExercisesStateService } from '../../../services/exercises-state.service';
 
 @Component({
@@ -7,7 +7,12 @@ import { ExercisesStateService } from '../../../services/exercises-state.service
   styleUrls: ['./exercise-panel.component.scss'],
 })
 export class ExercisePanelComponent {
-  constructor(public state: ExercisesStateService) {}
+  constructor(public state: ExercisesStateService, private el: ElementRef) {}
+
+  ngOnInit(): void {
+    this.state.panelContentElement =
+      this.el.nativeElement.querySelector('.panel-content');
+  }
 
   handleClick(): void {
     this.state.next$.next();

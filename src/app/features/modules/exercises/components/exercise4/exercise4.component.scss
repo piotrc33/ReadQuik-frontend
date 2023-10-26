@@ -3,4 +3,18 @@
 
 .exercise4 {
   text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+
+  .phrase {
+    margin-right: 5px;
+  }
+
+  .original {
+    white-space: pre-wrap;
+  }
+
+  .text {
+    position: relative;
+  }
 }

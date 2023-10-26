@@ -2,8 +2,8 @@
 
 .exercise-panel {
     background-color: white;
-    width: 600px;
-    height: 400px;
+    width: 700px;
+    height: 510px;
     z-index: $panel-z-index;
     position: relative;
     display: flex;
@@ -26,7 +26,8 @@
     .panel-content {
       // background-color: lightgreen;
       height: 100%;
-      padding: $spacing-05;
+      padding: 0 $spacing-05;
+      overflow: hidden;
     }
 
     .panel-footer {

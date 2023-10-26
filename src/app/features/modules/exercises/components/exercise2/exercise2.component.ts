@@ -14,20 +14,23 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
   styleUrls: ['./exercise2.component.scss'],
 })
 export class Exercise2Component extends Exercise implements AfterViewChecked {
-  leftOffset: number = 180;
+  leftOffset: number = 50;
   phraseWidth?: number;
 
   constructor(
     private el: ElementRef,
-    state: ExercisesStateService,
-    textService: TextService,
     keyboardService: KeyboardService,
+    state: ExercisesStateService
   ) {
-    super(textService, keyboardService, state);
+    super(keyboardService, state);
+  }
+
+  ngOnInit(): void {
+    this.leftOffset = this.getDefaultOffset('.exercise2');
   }
 
   ngAfterViewChecked(): void {
-    if(!this.state.finished) {
+    if (!this.state.finished) {
       const activeElement = this.el.nativeElement.querySelector('.active');
       this.phraseWidth = activeElement.offsetWidth;
     }
@@ -36,5 +39,10 @@ export class Exercise2Component extends Exercise implements AfterViewChecked {
   override handleNextFragment(): void {
     super.handleNextFragment();
     this.leftOffset -= this.phraseWidth!;
+  }
+
+  getDefaultOffset(selector: string): number {
+    const container = this.el.nativeElement.querySelector(selector);
+    return container.offsetWidth / 2 - 75;
   }
 }

@@ -1,10 +1,9 @@
 import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
-import { TextService } from '../../services/text.service';
-import { Exercise } from '../../model/exercise';
 import { KeyboardService } from '../../services/keyboard.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { getTimeoutMs } from 'src/app/utils/utils';
 import { Subscription, timer } from 'rxjs';
+import { Exercise2Component } from '../exercise2/exercise2.component';
 
 @Component({
   selector: 'exercise3',
@@ -12,34 +11,25 @@ import { Subscription, timer } from 'rxjs';
   styleUrls: ['./exercise3.component.scss'],
 })
 export class Exercise3Component
-  extends Exercise
+  extends Exercise2Component
   implements AfterViewChecked, OnInit
 {
-  leftOffset: number = 180;
-  phraseWidth?: number;
 
   wpmSpeed: number = 200;
   private timerSub?: Subscription;
 
   constructor(
-    private el: ElementRef,
+    el: ElementRef,
     state: ExercisesStateService,
-    textService: TextService,
     keyService: KeyboardService
   ) {
-    super(textService, keyService, state);
+    super(el, keyService, state);
     this.state.exerciseMode = 'auto';
   }
 
-  ngAfterViewChecked(): void {
-    if(!this.state.finished) {
-      const activeElement = this.el.nativeElement.querySelector('.active');
-      this.phraseWidth = activeElement.offsetWidth;
-    }
-  }
-
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.startAutoTimer();
+    this.leftOffset = this.getDefaultOffset('.exercise3');
   }
 
   override ngOnDestroy(): void {
@@ -71,12 +61,12 @@ export class Exercise3Component
   override handleNextFragment(): void {
     if (this.state.exerciseMode === 'manual') {
       super.handleNextFragment();
-      this.leftOffset -= this.phraseWidth!;
     }
   }
 
   reset(): void {
     this.state.phraseNumber = 0;
-    this.leftOffset = 180;
+    this.leftOffset = this.getDefaultOffset('.exercise3');
   }
+
 }

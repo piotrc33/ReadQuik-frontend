@@ -1,6 +1,6 @@
 <div class="exercise-panel">
   <div class="panel-header">
-    <img class="close-icon" src="./assets/images/close-icon.svg" alt="close">
+    <img (click)="state.exit$.next()" class="close-icon" src="./assets/images/close-icon.svg" alt="close">
   </div>
   <div class="panel-content">
     <ng-content></ng-content>

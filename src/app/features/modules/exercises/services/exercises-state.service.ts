@@ -6,15 +6,26 @@ import { ExerciseModeT } from '../model/exercise-mode.type';
 @Injectable()
 export class ExercisesStateService {
   next$ = new Subject<void>();
+  exit$ = new Subject<void>();
 
   private _started: boolean = false;
   phraseNumber: number = 0;
   bookFragments: string[];
+  wordFragments: string[];
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
 
+  bookText: string;
+
+  pageYPosition: number = 0;
+
+  panelContentElement?: HTMLElement;
+  activeElement?: HTMLElement;
+
   constructor(private readonly text: TextService) {
-    this.bookFragments = text.bookFragments;
+    this.bookFragments = text.getBookFragments();
+    this.wordFragments = text.getWordFragments();
+    this.bookText = text.bookText;
   }
 
   get started(): boolean {
@@ -22,7 +33,7 @@ export class ExercisesStateService {
   }
 
   get currentPhrase(): string {
-    return this.bookFragments[this.phraseNumber];
+    return this.wordFragments[this.phraseNumber];
   }
 
   private set started(val: boolean) {
@@ -38,7 +49,7 @@ export class ExercisesStateService {
   }
 
   get finished(): boolean {
-    return this.phraseNumber === this.bookFragments.length;
+    return this.phraseNumber === this.wordFragments.length;
   }
 
   nextFragment(): void {

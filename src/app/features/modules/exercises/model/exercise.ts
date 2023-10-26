@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { TextService } from '../services/text.service';
-import { Observable, Subscription, filter, merge, takeUntil, tap } from 'rxjs';
-import { KeyboardService } from '../services/keyboard.service';
+import { Observable, Subscription, filter, merge } from 'rxjs';
 import { ExercisesStateService } from '../services/exercises-state.service';
+import { KeyboardService } from '../services/keyboard.service';
 
 @Component({
   selector: 'app-exercise',
@@ -15,18 +14,16 @@ export class Exercise implements OnDestroy {
   finishSub: Subscription;
 
   constructor(
-    textService: TextService,
     keyService: KeyboardService,
     public state: ExercisesStateService
   ) {
-    this.state.bookFragments = textService.bookFragments;
-    this.exitSub = keyService.exitPress$.subscribe(() => {
+    this.exitSub = merge(keyService.exitPress$, state.exit$).subscribe(() => {
       state.end();
     });
 
     this.nextSub = merge(keyService.forwardingPress$, state.next$).subscribe(
       () => {
-        this.handleNextFragment(); 
+        this.handleNextFragment();
       }
     );
 
