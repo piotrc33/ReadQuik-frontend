@@ -17,6 +17,7 @@ export class ExercisesComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
+        this.state.currentExercise = Number(e.url.split('/').pop());
         if (e.url === '/exercises')
           this.router.navigate([`exercises/${this.state.lastPracticed}`]);
       }

@@ -15,6 +15,7 @@ export class ExercisesStateService {
   wordFragments: string[];
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
+  currentExercise?: number;
 
   bookText: string;
 
@@ -53,7 +54,9 @@ export class ExercisesStateService {
     this.started = false;
     this.speed = this.calculateSpeed(this.startTime, this.wordFragments);
     console.log(this.speed, 'wpm');
-    this.exHttpService.saveResult(this.speed).subscribe(console.log);
+    if(this.currentExercise) {
+      this.exHttpService.saveResult(this.speed, this.currentExercise).subscribe(console.log);
+    }
   }
 
   calculateSpeed(startTime: number, wordFragments: string[]): number {
