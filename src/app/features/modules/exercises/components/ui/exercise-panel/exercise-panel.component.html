@@ -6,6 +6,6 @@
     <ng-content></ng-content>
   </div>
   <div class="panel-footer">
-    <button *ngIf="state.exerciseMode === 'manual'" (click)="handleClick()" (keydown.space)="$event.preventDefault()">next phrase</button>
+    <button class="secondary" *ngIf="state.exerciseMode === 'manual'" (click)="handleClick()" (keydown.space)="$event.preventDefault()">next phrase</button>
   </div>
 </div>

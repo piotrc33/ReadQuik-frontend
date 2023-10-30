@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class MainComponent {
 
   constructor(
-    private readonly authService: AuthService,
+    public readonly authService: AuthService,
     private router: Router
   ) {}
 

@@ -2,7 +2,7 @@
   <app-exercise-nav></app-exercise-nav>
 
   <div class="exercise">
-    <button *ngIf="!state.started" (click)="state.start()">start</button>
+    <button class="primary" *ngIf="!state.started" (click)="state.start()">start</button>
 
     <ng-template [ngIf]="state.started">
       <app-exercise-panel>

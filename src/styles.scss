@@ -22,3 +22,20 @@
 body {
   font-family: 'Roboto';
 }
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: $spacing-04 $spacing-06;
+  cursor: pointer;
+  
+  &.primary {
+    background-color: $violet-600;
+    color: white;
+    font-weight: 600;
+  }
+
+  &.secondary {
+    background-color: $neutral-200;
+  }
+}

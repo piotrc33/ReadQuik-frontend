@@ -1,11 +1,8 @@
-<!-- <button (click)="logout()">logout</button> -->
-<!-- <exercise1></exercise1> -->
 <div class="main">
-  <!-- navigation -->
   <nav class="navbar">
     <a class="navbar-link" routerLink="">Main</a>
     <a class="navbar-link" routerLink="exercises">Exercises</a>
+    <a class="navbar-link" routerLink="auth/login" (click)="authService.logout()">Logout</a>
   </nav>
   <router-outlet></router-outlet>
 </div>
-<!-- <exercise2></exercise2> -->
