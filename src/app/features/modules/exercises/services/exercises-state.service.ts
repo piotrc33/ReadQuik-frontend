@@ -2,6 +2,7 @@ import { Subject } from 'rxjs';
 import { TextService } from './text.service';
 import { Injectable } from '@angular/core';
 import { ExerciseModeT } from '../model/exercise-mode.type';
+import { ExercisesHttpService } from './exercises-http.service';
 
 @Injectable()
 export class ExercisesStateService {
@@ -25,7 +26,7 @@ export class ExercisesStateService {
   startTime!: number;
   speed?: number;
 
-  constructor(private readonly text: TextService) {
+  constructor(private readonly text: TextService, private exHttpService: ExercisesHttpService) {
     this.bookFragments = text.getBookFragments();
     this.wordFragments = text.getWordFragments();
     this.bookText = text.bookText;
@@ -52,6 +53,7 @@ export class ExercisesStateService {
     this.started = false;
     this.speed = this.calculateSpeed(this.startTime, this.wordFragments);
     console.log(this.speed, 'wpm');
+    this.exHttpService.saveResult(this.speed).subscribe(console.log);
   }
 
   calculateSpeed(startTime: number, wordFragments: string[]): number {

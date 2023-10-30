@@ -6,19 +6,19 @@ import { LoginDataI } from "src/app/api/model/loginData.i";
 
 @Injectable()
 export class AuthService {
-  headers = {'content-type': 'application/json'}
+  headers = {'content-type': 'application/json'};
 
   constructor(private http: HttpClient) {}
 
   signup(user: User): Observable<any> {
-    const url = 'http://localhost:3001/signup';
+    const url = 'http://localhost:3002/signup';
     const body = JSON.stringify(user);
 
     return this.http.post(url, body, {'headers': this.headers});
   }
 
   login(loginData: LoginDataI): Observable<any> {
-    const url = 'http://localhost:3001/login';
+    const url = 'http://localhost:3002/login';
     const body = JSON.stringify(loginData);
 
     return this.http.post(url, body, { headers: this.headers });

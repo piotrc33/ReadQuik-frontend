@@ -11,6 +11,7 @@ import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.component';
 import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
+import { ExercisesHttpService } from './services/exercises-http.service';
 
 
 
@@ -35,7 +36,8 @@ import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-
   providers: [
     TextService,
     ExercisesStateService,
-    KeyboardService
+    KeyboardService,
+    ExercisesHttpService
   ]
 })
 export class ExercisesModule { }
