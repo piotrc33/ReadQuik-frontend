@@ -12,6 +12,7 @@ export class ExercisesStateService {
   private _started: boolean = false;
   phraseNumber: number = 0;
   bookFragments: string[];
+  bookFragmentsWithNewlines: string[];
   wordFragments: string[];
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
@@ -29,6 +30,7 @@ export class ExercisesStateService {
 
   constructor(private readonly text: TextService, private exHttpService: ExercisesHttpService) {
     this.bookFragments = text.getBookFragments();
+    this.bookFragmentsWithNewlines = text.getBookFragmentsWithNewlines();
     this.wordFragments = text.getWordFragments();
     this.bookText = text.bookText;
   }

@@ -11,6 +11,9 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
 })
 export class Exercise4Component extends Exercise implements AfterViewChecked {
 
+  wordIndexes: number[] = []
+  i: number = 0;
+
   constructor(
     state: ExercisesStateService,
     public readonly textService: TextService,
@@ -18,6 +21,11 @@ export class Exercise4Component extends Exercise implements AfterViewChecked {
     private el: ElementRef,
   ) {
     super(keyService, state);
+    for(let i = 0; i < this.state.bookFragmentsWithNewlines.length; i++) {
+      if(!textService.isNewline(this.state.bookFragmentsWithNewlines[i])) {
+        this.wordIndexes.push(i);
+      }
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -32,7 +40,12 @@ export class Exercise4Component extends Exercise implements AfterViewChecked {
     this.state.pageYPosition = 0;
   }
 
-  getPhraseIndex(phrase: string): number {
-    return this.state.wordFragments.indexOf(phrase);
+  override handleNextFragment(): void {
+    this.i++;
+    this.state.phraseNumber = this.currentIndex;
+  }
+
+  get currentIndex(): number {
+    return this.wordIndexes[this.i];
   }
 }
