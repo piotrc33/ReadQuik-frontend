@@ -54,10 +54,16 @@ export class ExercisesStateService {
 
   end(): void {
     this.started = false;
+  }
+
+  finish(): void {
+    this.end();
     this.speed = this.calculateSpeed(this.startTime, this.wordFragments);
     console.log(this.speed, 'wpm');
-    if(this.currentExercise) {
-      this.exHttpService.saveResult(this.speed, this.currentExercise).subscribe(console.log);
+    if (this.currentExercise) {
+      this.exHttpService
+        .saveResult(this.speed, this.currentExercise)
+        .subscribe(console.log);
     }
   }
 

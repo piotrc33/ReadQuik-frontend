@@ -31,7 +31,7 @@ export class Exercise implements OnDestroy {
       filter(() => this.state.finished)
     );
 
-    this.finishSub = this.finished$.subscribe(() => this.state.end());
+    this.finishSub = this.finished$.subscribe(() => this.state.finish());
   }
 
   ngOnDestroy(): void {

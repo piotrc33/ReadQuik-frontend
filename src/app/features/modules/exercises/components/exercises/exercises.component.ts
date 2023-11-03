@@ -12,7 +12,9 @@ export class ExercisesComponent implements OnInit {
     public state: ExercisesStateService,
     private readonly router: Router,
     private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  ) {
+    this.state.currentExercise = Number(router.url.split('/').pop());
+  }
 
   ngOnInit(): void {
     this.router.events.subscribe((e) => {
