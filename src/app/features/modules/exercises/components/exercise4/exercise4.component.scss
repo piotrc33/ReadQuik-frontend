@@ -1,4 +1,4 @@
-@import '../../../../../../variables';
+@import 'variables';
 @import '../../exercises.module.scss';
 
 .exercise4 {
@@ -6,8 +6,14 @@
   display: flex;
   flex-wrap: wrap;
 
+  br {
+    line-height: $line-height;
+  }
+
   .phrase {
-    margin-right: 5px;
+    margin: 2px 3px 2px;
+    display: inline-block;
+    height: 16px;
   }
 
   .original {

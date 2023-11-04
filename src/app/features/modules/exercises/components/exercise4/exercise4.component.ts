@@ -10,19 +10,17 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
   styleUrls: ['./exercise4.component.scss'],
 })
 export class Exercise4Component extends Exercise implements AfterViewChecked {
-
-  wordIndexes: number[] = []
-  i: number = 0;
+  wordIndexes: number[] = [];
 
   constructor(
     state: ExercisesStateService,
     public readonly textService: TextService,
     keyService: KeyboardService,
-    private el: ElementRef,
+    private el: ElementRef
   ) {
     super(keyService, state);
-    for(let i = 0; i < this.state.bookFragmentsWithNewlines.length; i++) {
-      if(!textService.isNewline(this.state.bookFragmentsWithNewlines[i])) {
+    for (let i = 0; i < this.state.bookFragmentsWithNewlines.length; i++) {
+      if (!textService.isNewline(this.state.bookFragmentsWithNewlines[i])) {
         this.wordIndexes.push(i);
       }
     }
@@ -38,14 +36,5 @@ export class Exercise4Component extends Exercise implements AfterViewChecked {
   override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.state.pageYPosition = 0;
-  }
-
-  override handleNextFragment(): void {
-    this.i++;
-    this.state.phraseNumber = this.currentIndex;
-  }
-
-  get currentIndex(): number {
-    return this.wordIndexes[this.i];
   }
 }

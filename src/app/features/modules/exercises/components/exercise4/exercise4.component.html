@@ -5,7 +5,7 @@
         <span
           class="phrase"
           [ngClass]="
-            state.phraseNumber === i
+            wordIndexes[state.phraseNumber] === i
               ? 'active'
               : 'inactive'
           "
@@ -14,7 +14,7 @@
       </ng-container>
 
       <ng-template #newline>
-        <span class="phrase">{{ phrase }}</span>
+        <br>
       </ng-template>
     </ng-container>
   </div>

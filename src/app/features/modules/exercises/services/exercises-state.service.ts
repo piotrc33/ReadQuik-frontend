@@ -11,7 +11,6 @@ export class ExercisesStateService {
 
   private _started: boolean = false;
   phraseNumber: number = 0;
-  bookFragments: string[];
   bookFragmentsWithNewlines: string[];
   wordFragments: string[];
   lastPracticed: number = 1;
@@ -28,8 +27,10 @@ export class ExercisesStateService {
   startTime!: number;
   speed?: number;
 
-  constructor(private readonly text: TextService, private exHttpService: ExercisesHttpService) {
-    this.bookFragments = text.getBookFragments();
+  constructor(
+    readonly text: TextService,
+    private exHttpService: ExercisesHttpService
+  ) {
     this.bookFragmentsWithNewlines = text.getBookFragmentsWithNewlines();
     this.wordFragments = text.getWordFragments();
     this.bookText = text.bookText;
@@ -45,6 +46,10 @@ export class ExercisesStateService {
 
   private set started(val: boolean) {
     this._started = val;
+  }
+
+  get finished(): boolean {
+    return this.phraseNumber === this.wordFragments.length;
   }
 
   start(): void {
@@ -72,12 +77,8 @@ export class ExercisesStateService {
       (total, currentWord) => total + currentWord.length,
       0
     );
-    const elapsedTimeMin =  (Date.now() - startTime) / (1000 * 60);
-    return Math.floor((totalCharacters / 5.5) / elapsedTimeMin);
-  }
-
-  get finished(): boolean {
-    return this.phraseNumber === this.wordFragments.length;
+    const elapsedTimeMin = (Date.now() - startTime) / (1000 * 60);
+    return Math.floor(totalCharacters / 5.5 / elapsedTimeMin);
   }
 
   nextFragment(): void {

@@ -121,13 +121,12 @@ I poszedł wolno miedzami, odmawiał półgłosem modlitwy i jasnym, pełnym koc
     fragments = this.splitLongFragments(fragments);
     this.bookFragmentsWithNewlines = [...fragments];
     fragments = this.removeNewlines(fragments);
-    this.bookFragments = fragments;
     this.wordFragments = fragments;
   }
 
-  getBookFragments(): string[] {
-    return this.bookFragments;
-  }
+  // getBookFragments(): string[] {
+  //   return this.bookFragments;
+  // }
 
   getBookFragmentsWithNewlines(): string[] {
     return this.bookFragmentsWithNewlines;
@@ -152,7 +151,7 @@ I poszedł wolno miedzami, odmawiał półgłosem modlitwy i jasnym, pełnym koc
   }
 
   splitByNewlines(text: string): string[] {
-    return text.split(/(\n+)/);
+    return text.split(/(\n)/);
   }
 
   isNewline(phrase: string): boolean {

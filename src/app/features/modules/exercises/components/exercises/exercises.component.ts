@@ -30,8 +30,8 @@ export class ExercisesComponent implements OnInit {
     if (!this.state.finished) {
       const actBox = this.state.activeElement?.getBoundingClientRect();
       const panelBox = this.state.panelContentElement?.getBoundingClientRect();
-
-      if (actBox?.y! > panelBox?.y! + panelBox?.height!) {
+      // console.log(actBox?.y!, panelBox?.y!, panelBox?.height!);
+      if (actBox?.y! > (panelBox?.y! + panelBox?.height!)) {
         this.state.pageYPosition -= panelBox!.height;
         this.changeDetectorRef.detectChanges(); // to avoid error ExpressionChangedAfterItHasBeenCheckedError
       }
