@@ -1,0 +1,5 @@
+<ng-container *ngIf="(books$ | async) as books">
+  <p *ngFor="let book of books">
+    {{book.title}}
+  </p>
+</ng-container>

@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainComponent } from './components/main/main.component';
+import { NgModule } from '@angular/core';
 import { AuthService } from '../auth/services/auth.service';
 import { ExercisesModule } from '../exercises/exercises.module';
+import { BookService } from '../library/services/book.service';
+import { MainComponent } from './components/main/main.component';
 import { MainRoutingModule } from './main-routing.module';
 
 
@@ -20,7 +21,8 @@ import { MainRoutingModule } from './main-routing.module';
     MainComponent
   ],
   providers: [
-    AuthService
+    AuthService,
+    BookService
   ]
 })
 export class MainModule { }

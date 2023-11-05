@@ -24,12 +24,6 @@ export class AuthService {
     return this.http.post(url, body, { headers: this.headers });
   }
 
-  verifyUser(): Observable<any> {
-    const url: string = 'http://localhost:3001/authorize';
-
-    return this.http.get(url, { headers: this.headers });
-  }
-
   saveToken(token: string): void {
     localStorage.setItem('token', token);
   }

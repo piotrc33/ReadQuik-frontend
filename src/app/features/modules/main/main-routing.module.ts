@@ -11,6 +11,13 @@ const routes: Routes = [
         (m) => m.ExercisesRoutingModule
       ),
   },
+  {
+    path: 'library',
+    loadChildren: () =>
+      import('../library/library-routing.module').then(
+        (m) => m.LibraryRoutingModule
+      ),
+  },
 ];
 
 @NgModule({

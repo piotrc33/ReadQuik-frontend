@@ -9,6 +9,7 @@ import { AuthInterceptorService } from './api/interceptors/auth-interceptor.serv
 import { AuthGuard } from './api/guards/auth.guard';
 import { ExercisesModule } from './features/modules/exercises/exercises.module';
 import { MainModule } from './features/modules/main/main.module';
+import { LibraryModule } from './features/modules/library/library.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { MainModule } from './features/modules/main/main.module';
     AuthModule,
     ExercisesModule,
     MainModule,
+    LibraryModule
   ],
   providers: [
     {
