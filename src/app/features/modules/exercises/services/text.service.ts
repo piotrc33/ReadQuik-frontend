@@ -2,27 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { BookI } from '../../library/book.i';
 import { BookService } from '../../library/services/book.service';
+import { AppStateService } from 'src/app/features/services/app-state.service';
 
 @Injectable()
 export class TextService {
-  currentBookId = '6547dc278aa6bb7f43f85f71';
   
-  currentBook$: Observable<BookI> = new Observable<BookI>();
   wordFragments$: Observable<string[]>;
   bookFragmentsWithNewlines$: Observable<string[]>;
 
-  constructor(private bookService: BookService) {
-    this.getBook(this.currentBookId);
-    this.bookFragmentsWithNewlines$ = this.currentBook$.pipe(
+  constructor(private bookService: BookService, private as: AppStateService) {
+    this.bookFragmentsWithNewlines$ = as.currentBook$.pipe(
       map((book: BookI) => this.getFragmentsWithNewlines(book.text)),
     );
     this.wordFragments$ = this.bookFragmentsWithNewlines$.pipe(
       map((fragments: string[]) => this.removeNewlines(fragments)),
     );
-  }
-
-  getBook(id: string): void {
-    this.currentBook$ =  this.bookService.getBook(id);
   }
 
   getWordFragments(book: BookI): string[] {

@@ -1,0 +1,11 @@
+@import 'variables';
+
+.library {
+  .book {
+    cursor: pointer;
+
+    &:hover {
+      color: $violet-600;
+    }
+  }
+}
