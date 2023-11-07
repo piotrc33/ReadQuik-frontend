@@ -1,54 +1,47 @@
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { BookI } from '../../library/book.i';
 import { BookService } from '../../library/services/book.service';
-import { firstValueFrom, take } from 'rxjs';
 
 @Injectable()
 export class TextService {
-  bookFragmentsWithNewlines: string[] = [];
-  bookText: string = '';
-  wordFragments: string[] = [];
-  private bookFragments: string[] = [];
+  currentBookId = '6547dc278aa6bb7f43f85f71';
+  
+  currentBook$: Observable<BookI> = new Observable<BookI>();
+  wordFragments$: Observable<string[]>;
+  bookFragmentsWithNewlines$: Observable<string[]>;
 
   constructor(private bookService: BookService) {
-    this.getBookData();
+    this.getBook(this.currentBookId);
+    this.bookFragmentsWithNewlines$ = this.currentBook$.pipe(
+      map((book: BookI) => this.getFragmentsWithNewlines(book.text)),
+    );
+    this.wordFragments$ = this.bookFragmentsWithNewlines$.pipe(
+      map((fragments: string[]) => this.removeNewlines(fragments)),
+    );
   }
 
-  getBookData() {
-    this.bookService
-      .getBook('6547dc278aa6bb7f43f85f71')
-      .pipe(take(1))
-      .subscribe((res) => {
-        this.bookText = res.text;
-        console.log(this.bookText);
-        this.initializeFragments();
-      });
+  getBook(id: string): void {
+    this.currentBook$ =  this.bookService.getBook(id);
   }
 
-  initializeFragments(): void {
-    this.bookFragments = this.splitByNewlines(this.bookText);
-    this.wordFragments = this.bookFragments.filter(
+  getWordFragments(book: BookI): string[] {
+    const bookText = book.text;
+    return this.splitByNewlines(bookText).filter(
       (frag) => !this.isNewline(frag)
     );
+  }
 
+  getFragmentsWithNewlines(text: string): string[] {
     let fragments: string[] = [];
-    let piped: string = this.bookText.replace(/[,.?!;…]+/g, '$&|');
+    let piped: string = text.replace(/[,.?!;…]+/g, '$&|');
     piped = piped.replace(/\S+$/gm, '$&|');
     piped = piped.replace(/(?<!^)—/gm, '$&|');
     fragments = this.splitByNewlines(piped);
     fragments = this.splitByPipes(fragments);
     fragments = this.splitLongFragments(fragments);
-    this.bookFragmentsWithNewlines = [...fragments];
-    fragments = this.removeNewlines(fragments);
-    this.wordFragments = fragments;
-    console.log(this.wordFragments);
-  }
 
-  getBookFragmentsWithNewlines(): string[] {
-    return this.bookFragmentsWithNewlines;
-  }
-
-  getWordFragments(): string[] {
-    return this.wordFragments;
+    return fragments;
   }
 
   splitTextByNWords(text: string, n: number) {

@@ -1,8 +1,8 @@
-import { Subject } from 'rxjs';
-import { TextService } from './text.service';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
+import { TextService } from './text.service';
 
 @Injectable()
 export class ExercisesStateService {
@@ -11,13 +11,11 @@ export class ExercisesStateService {
 
   private _started: boolean = false;
   phraseNumber: number = 0;
-  bookFragmentsWithNewlines: string[];
-  wordFragments: string[];
+  bookFragmentsWithNewlines: string[] = [];
+  wordFragments: string[] = [];
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   currentExercise?: number;
-
-  bookText: string;
 
   pageYPosition: number = 0;
 
@@ -30,11 +28,7 @@ export class ExercisesStateService {
   constructor(
     readonly text: TextService,
     private exHttpService: ExercisesHttpService
-  ) {
-    this.bookFragmentsWithNewlines = text.getBookFragmentsWithNewlines();
-    this.wordFragments = text.getWordFragments();
-    this.bookText = text.bookText;
-  }
+  ) {}
 
   get started(): boolean {
     return this._started;

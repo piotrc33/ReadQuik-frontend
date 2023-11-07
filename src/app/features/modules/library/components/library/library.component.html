@@ -1,5 +1,9 @@
-<ng-container *ngIf="(books$ | async) as books">
+<ng-container *ngIf="(books$ | async) as books; else loading">
   <p *ngFor="let book of books">
     {{book.title}}
   </p>
 </ng-container>
+
+<ng-template #loading>
+  Loading books...
+</ng-template>
