@@ -1,5 +1,7 @@
+import { SegmentI } from "./segment.i";
+
 export interface BookI {
   _id?: string,
   title: string,
-  text: string
+  segments: SegmentI[]
 }

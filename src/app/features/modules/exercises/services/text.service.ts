@@ -3,6 +3,7 @@ import { Observable, map } from 'rxjs';
 import { BookI } from '../../library/book.i';
 import { BookService } from '../../library/services/book.service';
 import { AppStateService } from 'src/app/features/services/app-state.service';
+import { SegmentI } from '../../library/segment.i';
 
 @Injectable()
 export class TextService {
@@ -12,17 +13,10 @@ export class TextService {
 
   constructor(private bookService: BookService, private as: AppStateService) {
     this.bookFragmentsWithNewlines$ = as.currentBook$.pipe(
-      map((book: BookI) => this.getFragmentsWithNewlines(book.text)),
+      map((book: BookI) => this.getFragmentsWithNewlines(book.segments[0].text)),
     );
     this.wordFragments$ = this.bookFragmentsWithNewlines$.pipe(
       map((fragments: string[]) => this.removeNewlines(fragments)),
-    );
-  }
-
-  getWordFragments(book: BookI): string[] {
-    const bookText = book.text;
-    return this.splitByNewlines(bookText).filter(
-      (frag) => !this.isNewline(frag)
     );
   }
 
@@ -38,7 +32,7 @@ export class TextService {
     return fragments;
   }
 
-  splitTextByNWords(text: string, n: number) {
+  splitTextByNWords(text: string, n: number): string[] {
     const words = text.split(/[^\S\r\n]/);
     const groups = [];
 
@@ -48,6 +42,32 @@ export class TextService {
     }
 
     return groups;
+  }
+
+  splitTextIntoSegments(text: string): SegmentI[] {
+    const words = text.match(/(\n+|\S+[^\S\r\n]*)/g);
+    const segments: SegmentI[] = [];
+    let segText: string[] = [];
+    let segNumber: number = 1;
+    const wps = 200; // words per segment
+
+    if(!words) {
+      return [];
+    }
+
+    for (let i = 0; i < words.length; i++) {
+      segText.push(words[i]);
+      if(segText.length >= wps && this.isNewline(segText[segText.length - 1])) {
+        segments.push({
+          number: segNumber,
+          text: segText.join('')
+        })
+        segText = [];
+        segNumber++;
+      }
+    }
+
+    return segments;
   }
 
   splitByNewlines(text: string): string[] {
