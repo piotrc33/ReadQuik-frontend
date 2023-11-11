@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -38,7 +38,7 @@ export class SignupComponent {
     ],
   });
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private readonly authService: AuthService
   ) {}
 

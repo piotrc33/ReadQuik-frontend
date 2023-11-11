@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -14,21 +14,21 @@ export class LoginComponent {
     password: '',
   });
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router
   ) {}
 
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         console.log('Login successful', res);
         if(res.loginSuccessful) {
           this.authService.saveToken(res.jwtToken);
           this.router.navigate(['']);
         }
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Login failed', error);
       },
     });
