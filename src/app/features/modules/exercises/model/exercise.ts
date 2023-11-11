@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subscription, filter, merge } from 'rxjs';
+import { Subscription, filter, merge } from 'rxjs';
 import { ExercisesStateService } from '../services/exercises-state.service';
 import { KeyboardService } from '../services/keyboard.service';
 
@@ -8,37 +8,37 @@ import { KeyboardService } from '../services/keyboard.service';
   template: '',
 })
 export class Exercise implements OnDestroy {
-  nextSub: Subscription;
-  exitSub: Subscription;
-  finished$: Observable<void>;
-  finishSub: Subscription;
+  subs: Subscription[] = [];
+
+  quitExercise$ = merge(this.keyService.exitPress$, this.state.exit$);
+  nextAction$ = merge(this.keyService.forwardingPress$, this.state.next$);
+  finished$ = merge(this.keyService.forwardingPress$, this.state.next$).pipe(
+    filter(() => this.state.finished)
+  );
 
   constructor(
-    keyService: KeyboardService,
+    private keyService: KeyboardService,
     public state: ExercisesStateService
   ) {
-    this.exitSub = merge(keyService.exitPress$, state.exit$).subscribe(() => {
-      state.end();
-    });
+    this.subs.push(
+      this.quitExercise$.subscribe(() => {
+        state.end();
+      })
+    );
 
-    this.nextSub = merge(keyService.forwardingPress$, state.next$).subscribe(
-      () => {
+    this.subs.push(
+      this.nextAction$.subscribe(() => {
         this.handleNextFragment();
-      }
+      })
     );
 
-    this.finished$ = merge(keyService.forwardingPress$, state.next$).pipe(
-      filter(() => this.state.finished)
-    );
-
-    this.finishSub = this.finished$.subscribe(() => this.state.finish());
+    this.subs.push(this.finished$.subscribe(() => this.state.finish()));
   }
 
   ngOnDestroy(): void {
-    this.nextSub.unsubscribe();
-    this.exitSub.unsubscribe();
-    this.finishSub.unsubscribe();
     this.state.phraseNumber = 0;
+
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   nextFragment(): void {

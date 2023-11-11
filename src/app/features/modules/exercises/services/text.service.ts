@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { BookI } from '../../library/book.i';
-import { BookService } from '../../library/services/book.service';
 import { AppStateService } from 'src/app/features/services/app-state.service';
 import { SegmentI } from '../../library/segment.i';
 
@@ -11,7 +10,7 @@ export class TextService {
   wordFragments$: Observable<string[]>;
   bookFragmentsWithNewlines$: Observable<string[]>;
 
-  constructor(private bookService: BookService, private as: AppStateService) {
+  constructor(readonly as: AppStateService) {
     this.bookFragmentsWithNewlines$ = as.currentBook$.pipe(
       map((book: BookI) => this.getFragmentsWithNewlines(book.segments[0].text)),
     );
