@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { take, tap } from 'rxjs';
+import { Component } from '@angular/core';
 import { BookService } from './../../services/book.service';
 
 @Component({
@@ -7,12 +6,10 @@ import { BookService } from './../../services/book.service';
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })
-export class LibraryComponent implements OnInit {
-  books$ = this.bookService.getBooks().pipe(take(1), tap(console.log));
+export class LibraryComponent {
+  books$ = this.bookService.getBooks();
 
   constructor(
     public bookService: BookService
   ) {}
-
-  ngOnInit(): void {}
 }

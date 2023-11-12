@@ -1,15 +1,39 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BookI } from '../book.i';
-import { Observable, take } from 'rxjs';
+import { Injectable, OnDestroy, inject } from '@angular/core';
+import { Observable, Subject, Subscription, map, take, takeUntil, tap } from 'rxjs';
 import { baseUrl } from 'src/app/shared/variables';
-import { AppStateService } from 'src/app/features/services/app-state.service';
+import { TextService } from '../../exercises/services/text.service';
+import { BookI } from '../book.i';
 
 @Injectable()
-export class BookService {
+export class BookService implements OnDestroy {
   headers = { 'Content-Type': 'application/json' };
+  textService = inject(TextService);
 
-  constructor(private http: HttpClient, private appState: AppStateService) {}
+  phrasesWithNewlines: string[] = [];
+  wordPhrases: string[] = [];
+
+  currentBook$ = new Subject<BookI>();
+  phrasesWithNewlines$: Observable<string[]> = this.currentBook$.pipe(
+    map((book: BookI) =>
+      this.textService.getFragmentsWithNewlines(book.segments[0].text)
+    ),
+    tap((phrases) => (this.phrasesWithNewlines = phrases))
+  );
+  wordPhrases$: Observable<string[]> = this.phrasesWithNewlines$.pipe(
+    map((fragments: string[]) => this.textService.removeNewlines(fragments)),
+    tap((phrases) => (this.wordPhrases = phrases))
+  );
+
+  sub: Subscription;
+
+  constructor(private http: HttpClient) {
+    this.sub = this.wordPhrases$.subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
   getBook(id: string): Observable<BookI> {
     const url = `${baseUrl}/books/book/${id}`;
@@ -22,7 +46,7 @@ export class BookService {
       .get<BookI>(url)
       .pipe(take(1))
       .subscribe((book: BookI) => {
-        this.appState.chooseBook(book);
+        this.currentBook$.next(book);
       });
   }
 

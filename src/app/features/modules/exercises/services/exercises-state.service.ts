@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
@@ -11,8 +12,6 @@ export class ExercisesStateService {
 
   private _started: boolean = false;
   phraseNumber: number = 0;
-  bookFragmentsWithNewlines: string[] = [];
-  wordFragments: string[] = [];
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   currentExercise?: number;
@@ -27,7 +26,8 @@ export class ExercisesStateService {
 
   constructor(
     readonly text: TextService,
-    private exHttpService: ExercisesHttpService
+    private exHttpService: ExercisesHttpService,
+    readonly bookService: BookService
   ) {}
 
   get started(): boolean {
@@ -35,7 +35,7 @@ export class ExercisesStateService {
   }
 
   get currentPhrase(): string {
-    return this.wordFragments[this.phraseNumber];
+    return this.bookService.wordPhrases[this.phraseNumber];
   }
 
   private set started(val: boolean) {
@@ -43,7 +43,7 @@ export class ExercisesStateService {
   }
 
   get finished(): boolean {
-    return this.phraseNumber === this.wordFragments.length;
+    return this.phraseNumber === this.bookService.wordPhrases.length;
   }
 
   start(): void {
@@ -57,7 +57,10 @@ export class ExercisesStateService {
 
   finish(): void {
     this.end();
-    this.speed = this.calculateSpeed(this.startTime, this.wordFragments);
+    this.speed = this.calculateSpeed(
+      this.startTime,
+      this.bookService.wordPhrases
+    );
     console.log(this.speed, 'wpm');
     if (this.currentExercise) {
       this.exHttpService
@@ -66,8 +69,8 @@ export class ExercisesStateService {
     }
   }
 
-  calculateSpeed(startTime: number, wordFragments: string[]): number {
-    const totalCharacters: number = wordFragments.reduce(
+  calculateSpeed(startTime: number, wordPhrases: string[]): number {
+    const totalCharacters: number = wordPhrases.reduce(
       (total, currentWord) => total + currentWord.length,
       0
     );

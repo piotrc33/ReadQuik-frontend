@@ -19,8 +19,8 @@ export class Exercise4Component extends Exercise implements AfterViewChecked {
     private el: ElementRef
   ) {
     super(keyService, state);
-    for (let i = 0; i < this.state.bookFragmentsWithNewlines.length; i++) {
-      if (!textService.isNewline(this.state.bookFragmentsWithNewlines[i])) {
+    for (let i = 0; i < this.state.bookService.phrasesWithNewlines.length; i++) {
+      if (!textService.isNewline(this.state.bookService.phrasesWithNewlines[i])) {
         this.wordIndexes.push(i);
       }
     }

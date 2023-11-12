@@ -1,6 +1,6 @@
 <div class="exercise4">
   <div class="original text" [style.top.px]="state.pageYPosition">
-    <ng-container *ngFor="let phrase of state.bookFragmentsWithNewlines; index as i">
+    <ng-container *ngFor="let phrase of state.bookService.phrasesWithNewlines; index as i">
       <ng-container *ngIf="!textService.isNewline(phrase); else newline">
         <span
           class="phrase"

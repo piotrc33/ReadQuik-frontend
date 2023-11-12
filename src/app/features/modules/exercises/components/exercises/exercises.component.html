@@ -4,12 +4,12 @@
   <div class="exercise">
     <button class="primary" *ngIf="!state.started" (click)="state.start()">start</button>
 
-    <ng-template [ngIf]="state.started">
+    <ng-container *ngIf="state.started">
       <app-exercise-panel>
         <router-outlet></router-outlet>
       </app-exercise-panel>
       <div class="exercises-overlay"></div>
-    </ng-template>
+    </ng-container>
     
   </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="exercise3 horizontal-exercise">
   <div>{{state.exerciseMode}}</div>
   <span 
-  *ngFor="let item of state.wordFragments; index as i"
+  *ngFor="let item of state.bookService.wordPhrases; index as i"
   class="phrase"
   [ngClass]="state.phraseNumber === i ? 'active' : 'inactive'"
   [ngStyle]="{ 'left.px': leftOffset }">{{item}} </span>

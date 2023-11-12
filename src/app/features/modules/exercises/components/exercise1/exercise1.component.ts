@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Exercise } from '../../model/exercise';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { KeyboardService } from './../../services/keyboard.service';
-import { TextService } from '../../services/text.service';
 
 @Component({
   selector: 'exercise1',
@@ -10,8 +9,10 @@ import { TextService } from '../../services/text.service';
   styleUrls: ['./exercise1.component.scss'],
 })
 export class Exercise1Component extends Exercise {
-
-  constructor(keyService: KeyboardService, state: ExercisesStateService, public text: TextService) {
+  constructor(
+    keyService: KeyboardService,
+    state: ExercisesStateService,
+  ) {
     super(keyService, state);
   }
 }
