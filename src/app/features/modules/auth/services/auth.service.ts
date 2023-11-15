@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { User } from "src/app/api/model/user.i";
+import { UserI } from "src/app/api/model/user.i";
 import { LoginDataI } from "src/app/api/model/loginData.i";
 
 @Injectable()
@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  signup(user: User): Observable<any> {
+  signup(user: UserI): Observable<any> {
     const url = 'http://localhost:3002/signup';
     const body = JSON.stringify(user);
 

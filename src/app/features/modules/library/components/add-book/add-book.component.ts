@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { take } from 'rxjs';
-import { BookI } from '../../book.i';
+import { BookDataI } from '../../../../../api/model/book-data.i';
 import { BookService } from '../../services/book.service';
 import { TextService } from '../../../exercises/services/text.service';
-import { SegmentI } from '../../segment.i';
+import { SegmentI } from '../../../../../api/model/segment.i';
+import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 
 @Component({
   selector: 'app-add-book',
@@ -29,11 +30,15 @@ export class AddBookComponent {
       ) {
         console.log('adding book', this.file.name);
         const segments: SegmentI[] = this.text.splitTextIntoSegments(fileReader.result);
-        const newBook: BookI = {
+        const newBookData: BookDataI = {
           title: this.file.name,
-          segments: segments,
         };
-        this.bookService.addBook(newBook).pipe(take(1)).subscribe(console.log);
+        const newBookSegments: BookSegmentsI = {
+          segments
+        };
+
+        console.log(newBookSegments);
+        this.bookService.addBook(newBookData, newBookSegments).pipe(take(1)).subscribe(console.log);
       }
     };
     fileReader.readAsText(this.file);

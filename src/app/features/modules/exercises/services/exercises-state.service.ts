@@ -66,6 +66,9 @@ export class ExercisesStateService {
       this.exHttpService
         .saveResult(this.speed, this.currentExercise)
         .subscribe(console.log);
+      this.bookService
+        .updateProgress(this.bookService.currentBookId(), 1)
+        .subscribe(console.log);
     }
   }
 

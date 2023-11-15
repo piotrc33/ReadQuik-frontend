@@ -2,7 +2,7 @@
   <app-exercise-nav></app-exercise-nav>
 
   <div class="exercise">
-    <button class="primary" *ngIf="!state.started" (click)="state.start()">start</button>
+    <button class="primary" *ngIf="!state.started && (state.bookService.wordPhrases$ | async)" (click)="state.start()">start</button>
 
     <ng-container *ngIf="state.started">
       <app-exercise-panel>
