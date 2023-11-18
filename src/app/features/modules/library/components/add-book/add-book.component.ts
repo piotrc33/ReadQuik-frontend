@@ -31,6 +31,7 @@ export class AddBookComponent {
         console.log('adding book', this.file.name);
         const segments: SegmentI[] = this.text.splitTextIntoSegments(fileReader.result);
         const newBookData: BookDataI = {
+          _id: '', // mongo adds id by itself
           title: this.file.name,
         };
         const newBookSegments: BookSegmentsI = {

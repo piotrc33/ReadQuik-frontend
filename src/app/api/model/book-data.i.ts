@@ -1,4 +1,4 @@
 export interface BookDataI {
-  _id?: string,
+  _id: string,
   title: string,
 }

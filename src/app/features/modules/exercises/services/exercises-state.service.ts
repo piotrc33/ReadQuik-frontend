@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, take } from 'rxjs';
 import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
@@ -64,11 +64,33 @@ export class ExercisesStateService {
     console.log(this.speed, 'wpm');
     if (this.currentExercise) {
       this.exHttpService
-        .saveResult(this.speed, this.currentExercise)
+        .saveResult(
+          this.speed,
+          this.currentExercise,
+          this.bookService.currentBook$.value._id
+        )
         .subscribe(console.log);
-      this.bookService
-        .updateProgress(this.bookService.currentBookId(), 1)
-        .subscribe(console.log);
+      if (this.bookService.currentSegment) {
+        this.bookService
+          .updateBookProgress(
+            this.bookService.currentBook$.value._id,
+            this.bookService.currentSegment.number
+          ).pipe(take(1))
+          .subscribe(console.log);
+        this.bookService
+          .getSegment(
+            this.bookService.currentBook$.value._id,
+            this.bookService.currentSegment.number + 1
+          )
+          .pipe(
+            take(1),
+          )
+          .subscribe((segment) => {
+            if (segment) {
+              this.bookService.currentSegment$.next(segment);
+            }
+          });
+      }
     }
   }
 

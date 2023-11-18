@@ -1,9 +1,9 @@
 <div class="library">
   <ng-container *ngIf="books$ | async as books; else loading">
     <div
-      class="book"
-      (click)="bookService.chooseBook(book._id || '')"
       *ngFor="let book of books"
+      class="book"
+      (click)="bookService.chooseBook(book._id)"
     >
       {{ book.title }}
     </div>
