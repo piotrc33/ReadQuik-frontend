@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  BehaviorSubject,
   Observable,
   ReplaySubject,
-  Subscription,
   filter,
   map,
-  of,
   take,
   tap
 } from 'rxjs';
-import { InitialDataI } from 'src/app/api/model/initial-data.i';
+import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { baseUrl } from 'src/app/shared/variables';
 import { BookDataI } from '../../../../api/model/book-data.i';
 import { TextService } from '../../exercises/services/text.service';
@@ -24,28 +22,16 @@ export class BookService {
   headers = { 'Content-Type': 'application/json' };
   textService = inject(TextService);
 
-  currentBookId = signal<string>('6551f6696d80ef17a3023e7e');
-  currentBook$ = new BehaviorSubject<BookDataI>({
-    _id: '',
-    title: '',
-  });
+  readingData$ = new ReplaySubject<ReadingDataI>(1);
+  currentReadingData = toSignal<ReadingDataI>(this.readingData$.asObservable());
 
-  segmentSub: Subscription;
+  currentBook$ = this.readingData$.pipe(map((data) => data.bookData));
 
-  segmentNumber$ = new ReplaySubject<number>(1);
   currentSegment: SegmentI | null = null;
-  // currentSegment$: Observable<SegmentI | null> = combineLatest([
-  //   this.currentBook$, // skipping the initial value
-  //   this.segmentNumber$,
-  // ]).pipe(
-  //   tap(([book, num]) => console.log(book, num)),
-  //   switchMap(([book, num]) => this.getSegment(book._id, num)),
-  //   tap((segment: SegmentI | null) => {
-  //     this.currentSegment = segment;
-  //   })
-  // );
-
-  currentSegment$ = new ReplaySubject<SegmentI>(1);
+  currentSegment$ = this.readingData$.pipe(
+    map((data) => data.segment),
+    tap((segment) => (this.currentSegment = segment))
+  );
 
   phrasesWithNewlines: string[] = [];
   phrasesWithNewlines$: Observable<string[]> = this.currentSegment$.pipe(
@@ -55,59 +41,48 @@ export class BookService {
     ),
     tap((phrases) => (this.phrasesWithNewlines = phrases))
   );
-  
+
   wordPhrases: string[] = [];
   wordPhrases$: Observable<string[]> = this.phrasesWithNewlines$.pipe(
     map((fragments: string[]) => this.textService.removeNewlines(fragments)),
     tap((phrases) => (this.wordPhrases = phrases))
   );
 
-  constructor(private http: HttpClient) {
-    this.segmentSub = this.currentSegment$.subscribe(segment => {
-      this.currentSegment = segment;
-    })
-  }
+  constructor(private http: HttpClient) {}
 
   getBook(id: string): Observable<BookDataI> {
     const url = `${baseUrl}/books/book/${id}`;
     return this.http.get<BookDataI>(url);
   }
 
-  chooseBook(id: string) {
-    console.log('choosing book');
-    const url = `${baseUrl}/books/change-book/${id}`;
+  getNextReadingData(bookId: string) {
+    console.log('getting reading data');
+    const url = `${baseUrl}/books/reading-data/${bookId}`;
     this.http
-      .get<InitialDataI>(url)
+      .get<ReadingDataI>(url)
       .pipe(take(1))
-      .subscribe((data: InitialDataI) => {
-        this.currentBook$.next(data.bookData);
-        this.currentSegment$.next(data.segment);
+      .subscribe((data: ReadingDataI) => { 
+        this.readingData$.next(data);
       });
   }
 
-  chooseBook$(id: string): Observable<BookDataI> {
-    const url = `${baseUrl}/books/book/${id}`;
-    return this.http
-      .get<BookDataI>(url);
-  }
-
-  initialData$(): Observable<InitialDataI> {
+  initialData$(): Observable<ReadingDataI> {
     const url = `${baseUrl}/initial-data`;
-    return this.http.get<InitialDataI>(url);
+    return this.http.get<ReadingDataI>(url);
   }
 
-  getSegment(
-    bookId: string | undefined,
-    number: number
-  ): Observable<SegmentI | null> {
-    // console.log('getting segment');
-    if (!bookId) {
-      return of(null);
-    }
-    const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
+  // getSegment(
+  //   bookId: string | undefined,
+  //   number: number
+  // ): Observable<SegmentI | null> {
+  //   // console.log('getting segment');
+  //   if (!bookId) {
+  //     return of(null);
+  //   }
+  //   const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
 
-    return this.http.get<SegmentI>(url);
-  }
+  //   return this.http.get<SegmentI>(url);
+  // }
 
   updateBookProgress(
     bookId: string,
@@ -116,11 +91,6 @@ export class BookService {
     const url = `${baseUrl}/results/update-progress`;
     const body = JSON.stringify({ bookId, lastSegmentNumber });
     return this.http.put<UserI | null>(url, body, { headers: this.headers });
-  }
-
-  getLastReadBookId(): Observable<any> {
-    const url = `${baseUrl}/results/last-result-book`;
-    return this.http.get<any>(url).pipe(take(1));
   }
 
   getBooks(): Observable<BookDataI[]> {

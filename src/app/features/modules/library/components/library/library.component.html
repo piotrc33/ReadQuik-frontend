@@ -3,7 +3,7 @@
     <div
       *ngFor="let book of books"
       class="book"
-      (click)="bookService.chooseBook(book._id)"
+      (click)="bookService.getNextReadingData(book._id)"
     >
       {{ book.title }}
     </div>

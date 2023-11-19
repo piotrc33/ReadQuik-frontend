@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../../library/services/book.service';
-import { switchMap, take, tap } from 'rxjs';
-import { BookDataI } from 'src/app/api/model/book-data.i';
 
 @Component({
   selector: 'app-main',
@@ -19,8 +18,7 @@ export class MainComponent {
   ) {
     console.log('main constructor run')
     bookService.initialData$().pipe(take(1)).subscribe(data => {
-      bookService.currentBook$.next(data.bookData);
-      bookService.currentSegment$.next(data.segment);
+      bookService.readingData$.next(data);
     });
   }
 
