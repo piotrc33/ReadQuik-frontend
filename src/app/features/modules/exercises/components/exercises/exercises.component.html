@@ -2,14 +2,42 @@
   <app-exercise-nav></app-exercise-nav>
 
   <div class="exercise">
-    <button class="primary" *ngIf="!state.started && (state.bookService.wordPhrases$ | async)" (click)="state.start()">start</button>
+    <button
+      class="primary"
+      *ngIf="!state.started && (state.bookService.wordPhrases$ | async)"
+      (click)="state.start()"
+    >
+      start
+    </button>
+
+    <div class="book-title">
+      {{ readingData()?.bookData?.title }}
+    </div>
+    <div class="segment">
+      Segment number:
+      {{ readingData()?.segment?.number }}
+    </div>
+    <div class="choose-segment">
+      Choose segment
+      <input type="number" #segmentNumber />
+      <button
+        (click)="
+          state.bookService.getReadingData(
+            readingData()?.bookData?._id || '',
+            segmentNumber.valueAsNumber
+          )
+        "
+      >
+        Submit
+      </button>
+    </div>
 
     <ng-container *ngIf="state.started">
-      <app-exercise-panel>
-        <router-outlet></router-outlet>
-      </app-exercise-panel>
-      <div class="exercises-overlay"></div>
+      <div class="exercises-overlay">
+        <app-exercise-panel>
+          <router-outlet></router-outlet>
+        </app-exercise-panel>
+      </div>
     </ng-container>
-    
   </div>
 </div>

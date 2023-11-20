@@ -16,6 +16,7 @@ import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from './../../../../api/model/book-segments.i';
 import { SegmentI } from './../../../../api/model/segment.i';
 import { UserI } from './../../../../api/model/user.i';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class BookService {
@@ -48,7 +49,7 @@ export class BookService {
     tap((phrases) => (this.wordPhrases = phrases))
   );
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getBook(id: string): Observable<BookDataI> {
     const url = `${baseUrl}/books/book/${id}`;
@@ -63,6 +64,7 @@ export class BookService {
       .pipe(take(1))
       .subscribe((data: ReadingDataI) => { 
         this.readingData$.next(data);
+        this.router.navigate(['/exercises']);
       });
   }
 
@@ -71,18 +73,18 @@ export class BookService {
     return this.http.get<ReadingDataI>(url);
   }
 
-  // getSegment(
-  //   bookId: string | undefined,
-  //   number: number
-  // ): Observable<SegmentI | null> {
-  //   // console.log('getting segment');
-  //   if (!bookId) {
-  //     return of(null);
-  //   }
-  //   const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
-
-  //   return this.http.get<SegmentI>(url);
-  // }
+  getReadingData(
+    bookId: string,
+    number: number
+  ) {
+    const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
+    this.http
+      .get<ReadingDataI>(url)
+      .pipe(take(1))
+      .subscribe((data: ReadingDataI) => {
+        this.readingData$.next(data);
+      });;
+  }
 
   updateBookProgress(
     bookId: string,

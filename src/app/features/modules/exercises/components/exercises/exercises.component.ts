@@ -9,6 +9,8 @@ import { BookService } from '../../../library/services/book.service';
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent implements OnInit {
+  readingData = this.state.bookService.currentReadingData;
+
   constructor(
     public state: ExercisesStateService,
     private readonly router: Router,
@@ -32,10 +34,14 @@ export class ExercisesComponent implements OnInit {
     if (!this.state.finished) {
       const actBox = this.state.activeElement?.getBoundingClientRect();
       const panelBox = this.state.panelContentElement?.getBoundingClientRect();
-      if (actBox?.y! > (panelBox?.y! + panelBox?.height!)) {
+      if (actBox?.y! > panelBox?.y! + panelBox?.height!) {
         this.state.pageYPosition -= panelBox!.height;
         this.changeDetectorRef.detectChanges(); // to avoid error ExpressionChangedAfterItHasBeenCheckedError
       }
     }
+  }
+
+  submit(val: number) {
+    console.log('submitted', val);
   }
 }
