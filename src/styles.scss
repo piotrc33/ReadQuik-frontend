@@ -19,6 +19,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Sansita';
+  src: url('./assets/fonts/Sansita/Sansita-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
   font-family: 'Roboto';
 }
@@ -38,4 +45,14 @@ button {
   &.secondary {
     background-color: $neutral-200;
   }
+}
+
+.svg {
+  &.small {
+    height: 20px;
+  }
+}
+
+.shadow-primary {
+  box-shadow: 0 4px 4px rgb(black, 25%);
 }

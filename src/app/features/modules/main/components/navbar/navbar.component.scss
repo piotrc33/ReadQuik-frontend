@@ -1,0 +1,119 @@
+@import "variables";
+
+.navbar {
+  width: 100vw;
+  height: $spacing-10;
+  background-color: $neutral-50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(black, 12%);
+  margin-bottom: $spacing-07;
+
+  .nav-container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    min-width: 700px;
+    padding: $spacing-03 $spacing-04;
+  }
+
+  .logo {
+    font-family: "Sansita";
+    font-style: italic;
+    font-weight: 700;
+    font-size: 26px;
+  }
+
+  .link-container {
+    display: flex;
+    align-items: baseline;
+    gap: $spacing-06;
+    margin-left: auto;
+    align-self: end;
+    padding: $spacing-02 0;
+    position: relative;
+
+    .navbar-link {
+      &::after {
+        content: "";
+        margin-top: $spacing-01;
+        display: block;
+        width: 0;
+        height: 3px;
+        background-color: $violet-600;
+        transition: width 0.3s;
+      }
+
+      &.active::after {
+        width: 100%;
+      }
+    }
+
+    .user {
+      display: flex;
+      align-items: baseline;
+      cursor: pointer;
+    }
+
+    .username {
+      margin-right: $spacing-03;
+    }
+
+    .user-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      color: $violet-950;
+      border: 2px solid $violet-800;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      display: flex;
+      background-color: white;
+      flex-direction: column;
+      width: 220px;
+      font-size: 15px;
+      border-radius: 6px;
+
+      .dropdown-header {
+        display: flex;
+        align-items: center;
+        padding: $spacing-05 $spacing-05 $spacing-04 $spacing-04;
+
+        .user-circle {
+          margin-right: $spacing-04;
+        }
+
+        .username {
+          font-weight: bold;
+        }
+      }
+
+      .dropdown-options {
+        .option {
+          cursor: pointer;
+          display: flex;
+          padding: $spacing-04 18px;
+          align-items: center;
+          border-radius: 6px;
+
+          &:hover {
+            background-color: $violet-100;
+          }
+        }
+
+        .svg {
+          margin-right: $spacing-04;
+        }
+      }
+    }
+  }
+}

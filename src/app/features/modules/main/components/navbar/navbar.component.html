@@ -1,0 +1,46 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a class="logo" routerLink="/">ReadQuik</a>
+    <div class="link-container">
+      <a class="navbar-link" routerLink="exercises" routerLinkActive="active"
+        >Exercises</a
+      >
+      <a class="navbar-link" routerLink="library" routerLinkActive="active"
+        >Library</a
+      >
+      <a class="navbar-link">Progress</a>
+      <div class="user" (click)="handleDropdown()">
+        <div class="username">username</div>
+        <div class="user-circle">U</div>
+      </div>
+      <div *ngIf="dropdownOpened" class="user-dropdown shadow-primary">
+        <section class="dropdown-header">
+          <div class="user-circle">U</div>
+          <div class="username">username</div>
+        </section>
+        <section class="dropdown-options">
+          <div class="option">
+            <img
+              class="svg small"
+              src="./assets/images/cog-8-tooth.svg"
+              alt="cog"
+            />
+            <div>Settings</div>
+          </div>
+          <div
+            class="option"
+            routerLink="auth/login"
+            (click)="authService.logout()"
+          >
+            <img
+              class="svg small"
+              src="./assets/images/arrow-left-on-rectangle.svg"
+              alt="arrow-left"
+            />
+            <div>Logout</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</nav>

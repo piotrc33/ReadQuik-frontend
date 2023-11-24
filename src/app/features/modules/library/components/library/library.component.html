@@ -1,4 +1,6 @@
 <div class="library">
+  <button class="primary" routerLink="add-book">Add book</button>
+
   <ng-container *ngIf="books$ | async as books; else loading">
     <div
       *ngFor="let book of books"
