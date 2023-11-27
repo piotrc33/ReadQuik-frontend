@@ -2,7 +2,7 @@
 
 .exercise-panel {
   background-color: white;
-  width: 700px;
+  width: $minimum-width;
   z-index: $panel-z-index;
   position: relative;
   display: flex;

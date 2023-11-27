@@ -1,33 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
-@import './reset.scss';
-@import './variables.scss';
-
-// font import
-@import url('https://fonts.googleapis.com/css2?family=Ramaraja&display=swap');
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('./assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Sansita';
-  src: url('./assets/fonts/Sansita/Sansita-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
+@import "./reset.scss";
+@import "./variables.scss";
+@import "./fonts";
 
 body {
-  font-family: 'Roboto';
+  font-family: "Roboto";
 }
 
 button {
@@ -35,7 +11,7 @@ button {
   border-radius: 12px;
   padding: $spacing-04 $spacing-06;
   cursor: pointer;
-  
+
   &.primary {
     background-color: $violet-600;
     color: white;
@@ -43,7 +19,8 @@ button {
   }
 
   &.secondary {
-    background-color: $neutral-200;
+    background-color: $violet-100;
+    color: $violet-900;
   }
 }
 
@@ -55,4 +32,14 @@ button {
 
 .shadow-primary {
   box-shadow: 0 4px 4px rgb(black, 25%);
+}
+
+.limit-width {
+  width: 80%;
+  max-width: 1200px;
+  min-width: $minimum-width;
+}
+
+.center {
+  text-align: center;
 }

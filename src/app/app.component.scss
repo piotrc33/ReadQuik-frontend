@@ -6,8 +6,8 @@
   background-size: 150px;
   background-color: $violet-50;
   width: 100vw;
+  min-width: $minimum-width;
   height: 100vh;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;

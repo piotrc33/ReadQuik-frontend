@@ -1,13 +1,12 @@
 @import 'variables';
 
 .main {
+  min-width: $minimum-width;
+
   .content-container {
     background-color: $neutral-50;
-    width: 700px;
     height: 500px;
     padding: $spacing-05;
-    display: flex;
-    justify-content: center;
     margin: 0 auto;
   }
 }

@@ -2,6 +2,7 @@
 
 .navbar {
   width: 100vw;
+  min-width: $minimum-width;
   height: $spacing-10;
   background-color: $neutral-50;
   display: flex;
@@ -12,9 +13,6 @@
 
   .nav-container {
     display: flex;
-    width: 80%;
-    max-width: 1200px;
-    min-width: 700px;
     padding: $spacing-03 $spacing-04;
   }
 
