@@ -10,13 +10,13 @@
       >
       <a class="navbar-link">Progress</a>
       <div class="user" (click)="handleDropdown()">
-        <div class="username">username</div>
-        <div class="user-circle">U</div>
+        <div class="username">{{username}}</div>
+        <div class="user-circle">{{username[0].toUpperCase()}}</div>
       </div>
       <div *ngIf="dropdownOpened" class="user-dropdown shadow-primary">
         <section class="dropdown-header">
-          <div class="user-circle">U</div>
-          <div class="username">username</div>
+          <div class="user-circle">{{username[0].toUpperCase()}}</div>
+          <div class="username">{{username}}</div>
         </section>
         <section class="dropdown-options">
           <div class="option">

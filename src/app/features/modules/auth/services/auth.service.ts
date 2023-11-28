@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { UserI } from "src/app/api/model/user.i";
 import { LoginDataI } from "src/app/api/model/loginData.i";
+import { jwtDecode } from "jwt-decode";
 
 @Injectable()
 export class AuthService {
@@ -22,6 +23,10 @@ export class AuthService {
     const body = JSON.stringify(loginData);
 
     return this.http.post(url, body, { headers: this.headers });
+  }
+
+  getUsername(): string {
+    return (jwtDecode(this.getToken() || '') as any).username;
   }
 
   saveToken(token: string): void {

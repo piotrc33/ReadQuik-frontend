@@ -8,8 +8,11 @@ import { AuthService } from '../../../auth/services/auth.service';
 })
 export class NavbarComponent {
   dropdownOpened: boolean = false;
+  username = ''
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+    this.username = this.authService.getUsername();
+  }
 
   handleDropdown() {
     this.dropdownOpened = !this.dropdownOpened;

@@ -38,13 +38,13 @@
           </button>
         </div>
       </div>
-      <!-- <div class="change-button"> -->
-        <button class="secondary change-button">Change Book</button>
-      <!-- </div> -->
+      <button routerLink="/library" class="secondary change-button">
+        Change Book
+      </button>
     </section>
 
     <section class="exercise center">
-      <h2 class="number">Exercise 1</h2>
+      <h2 class="number">Exercise {{ state.currentExercise }}</h2>
       <div class="repetition-indicator">
         <div class="circle active"></div>
         <div *ngFor="let i of [].constructor(9)" class="circle"></div>
