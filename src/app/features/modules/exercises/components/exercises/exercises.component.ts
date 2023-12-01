@@ -9,13 +9,10 @@ import { BookService } from '../../../library/services/book.service';
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent implements OnInit {
-  readingData = this.state.bookService.currentReadingData;
-
   constructor(
     public state: ExercisesStateService,
     private readonly router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-    public book: BookService
   ) {
     this.state.currentExercise = Number(router.url.split('/').pop());
   }

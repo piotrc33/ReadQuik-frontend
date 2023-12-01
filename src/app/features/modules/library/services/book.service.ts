@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   Observable,
   ReplaySubject,
@@ -16,15 +16,20 @@ import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from './../../../../api/model/book-segments.i';
 import { SegmentI } from './../../../../api/model/segment.i';
 import { UserI } from './../../../../api/model/user.i';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class BookService {
   headers = { 'Content-Type': 'application/json' };
   textService = inject(TextService);
+  currentBookId = signal('');
 
   readingData$ = new ReplaySubject<ReadingDataI>(1);
-  currentReadingData = toSignal<ReadingDataI>(this.readingData$.asObservable());
+  bookData$ = this.readingData$.pipe(
+    map((data) => data.bookData),
+    tap((book) => {
+      this.currentBookId.set(book._id)})
+  );
+  segmentData$ = this.readingData$.pipe(map((data) => data.segment));
 
   currentBook$ = this.readingData$.pipe(map((data) => data.bookData));
 
@@ -62,7 +67,7 @@ export class BookService {
     this.http
       .get<ReadingDataI>(url)
       .pipe(take(1))
-      .subscribe((data: ReadingDataI) => { 
+      .subscribe((data: ReadingDataI) => {
         this.readingData$.next(data);
         this.router.navigate(['/exercises']);
       });
@@ -73,17 +78,14 @@ export class BookService {
     return this.http.get<ReadingDataI>(url);
   }
 
-  getReadingData(
-    bookId: string,
-    number: number
-  ) {
+  getReadingData(bookId: string, number: number) {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
     this.http
       .get<ReadingDataI>(url)
       .pipe(take(1))
       .subscribe((data: ReadingDataI) => {
         this.readingData$.next(data);
-      });;
+      });
   }
 
   updateBookProgress(

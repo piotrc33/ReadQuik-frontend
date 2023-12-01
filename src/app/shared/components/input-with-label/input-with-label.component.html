@@ -1,10 +1,9 @@
 <div class="input-container">
-  <label [for]="inputId" class="input-label">{{inputLabel}}</label>
+  <label class="input-label">{{label}}</label>
   <input
-    [type]="inputType"
-    [name]="inputName"
     class="input"
-    [formControlName]="formControlName"
+    [value]="innerValue"
+    (input)="handleChange($event)"
     required
   />
 </div>

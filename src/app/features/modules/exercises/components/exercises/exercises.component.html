@@ -3,33 +3,29 @@
     <app-exercise-nav></app-exercise-nav>
   </div>
   <div class="content">
-    <section class="book">
+    <section class="book" *ngIf="state.bookService.bookData$ | async as book">
       <div class="header">
         <h2 class="title">
-          {{ readingData()?.bookData?.title }}
+          {{ book.title }}
         </h2>
-        <div class="author">Władysław Reymont</div>
+        <div class="author">{{ book.author }}</div>
       </div>
       <div>
-        <img
-          class="cover"
-          src="https://wolnelektury.pl/media/book/cover_clean/chlopi-czesc-pierwsza-jesien_972yckN.jpg"
-          alt="cover"
-        />
+        <img class="cover" [src]="book.coverUrl" alt="cover" />
       </div>
-      <div class="segment">
+      <div class="segment" *ngIf="state.bookService.segmentData$ | async as segment">
         <div>Segment:</div>
         <div class="choose">
           <input
             type="number"
-            [value]="readingData()?.segment?.number"
+            [value]="segment.number"
             #segmentNumber
           />
-          / 51
+          / {{ book.totalSegments }}
           <button
             (click)="
               state.bookService.getReadingData(
-                readingData()?.bookData?._id || '',
+                book._id || '',
                 segmentNumber.valueAsNumber
               )
             "

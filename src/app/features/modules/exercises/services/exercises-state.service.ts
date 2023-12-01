@@ -63,24 +63,16 @@ export class ExercisesStateService {
     );
     console.log(this.speed, 'wpm');
 
-    const bookId =
-      this.bookService.currentReadingData()!.bookData._id;
+    const bookId = this.bookService.currentBookId();
     if (this.currentExercise) {
       this.exHttpService
-        .saveResult(
-          this.speed,
-          this.currentExercise,
-          bookId
-        )
+        .saveResult(this.speed, this.currentExercise, bookId)
         .subscribe(console.log);
       if (this.bookService.currentSegment) {
         this.bookService
-          .updateBookProgress(
-            bookId,
-            this.bookService.currentSegment.number
-          )
+          .updateBookProgress(bookId, this.bookService.currentSegment.number)
           .pipe(take(1))
-          .subscribe((data) => {
+          .subscribe(() => {
             this.bookService.getNextReadingData(bookId);
           });
       }

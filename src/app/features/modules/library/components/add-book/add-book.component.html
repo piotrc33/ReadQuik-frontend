@@ -1,5 +1,18 @@
-
-<!-- <form action=""> -->
-  <input type="file" (change)="fileChanged($event)">
+<form [formGroup]="bookForm" class="add-book">
+  <input-with-label label="Title" formControlName="title"></input-with-label>
+  <input-with-label label="Author" formControlName="author"></input-with-label>
+  <input-with-label
+    label="Cover Image URL"
+    formControlName="coverUrl"
+  ></input-with-label>
+  <div class="input-container">
+    <label for="language" class="input-label">Language</label>
+    <select formControlName="language">
+      <option value="Polish">Polish</option>
+      <option value="English">English</option>
+    </select>
+  </div>
+  <input type="file" (change)="fileChanged($event)" />
+  <button (click)="checkFormValue()">Check form</button>
   <button (click)="upload()">Upload</button>
-<!-- </form> -->
+</form>
