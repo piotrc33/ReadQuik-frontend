@@ -6,7 +6,6 @@ import {
   ReplaySubject,
   filter,
   map,
-  take,
   tap
 } from 'rxjs';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
@@ -66,7 +65,6 @@ export class BookService {
     const url = `${baseUrl}/books/reading-data/${bookId}`;
     this.http
       .get<ReadingDataI>(url)
-      .pipe(take(1))
       .subscribe((data: ReadingDataI) => {
         this.readingData$.next(data);
         this.router.navigate(['/exercises']);
@@ -82,7 +80,6 @@ export class BookService {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
     this.http
       .get<ReadingDataI>(url)
-      .pipe(take(1))
       .subscribe((data: ReadingDataI) => {
         this.readingData$.next(data);
       });

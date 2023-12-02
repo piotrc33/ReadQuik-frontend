@@ -1,6 +1,8 @@
 @import "variables";
 
 .exercises {
+  padding: $spacing-03 $spacing-07;
+
   .nav {
     text-align: center;
   }
@@ -22,10 +24,8 @@
   }
 
   .book {
-    padding: $spacing-04 $spacing-03;
-
     .header {
-      margin-bottom: $spacing-03;
+      margin-bottom: $spacing-05;
     }
 
     .title {
@@ -40,13 +40,23 @@
 
     .cover {
       height: 200px;
-      margin-bottom: $spacing-03;
+      margin-bottom: $spacing-04;
     }
 
     .segment {
       input {
-        width: 50px;
+        width: 45px;
       }
+
+      .label {
+        margin-bottom: $spacing-02;
+      }
+
+      margin-bottom: $spacing-03;
+    }
+
+    .switch-button {
+      margin-left: $spacing-04;
     }
 
     .change-button {

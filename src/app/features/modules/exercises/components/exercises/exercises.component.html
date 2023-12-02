@@ -13,16 +13,21 @@
       <div>
         <img class="cover" [src]="book.coverUrl" alt="cover" />
       </div>
-      <div class="segment" *ngIf="state.bookService.segmentData$ | async as segment">
-        <div>Segment:</div>
+      <div
+        class="segment"
+        *ngIf="state.bookService.segmentData$ | async as segment"
+      >
+        <div class="label">Segment:</div>
         <div class="choose">
           <input
             type="number"
+            class="input small"
             [value]="segment.number"
             #segmentNumber
           />
           / {{ book.totalSegments }}
           <button
+            class="small switch-button"
             (click)="
               state.bookService.getReadingData(
                 book._id || '',
