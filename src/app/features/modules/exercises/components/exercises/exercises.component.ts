@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ExercisesStateService } from '../../services/exercises-state.service';
+import { ResultsService } from 'src/app/features/services/results.service';
 
 @Component({
   selector: 'exercises',
@@ -12,6 +13,7 @@ export class ExercisesComponent implements OnInit {
     public state: ExercisesStateService,
     private readonly router: Router,
     private changeDetectorRef: ChangeDetectorRef,
+    public resultsService: ResultsService
   ) {
     const exerciseNumber = Number(router.url.split('/').pop());
     if (exerciseNumber) {
@@ -20,6 +22,8 @@ export class ExercisesComponent implements OnInit {
       this.state.currentExercise = this.state.lastPracticed;
       this.router.navigate([`exercises/${this.state.lastPracticed}`]);
     }
+
+    resultsService.updateRecentResults();
   }
 
   ngOnInit(): void {

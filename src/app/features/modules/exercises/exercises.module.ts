@@ -12,7 +12,7 @@ import { KeyboardService } from './services/keyboard.service';
 import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.component';
 import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
 import { ExercisesHttpService } from './services/exercises-http.service';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -27,7 +27,8 @@ import { ExercisesHttpService } from './services/exercises-http.service';
   ],
   imports: [
     CommonModule,
-    ExercisesRoutingModule
+    ExercisesRoutingModule,
+    SharedModule
   ],
   exports: [
     Exercise1Component,

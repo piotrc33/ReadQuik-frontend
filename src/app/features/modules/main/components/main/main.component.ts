@@ -14,7 +14,6 @@ export class MainComponent {
     private router: Router,
     readonly bookService: BookService
   ) {
-    console.log('main constructor run');
     bookService.initialData$().subscribe((data) => {
       bookService.readingData$.next(data);
     });

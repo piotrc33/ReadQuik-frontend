@@ -1,3 +1,4 @@
+import { ResultsService } from 'src/app/features/services/results.service';
 import { Injectable } from '@angular/core';
 import { Subject, take } from 'rxjs';
 import { BookService } from '../../library/services/book.service';
@@ -27,7 +28,8 @@ export class ExercisesStateService {
   constructor(
     readonly text: TextService,
     private exHttpService: ExercisesHttpService,
-    readonly bookService: BookService
+    readonly bookService: BookService,
+    private resultsService: ResultsService
   ) {}
 
   get started(): boolean {
@@ -71,11 +73,11 @@ export class ExercisesStateService {
       if (this.bookService.currentSegment) {
         this.bookService
           .updateBookProgress(bookId, this.bookService.currentSegment.number)
-          .pipe(take(1))
           .subscribe(() => {
             this.bookService.getNextReadingData(bookId);
           });
       }
+      this.resultsService.updateRecentResults();
     }
   }
 

@@ -85,21 +85,22 @@
       </ng-container>
     </section>
 
-    <section class="recents">
+    <section
+      class="recents"
+      *ngIf="resultsService.recentResults$ | async as recentResults"
+    >
       <h2 class="center title">Recent Results</h2>
-      <div class="result">
+      <div class="result" *ngFor="let result of recentResults">
         <div class="main">
-          <div class="speed">343 wpm</div>
-          <div class="percent positive">+10%</div>
+          <div class="speed">{{ result.wpm }} wpm</div>
+          <div
+            class="percent"
+            [ngClass]="result.percentDiff >= 0 ? 'positive' : 'negative'"
+          >
+            {{ result.percentDiff | percent }}
+          </div>
         </div>
-        <div class="date">Today</div>
-      </div>
-      <div class="result">
-        <div class="main">
-          <div class="speed">280 wpm</div>
-          <div class="percent negative">-8%</div>
-        </div>
-        <div class="date">Yesterday</div>
+        <div class="date">{{ result.date | relativeDate }}</div>
       </div>
       <button class="secondary progress-button">Check full progress</button>
     </section>
