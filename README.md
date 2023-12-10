@@ -1,27 +1,14 @@
-# ReadQuikFrontend
+# ReadQuik
+Front-End
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.
+## Application with exercises to learn speed reading
+This app will guide you through the process of learning speed reading so at the end you can read faster and comprehend more than before!
+You can choose from plenty of books in English and Polish on which You will learn
+You can also upload and use your own text/book
 
-## Development server
+## Current screenshots
+![image](https://github.com/piotrc33/ReadQuik-frontend/assets/73281734/31be8e3f-6d87-4b1a-899f-333767823efc)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![image](https://github.com/piotrc33/ReadQuik-frontend/assets/73281734/a1ad87db-d8df-4803-86ec-61cb506b8232)
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![image](https://github.com/piotrc33/ReadQuik-frontend/assets/73281734/9cc3ccf5-f363-452d-b898-f539940c3e93)
