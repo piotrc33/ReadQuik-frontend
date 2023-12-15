@@ -20,11 +20,23 @@ button {
     background-color: $violet-600;
     color: white;
     font-weight: 600;
+
+    &:hover {
+      background-color: $violet-500;
+    }
   }
 
   &.secondary {
     background-color: $violet-100;
     color: $violet-900;
+
+    &:hover {
+      background-color: $violet-200;
+    }
+  }
+
+  &.ternary {
+    background-color: $neutral-200;
   }
 }
 

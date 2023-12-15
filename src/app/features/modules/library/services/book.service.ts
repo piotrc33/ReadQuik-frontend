@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Observable,
-  ReplaySubject,
-  filter,
-  map,
-  tap
-} from 'rxjs';
+import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { baseUrl } from 'src/app/shared/variables';
 import { BookDataI } from '../../../../api/model/book-data.i';
@@ -26,7 +20,8 @@ export class BookService {
   bookData$ = this.readingData$.pipe(
     map((data) => data.bookData),
     tap((book) => {
-      this.currentBookId.set(book._id)})
+      this.currentBookId.set(book._id);
+    })
   );
   segmentData$ = this.readingData$.pipe(map((data) => data.segment));
 
@@ -63,12 +58,12 @@ export class BookService {
   getNextReadingData(bookId: string) {
     console.log('getting reading data');
     const url = `${baseUrl}/books/reading-data/${bookId}`;
-    this.http
-      .get<ReadingDataI>(url)
-      .subscribe((data: ReadingDataI) => {
+    this.http.get<ReadingDataI>(url).subscribe((data: ReadingDataI | null) => {
+      if (data) {
         this.readingData$.next(data);
-        this.router.navigate(['/exercises']);
-      });
+      }
+      this.router.navigate(['/exercises']);
+    });
   }
 
   initialData$(): Observable<ReadingDataI> {
@@ -78,11 +73,11 @@ export class BookService {
 
   getReadingData(bookId: string, number: number) {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
-    this.http
-      .get<ReadingDataI>(url)
-      .subscribe((data: ReadingDataI) => {
+    this.http.get<ReadingDataI>(url).subscribe((data: ReadingDataI | null) => {
+      if (data) {
         this.readingData$.next(data);
-      });
+      }
+    });
   }
 
   updateBookProgress(

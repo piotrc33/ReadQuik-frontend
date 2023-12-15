@@ -15,7 +15,9 @@ export class MainComponent {
     readonly bookService: BookService
   ) {
     bookService.initialData$().subscribe((data) => {
-      bookService.readingData$.next(data);
+      if (data) {
+        bookService.readingData$.next(data);
+      }
     });
   }
 

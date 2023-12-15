@@ -3,42 +3,44 @@
     <app-exercise-nav></app-exercise-nav>
   </div>
   <div class="content">
-    <section class="book" *ngIf="state.bookService.bookData$ | async as book">
-      <div class="header">
-        <h2 class="title">
-          {{ book.title }}
-        </h2>
-        <div class="author">{{ book.author }}</div>
-      </div>
-      <div>
-        <img class="cover" [src]="book.coverUrl" alt="cover" />
-      </div>
-      <div
-        class="segment"
-        *ngIf="state.bookService.segmentData$ | async as segment"
-      >
-        <div class="label">Segment:</div>
-        <div class="choose">
-          <input
-            type="number"
-            class="input small"
-            [value]="segment.number"
-            #segmentNumber
-          />
-          / {{ book.totalSegments }}
-          <button
-            class="small switch-button"
-            (click)="
-              state.bookService.getReadingData(
-                book._id || '',
-                segmentNumber.valueAsNumber
-              )
-            "
-          >
-            Switch
-          </button>
+    <section class="book">
+      <ng-container *ngIf="state.bookService.bookData$ | async as book">
+        <div class="header">
+          <h2 class="title">
+            {{ book.title }}
+          </h2>
+          <div class="author">{{ book.author }}</div>
         </div>
-      </div>
+        <div>
+          <img class="cover" [src]="book.coverUrl" alt="cover" />
+        </div>
+        <div
+          class="segment"
+          *ngIf="state.bookService.segmentData$ | async as segment"
+        >
+          <div class="label">Segment:</div>
+          <div class="choose">
+            <input
+              type="number"
+              class="input small"
+              [value]="segment.number"
+              #segmentNumber
+            />
+            / {{ book.totalSegments }}
+            <button
+              class="small ternary switch-button"
+              (click)="
+                state.bookService.getReadingData(
+                  book._id || '',
+                  segmentNumber.valueAsNumber
+                )
+              "
+            >
+              Switch
+            </button>
+          </div>
+        </div>
+      </ng-container>
       <button routerLink="/library" class="secondary change-button">
         Change Book
       </button>
@@ -85,23 +87,24 @@
       </ng-container>
     </section>
 
-    <section
-      class="recents"
-      *ngIf="resultsService.recentResults$ | async as recentResults"
-    >
+    <section class="recents">
       <h2 class="center title">Recent Results</h2>
-      <div class="result" *ngFor="let result of recentResults">
-        <div class="main">
-          <div class="speed">{{ result.wpm }} wpm</div>
-          <div
-            class="percent"
-            [ngClass]="result.percentDiff >= 0 ? 'positive' : 'negative'"
-          >
-            {{ result.percentDiff | percent }}
+      <ng-container
+        *ngIf="resultsService.recentResults$ | async as recentResults"
+      >
+        <div class="result" *ngFor="let result of recentResults">
+          <div class="main">
+            <div class="speed">{{ result.wpm }} wpm</div>
+            <div
+              class="percent"
+              [ngClass]="result.percentDiff >= 0 ? 'positive' : 'negative'"
+            >
+              {{ result.percentDiff | percent }}
+            </div>
           </div>
+          <div class="date">{{ result.date | relativeDate }}</div>
         </div>
-        <div class="date">{{ result.date | relativeDate }}</div>
-      </div>
+      </ng-container>
       <button class="secondary progress-button">Check full progress</button>
     </section>
   </div>
