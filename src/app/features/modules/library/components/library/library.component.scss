@@ -1,11 +1,34 @@
-@import 'variables';
+@import "variables";
 
 .library {
-  .book {
-    cursor: pointer;
+  .filters {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacing-05;
+    margin-bottom: $spacing-05;
 
-    &:hover {
-      color: $violet-600;
+    button {
+      &.add-book {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .book-list {
+    display: grid;
+    gap: $spacing-05;
+    max-height: 490px;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-items: center;
+
+    @media (min-width: 960px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1300px) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 }

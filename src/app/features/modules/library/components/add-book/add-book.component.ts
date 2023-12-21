@@ -52,6 +52,7 @@ export class AddBookComponent {
           author: this.bookForm.controls['author'].value,
           coverUrl: this.bookForm.controls['coverUrl'].value,
           language: this.bookForm.controls['language'].value,
+          tags: ['to', 'be', 'added'],
           totalSegments: segments.length,
         };
         const newBookSegments: BookSegmentsI = {

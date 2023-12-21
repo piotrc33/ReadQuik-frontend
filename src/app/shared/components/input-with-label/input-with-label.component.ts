@@ -9,18 +9,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputWithLabelComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class InputWithLabelComponent implements ControlValueAccessor {
-  @Input() label?: string;
+  @Input()
+  size: 'small' | 'medium' | 'large' = 'large';
+
+  @Input()
+  label?: string;
 
   innerValue: any;
   onChange = (value: any) => {};
   onTouched = () => {};
 
-  constructor() { }
   writeValue(obj: any): void {
     this.innerValue = obj;
     console.log(this.innerValue);

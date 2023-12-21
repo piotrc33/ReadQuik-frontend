@@ -5,4 +5,5 @@ export interface BookDataI {
   coverUrl: string,
   language: 'Polish' | 'English',
   totalSegments: number,
+  tags: string[]
 }

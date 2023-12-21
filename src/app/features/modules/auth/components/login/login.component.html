@@ -1,25 +1,7 @@
 <app-auth-panel title="Log in">
   <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="input-container">
-      <label for="email" class="input-label">Email</label>
-      <input
-        type="email"
-        name="email"
-        class="input"
-        formControlName="email"
-        required
-      />
-    </div>
-    <div class="input-container">
-      <label for="password" class="input-label">Password</label>
-      <input
-        type="password"
-        name="password"
-        class="input"
-        formControlName="password"
-        required
-      />
-    </div>
+    <input-with-label label="Email" formControlName="email"></input-with-label>
+    <input-with-label label="Password" formControlName="password"></input-with-label>
 
     <button type="submit" class="continue-button">Continue</button>
     <div class="alt-info">

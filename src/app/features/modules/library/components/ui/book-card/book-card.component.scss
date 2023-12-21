@@ -1,0 +1,59 @@
+@import "variables";
+
+.book-card {
+  $card-height: 200px;
+  background-color: white;
+  box-shadow: 0 4px 4px rgb(black, 25%);
+  border-radius: 8px;
+  display: flex;
+  font-size: 14px;
+  height: $card-height;
+  width: 340px;
+  color: $neutral-700;
+  box-sizing: border-box;
+
+  img {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .info-container {
+    padding: $spacing-04;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: $spacing-02;
+    color: black;
+  }
+
+  .author {
+    font-size: 14px;
+    margin-bottom: $spacing-04;
+  }
+
+  .language-container {
+    margin-bottom: $spacing-04;
+
+    .code-and-flag {
+      font-weight: 600;
+    }
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-03;
+    width: 100%;
+  }
+
+  .choose-btn {
+    margin-right: $spacing-03;
+    margin-top: auto;
+  }
+}

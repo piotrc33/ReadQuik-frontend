@@ -1,0 +1,9 @@
+@import 'variables';
+
+.pill {
+  background-color: $neutral-200;
+  border-radius: 16px;
+  padding: $spacing-02 $spacing-03;
+  display: inline-block;
+  font-size: 13px;
+}

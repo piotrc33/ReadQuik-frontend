@@ -1,15 +1,36 @@
 <div class="library">
-  <button class="primary" routerLink="add-book">Add book</button>
+  <section class="filters">
+    <input-with-label size="medium" label="Title"></input-with-label>
+    <input-with-label size="medium" label="Author"></input-with-label>
+    <button class="secondary">
+      Tags <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
+    </button>
+    <button class="primary">
+      Search
+      <img
+        class="icon svg"
+        src="./assets/images/magnifying-glass.svg"
+        alt="magnifying-glass"
+      />
+    </button>
+    <button class="secondary add-book" routerLink="add-book">
+      Add book
+      <img class="icon svg" src="./assets/images/plus.svg" alt="plus" />
+    </button>
+  </section>
 
-  <ng-container *ngIf="books$ | async as books; else loading">
-    <div
-      *ngFor="let book of books"
-      class="book"
-      (click)="bookService.getNextReadingData(book._id)"
-    >
-      {{ book.title }}
-    </div>
-  </ng-container>
+  <section class="book-list">
+    <ng-container *ngIf="books$ | async as books; else loading">
+      <ng-container *ngFor="let book of books">
+        <book-card
+          [book]="book"
+          (choose)="bookService.getNextReadingData(book._id)"
+          ></book-card>
+      </ng-container>
+    </ng-container>
+  
+    <ng-template #loading> Loading books... </ng-template>
+    
+  </section>
 
-  <ng-template #loading> Loading books... </ng-template>
 </div>
