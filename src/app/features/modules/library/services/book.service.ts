@@ -48,6 +48,8 @@ export class BookService {
     tap((phrases) => (this.wordPhrases = phrases))
   );
 
+  tags$ = this.http.get<string[]>(`${baseUrl}/books/all-tags`);
+
   constructor(private http: HttpClient, private router: Router) {}
 
   getBook(id: string): Observable<BookDataI> {

@@ -12,6 +12,13 @@
       <option value="English">English</option>
     </select>
   </div>
+  <div class="tags" *ngIf="bookService.tags$ | async as tags">
+    <ng-container *ngFor="let tag of tags">
+      <pill [clickable]="isTagClickable(tag)" (clicked)="handlePill(tag)">{{
+        tag
+      }}</pill>
+    </ng-container>
+  </div>
   <input type="file" (change)="fileChanged($event)" />
   <button (click)="checkFormValue()">Check form</button>
   <button (click)="upload()">Upload</button>

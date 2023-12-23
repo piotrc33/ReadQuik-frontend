@@ -6,4 +6,15 @@
   padding: $spacing-02 $spacing-03;
   display: inline-block;
   font-size: 13px;
+  transition: 200ms background-color;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  &.active {
+    background-color: $violet-600;
+    color: white;
+    transition: 200ms background-color;
+  }
 }

@@ -5,7 +5,7 @@ import { BookService } from '../../services/book.service';
 import { TextService } from '../../../exercises/services/text.service';
 import { SegmentI } from '../../../../../api/model/segment.i';
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,20 +14,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-book.component.scss'],
 })
 export class AddBookComponent {
-  bookForm: FormGroup;
+  readonly bookForm: FormGroup;
   file: any;
 
   constructor(
-    private bookService: BookService,
-    private text: TextService,
-    private fb: FormBuilder,
-    private router: Router
+    public readonly bookService: BookService,
+    private readonly text: TextService,
+    private readonly fb: FormBuilder,
+    private readonly router: Router
   ) {
     this.bookForm = this.fb.group({
       title: ['', [Validators.required]],
       author: ['', [Validators.required]],
       coverUrl: ['', [Validators.required]],
       language: ['Polish', [Validators.required]],
+      tags: this.fb.array([]),
     });
   }
 
@@ -52,7 +53,7 @@ export class AddBookComponent {
           author: this.bookForm.controls['author'].value,
           coverUrl: this.bookForm.controls['coverUrl'].value,
           language: this.bookForm.controls['language'].value,
-          tags: ['to', 'be', 'added'],
+          tags: this.bookForm.controls['tags'].value,
           totalSegments: segments.length,
         };
         const newBookSegments: BookSegmentsI = {
@@ -70,10 +71,28 @@ export class AddBookComponent {
     fileReader.readAsText(this.file);
   }
 
+  get tagsFormArray(): FormArray {
+    return this.bookForm.controls['tags'] as FormArray;
+  }
+
+  handlePill(tag: string) {
+    const index = this.tagsFormArray.value.indexOf(tag);
+
+    if (index !== -1) {
+      this.tagsFormArray.removeAt(index);
+      return;
+    }
+    if (this.tagsFormArray.value.length >= 4) return;
+    this.tagsFormArray.push(this.fb.control(tag));
+  }
+
+  isTagClickable(tag: string): boolean {
+    const index = this.tagsFormArray.value.indexOf(tag);
+    if (index === -1 && this.tagsFormArray.value.length >= 4) return false;
+    return true;
+  }
+
   checkFormValue() {
-    console.log(this.bookForm.controls['title'].value);
-    console.log(this.bookForm.controls['author'].value);
-    console.log(this.bookForm.controls['coverUrl'].value);
-    console.log(this.bookForm.controls['language'].value);
+    console.log(this.bookForm.value);
   }
 }
