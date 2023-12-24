@@ -12,12 +12,24 @@
       <option value="English">English</option>
     </select>
   </div>
-  <div class="tags" *ngIf="bookService.tags$ | async as tags">
+  <div class="tags" *ngIf="tags$ | async as tags">
     <ng-container *ngFor="let tag of tags">
       <pill [clickable]="isTagClickable(tag)" (clicked)="handlePill(tag)">{{
         tag
       }}</pill>
     </ng-container>
+  </div>
+  <div>
+    <div class="label">New Tag:</div>
+    <div class="choose">
+      <input type="text" class="input medium" #newTagInput />
+      <button
+        class="small ternary switch-button"
+        (click)="addTag(newTagInput.value); clearInput()"
+      >
+        Add
+      </button>
+    </div>
   </div>
   <input type="file" (change)="fileChanged($event)" />
   <button (click)="checkFormValue()">Check form</button>

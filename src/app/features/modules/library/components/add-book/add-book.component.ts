@@ -1,35 +1,52 @@
-import { Component } from '@angular/core';
-import { take } from 'rxjs';
-import { BookDataI } from '../../../../../api/model/book-data.i';
-import { BookService } from '../../services/book.service';
-import { TextService } from '../../../exercises/services/text.service';
-import { SegmentI } from '../../../../../api/model/segment.i';
-import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Subject, take, takeUntil } from 'rxjs';
+import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
+import { BookDataI } from '../../../../../api/model/book-data.i';
+import { SegmentI } from '../../../../../api/model/segment.i';
+import { TextService } from '../../../exercises/services/text.service';
+import { BookService } from './../../services/book.service';
+import { AddBookFormI } from './add-book-form.i';
 
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss'],
 })
-export class AddBookComponent {
-  readonly bookForm: FormGroup;
+export class AddBookComponent implements OnDestroy {
+  readonly bookService = inject(BookService);
+  readonly text = inject(TextService);
+  readonly fb = inject(FormBuilder);
+  readonly router = inject(Router);
+
+  readonly destroy$ = new Subject<void>();
+  readonly bookForm: FormGroup<AddBookFormI>;
   file: any;
 
-  constructor(
-    public readonly bookService: BookService,
-    private readonly text: TextService,
-    private readonly fb: FormBuilder,
-    private readonly router: Router
-  ) {
-    this.bookForm = this.fb.group({
+  tagsSubject = new BehaviorSubject<string[]>([]);
+  tags$ = this.tagsSubject.asObservable();
+
+  @ViewChild('newTagInput') newTagInput?: ElementRef;
+
+  constructor() {
+    this.bookForm = this.fb.nonNullable.group({
       title: ['', [Validators.required]],
       author: ['', [Validators.required]],
       coverUrl: ['', [Validators.required]],
       language: ['Polish', [Validators.required]],
       tags: this.fb.array([]),
-    });
+    }) as FormGroup<AddBookFormI>;
+
+    this.bookService.tags$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((tags) => this.tagsSubject.next(tags));
   }
 
   fileChanged(event: any): void {
@@ -92,7 +109,27 @@ export class AddBookComponent {
     return true;
   }
 
+  addTag(newTag: string) {
+    this.bookService
+      .addTag(newTag)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((tag) => {
+        this.tagsSubject.next([...this.tagsSubject.value, tag.name]);
+      });
+  }
+
+  clearInput() {
+    if (this.newTagInput) {
+      this.newTagInput.nativeElement.value = '';
+    }
+  }
+
   checkFormValue() {
     console.log(this.bookForm.value);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

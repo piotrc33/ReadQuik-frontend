@@ -9,6 +9,8 @@ import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from './../../../../api/model/book-segments.i';
 import { SegmentI } from './../../../../api/model/segment.i';
 import { UserI } from './../../../../api/model/user.i';
+import { NewBookResponseI } from 'src/app/api/model/new-book-response.i';
+import { TagI } from 'src/app/api/model/tag.i';
 
 @Injectable()
 export class BookService {
@@ -96,13 +98,29 @@ export class BookService {
     return this.http.get<BookDataI[]>(url);
   }
 
-  addBook(bookData: BookDataI, bookSegments: BookSegmentsI): Observable<any> {
+  addBook(
+    bookData: BookDataI,
+    bookSegments: BookSegmentsI
+  ): Observable<NewBookResponseI> {
     const url = `${baseUrl}/books/add-book`;
     const newBook = {
       ...bookData,
       ...bookSegments,
     };
     const body = JSON.stringify(newBook);
-    return this.http.post(url, body, { headers: this.headers });
+    return this.http.post<NewBookResponseI>(url, body, {
+      headers: this.headers,
+    });
+  }
+
+  addTag(newTag: string): Observable<TagI> {
+    const url = `${baseUrl}/books/add-tag`;
+    const newBook = {
+      newTag,
+    };
+    const body = JSON.stringify(newBook);
+    return this.http.post<TagI>(url, body, {
+      headers: this.headers,
+    });
   }
 }
