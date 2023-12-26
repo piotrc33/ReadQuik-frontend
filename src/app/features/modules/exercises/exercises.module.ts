@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { Exercise1Component } from './components/exercise1/exercise1.component';
 import { Exercise2Component } from './components/exercise2/exercise2.component';
-import { ExercisesComponent } from './components/exercises/exercises.component';
-import { ExercisesRoutingModule } from './exercises-routing.module';
 import { Exercise3Component } from './components/exercise3/exercise3.component';
-import { TextService } from './services/text.service';
 import { Exercise4Component } from './components/exercise4/exercise4.component';
-import { ExercisesStateService } from './services/exercises-state.service';
-import { KeyboardService } from './services/keyboard.service';
+import { Exercise5Component } from './components/exercise5/exercise5.component';
+import { ExercisesComponent } from './components/exercises/exercises.component';
 import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.component';
 import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
+import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ExercisesHttpService } from './services/exercises-http.service';
-import { SharedModule } from 'src/app/shared/shared.module';
-
+import { ExercisesStateService } from './services/exercises-state.service';
+import { KeyboardService } from './services/keyboard.service';
+import { TextService } from './services/text.service';
 
 @NgModule({
   declarations: [
@@ -22,23 +22,17 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ExercisesComponent,
     Exercise3Component,
     Exercise4Component,
+    Exercise5Component,
     ExerciseNavComponent,
-    ExercisePanelComponent
+    ExercisePanelComponent,
   ],
-  imports: [
-    CommonModule,
-    ExercisesRoutingModule,
-    SharedModule
-  ],
-  exports: [
-    Exercise1Component,
-    Exercise2Component,
-  ],
+  imports: [CommonModule, ExercisesRoutingModule, SharedModule],
+  exports: [Exercise1Component, Exercise2Component],
   providers: [
     TextService,
     ExercisesStateService,
     KeyboardService,
-    ExercisesHttpService
-  ]
+    ExercisesHttpService,
+  ],
 })
-export class ExercisesModule { }
+export class ExercisesModule {}
