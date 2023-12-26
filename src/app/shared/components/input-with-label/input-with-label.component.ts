@@ -26,7 +26,6 @@ export class InputWithLabelComponent implements ControlValueAccessor {
 
   writeValue(obj: any): void {
     this.innerValue = obj;
-    console.log(this.innerValue);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

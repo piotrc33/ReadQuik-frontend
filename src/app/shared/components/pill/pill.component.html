@@ -1,0 +1,7 @@
+<span
+  class="pill"
+  [ngClass]="[isActive ? 'active' : '', clickable ? 'clickable' : '']"
+  (click)="handleClick()"
+>
+  <ng-content></ng-content>
+</span>
