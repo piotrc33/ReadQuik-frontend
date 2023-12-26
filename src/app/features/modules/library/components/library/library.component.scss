@@ -1,19 +1,6 @@
 @import "variables";
 
 .library {
-  .filters {
-    display: flex;
-    align-items: flex-end;
-    gap: $spacing-05;
-    margin-bottom: $spacing-05;
-
-    button {
-      &.add-book {
-        margin-left: auto;
-      }
-    }
-  }
-
   .book-list {
     display: grid;
     gap: $spacing-05;

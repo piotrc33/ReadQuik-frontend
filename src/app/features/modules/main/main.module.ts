@@ -6,6 +6,7 @@ import { BookService } from '../library/services/book.service';
 import { MainComponent } from './components/main/main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -18,6 +19,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MainRoutingModule,
     CommonModule,
     ExercisesModule,
+    SharedModule
   ],
   exports: [
     MainComponent

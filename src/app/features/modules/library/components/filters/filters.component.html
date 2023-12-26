@@ -1,0 +1,50 @@
+<form class="filters" [formGroup]="filterForm" (ngSubmit)="searchBooks()">
+  <input-with-label
+    size="medium"
+    label="Title"
+    formControlName="title"
+  ></input-with-label>
+
+  <input-with-label
+    size="medium"
+    label="Author"
+    formControlName="author"
+  ></input-with-label>
+
+  <div class="tags">
+    <button
+      type="button"
+      class="secondary"
+      (click)="dropdownOpened = !dropdownOpened"
+    >
+      Tags <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
+    </button>
+    <div *ngIf="dropdownOpened" class="dropdown-panel">
+      <section class="dropdown-header">Tags</section>
+      <section class="dropdown-content">
+        <ng-container *ngFor="let tag of tags">
+          <pill
+            [isActive]="tagsFormArray.value.includes(tag)"
+            [clickable]="true"
+            (clicked)="handlePill(tag)"
+            >{{ tag }}</pill
+          >
+        </ng-container>
+      </section>
+    </div>
+  </div>
+
+  <button type="submit" class="primary">
+    Search
+    <img
+      class="icon svg"
+      src="./assets/images/magnifying-glass.svg"
+      alt="magnifying-glass"
+    />
+  </button>
+
+  <button class="secondary add-book" routerLink="add-book">
+    Add book
+    <img class="icon svg" src="./assets/images/plus.svg" alt="plus" />
+  </button>
+</form>

@@ -1,31 +1,28 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { LibraryRoutingModule } from './library-routing.module';
-import { BookService } from './services/book.service';
-import { LibraryComponent } from './components/library/library.component';
-import { AddBookComponent } from './components/add-book/add-book.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { PillComponent } from './components/ui/pill/pill.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
+import { FiltersComponent } from './components/filters/filters.component';
+import { LibraryComponent } from './components/library/library.component';
 import { BookCardComponent } from './components/ui/book-card/book-card.component';
-
+import { LibraryRoutingModule } from './library-routing.module';
+import { BookService } from './services/book.service';
 
 @NgModule({
   declarations: [
     AddBookComponent,
     LibraryComponent,
-    PillComponent,
-    BookCardComponent
+    BookCardComponent,
+    FiltersComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     LibraryRoutingModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    BookService
-  ]
+  providers: [BookService],
 })
-export class LibraryModule { }
+export class LibraryModule {}

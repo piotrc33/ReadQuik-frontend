@@ -1,0 +1,41 @@
+@import "variables";
+
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-05;
+  margin-bottom: $spacing-05;
+
+  button {
+    &.add-book {
+      margin-left: auto;
+    }
+  }
+
+  .tags {
+    position: relative;
+
+    .dropdown-panel {
+      width: 220px;
+      top: 50px;
+      padding: $spacing-03;
+    }
+
+    .dropdown-header {
+      font-weight: 600;
+      margin-bottom: $spacing-03;
+    }
+
+    .dropdown-content {
+      display: flex;
+      flex-wrap: wrap;
+      height: 90px;
+      width: 100%;
+      overflow-y: auto;
+    }
+
+    pill {
+      margin: $spacing-01;
+    }
+  }
+}

@@ -117,3 +117,11 @@ button {
     border-color: red;
   }
 }
+
+.dropdown-panel {
+  position: absolute;
+  background-color: white;
+  border-radius: 8px;
+  z-index: $panel-z-index;
+  @extend .shadow-primary;
+}

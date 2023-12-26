@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
+import { BookDataI } from 'src/app/api/model/book-data.i';
+import { FiltersI } from '../../../../../api/model/filters.i';
 import { BookService } from './../../services/book.service';
 
 @Component({
@@ -6,10 +9,26 @@ import { BookService } from './../../services/book.service';
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
 })
-export class LibraryComponent {
-  books$ = this.bookService.getBooks();
+export class LibraryComponent implements OnInit {
+  readonly bookService = inject(BookService);
+  booksSubject = new BehaviorSubject<BookDataI[]>([]);
+  books$ = this.booksSubject.asObservable();
 
-  constructor(
-    public bookService: BookService
-  ) {}
+  ngOnInit(): void {
+    this.bookService
+      .getBooks()
+      .pipe(take(1))
+      .subscribe((books) => {
+        this.booksSubject.next(books);
+      });
+  }
+
+  handleFilter(filters: FiltersI) {
+    this.bookService
+      .getFilteredBooks$(filters)
+      .pipe(take(1))
+      .subscribe((filteredBooks) => {
+        this.booksSubject.next(filteredBooks);
+      });
+  }
 }

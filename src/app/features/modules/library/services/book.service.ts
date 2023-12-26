@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
+import { FiltersI } from 'src/app/api/model/filters.i';
+import { NewBookResponseI } from 'src/app/api/model/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
+import { TagI } from 'src/app/api/model/tag.i';
 import { baseUrl } from 'src/app/shared/variables';
 import { BookDataI } from '../../../../api/model/book-data.i';
 import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from './../../../../api/model/book-segments.i';
 import { SegmentI } from './../../../../api/model/segment.i';
 import { UserI } from './../../../../api/model/user.i';
-import { NewBookResponseI } from 'src/app/api/model/new-book-response.i';
-import { TagI } from 'src/app/api/model/tag.i';
 
 @Injectable()
 export class BookService {
@@ -57,6 +58,15 @@ export class BookService {
   getBook(id: string): Observable<BookDataI> {
     const url = `${baseUrl}/books/book/${id}`;
     return this.http.get<BookDataI>(url);
+  }
+
+  getFilteredBooks$(filters: FiltersI): Observable<BookDataI[]> {
+    let params = new HttpParams();
+    params = params.set('title', filters.title);
+    params = params.set('author', filters.author);
+    params = params.set('tags', filters.tags.join(','));
+
+    return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
   }
 
   getNextReadingData(bookId: string) {

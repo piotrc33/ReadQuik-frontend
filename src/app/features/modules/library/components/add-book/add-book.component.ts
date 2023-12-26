@@ -2,10 +2,16 @@ import {
   Component,
   ElementRef,
   OnDestroy,
+  OnInit,
   ViewChild,
   inject,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, take, takeUntil } from 'rxjs';
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
@@ -20,14 +26,20 @@ import { AddBookFormI } from './add-book-form.i';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss'],
 })
-export class AddBookComponent implements OnDestroy {
+export class AddBookComponent implements OnDestroy, OnInit {
   readonly bookService = inject(BookService);
   readonly text = inject(TextService);
   readonly fb = inject(FormBuilder);
   readonly router = inject(Router);
 
   readonly destroy$ = new Subject<void>();
-  readonly bookForm: FormGroup<AddBookFormI>;
+  readonly bookForm: FormGroup<AddBookFormI> = this.fb.nonNullable.group({
+    title: ['', [Validators.required]],
+    author: ['', [Validators.required]],
+    coverUrl: ['', [Validators.required]],
+    language: new FormControl<'Polish' | 'English'>('Polish'),
+    tags: this.fb.array([]),
+  }) as FormGroup<AddBookFormI>;
   file: any;
 
   tagsSubject = new BehaviorSubject<string[]>([]);
@@ -35,15 +47,7 @@ export class AddBookComponent implements OnDestroy {
 
   @ViewChild('newTagInput') newTagInput?: ElementRef;
 
-  constructor() {
-    this.bookForm = this.fb.nonNullable.group({
-      title: ['', [Validators.required]],
-      author: ['', [Validators.required]],
-      coverUrl: ['', [Validators.required]],
-      language: ['Polish', [Validators.required]],
-      tags: this.fb.array([]),
-    }) as FormGroup<AddBookFormI>;
-
+  ngOnInit(): void {
     this.bookService.tags$
       .pipe(takeUntil(this.destroy$))
       .subscribe((tags) => this.tagsSubject.next(tags));
@@ -77,7 +81,6 @@ export class AddBookComponent implements OnDestroy {
           segments,
         };
 
-        console.log(newBookSegments);
         this.bookService
           .addBook(newBookData, newBookSegments)
           .pipe(take(1))
@@ -88,8 +91,8 @@ export class AddBookComponent implements OnDestroy {
     fileReader.readAsText(this.file);
   }
 
-  get tagsFormArray(): FormArray {
-    return this.bookForm.controls['tags'] as FormArray;
+  get tagsFormArray() {
+    return this.bookForm.controls['tags'];
   }
 
   handlePill(tag: string) {
@@ -100,7 +103,7 @@ export class AddBookComponent implements OnDestroy {
       return;
     }
     if (this.tagsFormArray.value.length >= 4) return;
-    this.tagsFormArray.push(this.fb.control(tag));
+    this.tagsFormArray.push(this.fb.nonNullable.control(tag));
   }
 
   isTagClickable(tag: string): boolean {
