@@ -1,21 +1,21 @@
 @import "variables";
 
 .library {
+  padding: $spacing-04;
+  min-width: 860px;
+
   .book-list {
     display: grid;
     gap: $spacing-05;
     max-height: 490px;
     overflow-y: auto;
-    padding: 20px;
-    box-sizing: border-box;
-    justify-items: center;
+    padding-bottom: $spacing-05;
+    
+    $card-width: 340px;
+    grid-template-columns: repeat(2, $card-width);
 
-    @media (min-width: 960px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (min-width: 1300px) {
-      grid-template-columns: repeat(3, 1fr);
+    @media (min-width: 1234px) {
+      grid-template-columns: repeat(3, $card-width);
     }
   }
 }

@@ -47,7 +47,6 @@ export class FiltersComponent implements OnInit {
   }
 
   searchBooks() {
-    console.log('searching books 😎😎');
     this.filter.emit(this.filterForm.getRawValue());
   }
 }

@@ -2,13 +2,13 @@
 
 .book-card {
   $card-height: 200px;
+  height: $card-height;
+  width: 340px;
   background-color: white;
   box-shadow: 0 4px 4px rgb(black, 25%);
   border-radius: 8px;
   display: flex;
   font-size: 14px;
-  height: $card-height;
-  width: 340px;
   color: $neutral-700;
   box-sizing: border-box;
 
