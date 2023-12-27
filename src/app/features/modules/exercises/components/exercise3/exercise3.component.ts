@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, ElementRef, OnInit } from '@angular/core';
 import { KeyboardService } from '../../services/keyboard.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
-import { getTimeoutMs } from 'src/app/utils/utils';
+import { getAverageTimeoutMs, getTimeoutMs } from 'src/app/utils/utils';
 import { Subscription, timer } from 'rxjs';
 import { Exercise2Component } from '../exercise2/exercise2.component';
 
@@ -14,8 +14,7 @@ export class Exercise3Component
   extends Exercise2Component
   implements AfterViewChecked, OnInit
 {
-
-  wpmSpeed: number = 200;
+  readonly wpmSpeed: number = 200;
   private timerSub?: Subscription;
 
   constructor(
@@ -39,9 +38,16 @@ export class Exercise3Component
   }
 
   startAutoTimer(): void {
+    if (this.state.bookService.currentSegment === null) {
+      return;
+    }
     this.timerSub?.unsubscribe();
     this.timerSub = timer(
-      getTimeoutMs(this.state.currentPhrase.length, this.wpmSpeed)
+      getAverageTimeoutMs(
+        this.state.bookService.currentSegment.text.length,
+        this.state.bookService.wordPhrases.length,
+        this.wpmSpeed
+      )
     ).subscribe(() => {
       this.handleAutoNextFragment();
     });
@@ -69,5 +75,4 @@ export class Exercise3Component
     this.state.phraseNumber = 0;
     this.leftOffset = this.getDefaultOffset('.exercise3');
   }
-
 }
