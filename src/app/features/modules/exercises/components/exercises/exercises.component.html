@@ -78,8 +78,8 @@
         start
       </button>
 
-      <ng-container *ngIf="state.started">
-        <div class="exercises-overlay">
+      <ng-container *ngIf="state.started && state.currentExercise">
+        <div [style.font-size.px]="state.currentExercise < 5 ? 18 : 16" class="exercises-overlay">
           <app-exercise-panel>
             <router-outlet></router-outlet>
           </app-exercise-panel>

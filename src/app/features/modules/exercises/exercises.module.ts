@@ -14,6 +14,7 @@ import { ExercisesHttpService } from './services/exercises-http.service';
 import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { TextService } from './services/text.service';
+import { Exercise6Component } from './components/exercise6/exercise6.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TextService } from './services/text.service';
     Exercise5Component,
     ExerciseNavComponent,
     ExercisePanelComponent,
+    Exercise6Component,
   ],
   imports: [CommonModule, ExercisesRoutingModule, SharedModule],
   exports: [Exercise1Component, Exercise2Component],

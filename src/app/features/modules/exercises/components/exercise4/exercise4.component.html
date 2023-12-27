@@ -3,7 +3,6 @@
     <ng-container *ngFor="let phrase of state.bookService.phrasesWithNewlines; index as i">
       <ng-container *ngIf="!textService.isNewline(phrase); else newline">
         <span
-          [style.font-size.px]="fontSize"
           class="phrase"
           [ngClass]="
             wordIndexes[state.phraseNumber] === i

@@ -12,9 +12,6 @@ import { ExercisesStateService } from '../../services/exercises-state.service';
 export class Exercise4Component extends Exercise implements AfterViewChecked {
   wordIndexes: number[] = [];
 
-  @Input()
-  fontSize: number = 18;
-
   constructor(
     state: ExercisesStateService,
     public readonly textService: TextService,
