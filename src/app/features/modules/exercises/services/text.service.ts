@@ -7,7 +7,7 @@ export class TextService {
     let fragments: string[] = [];
     let piped: string = text.replace(/[,.?!;…]+/g, '$&|');
     piped = piped.replace(/\S+$/gm, '$&|'); // adding pipe at the end
-    piped = piped.replace(/(?<!^)—/gm, '$&|');
+    piped = piped.replace(/(?<!^)(?<=[,.?!;…]\s+)—/gm, '$&|');
     fragments = this.splitByNewlines(piped);
     fragments = this.splitByPipes(fragments);
     fragments = this.splitLongFragments(fragments);
