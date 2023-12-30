@@ -6,12 +6,14 @@
 
   <section class="book-list">
     <ng-container *ngIf="books$ | async as books; else loading">
-      <ng-container *ngFor="let book of books">
-        <book-card
-          [book]="book"
-          (choose)="bookService.getNextReadingData(book._id)"
-        ></book-card>
-      </ng-container>
+      <book-card
+        *ngFor="let book of books"
+        [book]="book"
+        (choose)="
+          bookService.getNextReadingData(book._id);
+          router.navigate(['/exercises'])
+        "
+      ></book-card>
     </ng-container>
 
     <ng-template #loading> Loading books... </ng-template>

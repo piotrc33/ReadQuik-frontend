@@ -76,7 +76,6 @@ export class BookService {
       if (data) {
         this.readingData$.next(data);
       }
-      this.router.navigate(['/exercises']);
     });
   }
 

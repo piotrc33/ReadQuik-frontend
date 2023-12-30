@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription, filter, merge } from 'rxjs';
+import { Component, OnDestroy, inject } from '@angular/core';
+import { filter, merge } from 'rxjs';
+import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExercisesStateService } from '../services/exercises-state.service';
 import { KeyboardService } from '../services/keyboard.service';
 
@@ -8,7 +9,9 @@ import { KeyboardService } from '../services/keyboard.service';
   template: '',
 })
 export class Exercise implements OnDestroy {
-  subs: Subscription[] = [];
+  private readonly keyService = inject(KeyboardService);
+  public readonly state = inject(ExercisesStateService);
+  subs = new SubscriptionContainer();
 
   quitExercise$ = merge(this.keyService.exitPress$, this.state.exit$);
   nextAction$ = merge(this.keyService.forwardingPress$, this.state.next$);
@@ -16,29 +19,22 @@ export class Exercise implements OnDestroy {
     filter(() => this.state.finished)
   );
 
-  constructor(
-    private keyService: KeyboardService,
-    public state: ExercisesStateService
-  ) {
-    this.subs.push(
-      this.quitExercise$.subscribe(() => {
-        state.end();
-      })
-    );
+  constructor() {
+    this.subs.add = this.quitExercise$.subscribe(() => {
+      this.state.end();
+    });
 
-    this.subs.push(
-      this.nextAction$.subscribe(() => {
-        this.handleNextFragment();
-      })
-    );
+    this.subs.add = this.nextAction$.subscribe(() => {
+      this.handleNextFragment();
+    });
 
-    this.subs.push(this.finished$.subscribe(() => this.state.finish()));
+    this.subs.add = this.finished$.subscribe(() => this.state.finish());
   }
 
   ngOnDestroy(): void {
     this.state.phraseNumber = 0;
 
-    this.subs.forEach((sub) => sub.unsubscribe());
+    this.subs.dispose();
   }
 
   nextFragment(): void {

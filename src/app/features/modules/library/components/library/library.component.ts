@@ -3,6 +3,7 @@ import { BehaviorSubject, take } from 'rxjs';
 import { BookDataI } from 'src/app/api/model/book-data.i';
 import { FiltersI } from '../../../../../api/model/filters.i';
 import { BookService } from './../../services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -11,6 +12,7 @@ import { BookService } from './../../services/book.service';
 })
 export class LibraryComponent implements OnInit {
   readonly bookService = inject(BookService);
+  public readonly router = inject(Router);
   booksSubject = new BehaviorSubject<BookDataI[]>([]);
   books$ = this.booksSubject.asObservable();
 
