@@ -9,7 +9,7 @@ import { KeyboardService } from '../services/keyboard.service';
   template: '',
 })
 export class Exercise implements OnDestroy {
-  private readonly keyService = inject(KeyboardService);
+  public readonly keyService = inject(KeyboardService);
   public readonly state = inject(ExercisesStateService);
   subs = new SubscriptionContainer();
 
@@ -33,7 +33,7 @@ export class Exercise implements OnDestroy {
 
   ngOnDestroy(): void {
     this.state.phraseNumber = 0;
-
+    this.state.pageYPosition = 0;
     this.subs.dispose();
   }
 

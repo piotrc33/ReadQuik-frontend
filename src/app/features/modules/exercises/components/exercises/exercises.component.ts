@@ -41,13 +41,14 @@ export class ExercisesComponent implements OnInit {
       const actBox = this.state.activeElement?.getBoundingClientRect();
       const panelBox = this.state.panelContentElement?.getBoundingClientRect();
       if (actBox?.y! > panelBox?.y! + panelBox?.height!) {
-        this.state.pageYPosition -= panelBox!.height;
+        this.nextPage();
         this.changeDetectorRef.detectChanges(); // to avoid error ExpressionChangedAfterItHasBeenCheckedError
       }
     }
   }
 
-  submit(val: number) {
-    console.log('submitted', val);
+  nextPage() {
+    const panelBox = this.state.panelContentElement?.getBoundingClientRect();
+    this.state.pageYPosition -= panelBox!.height;
   }
 }

@@ -61,7 +61,6 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
 
   override ngOnDestroy(): void {
     super.ngOnDestroy();
-    this.state.pageYPosition = 0;
     this.state.exerciseMode = 'manual';
     this.subsContainer.dispose();
   }

@@ -1,0 +1,24 @@
+@import "variables";
+
+.exercise7 {
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+
+  br {
+    line-height: $line-height;
+  }
+
+  .phrase {
+    margin: 2px 3px 2px;
+    display: inline-block;
+  }
+
+  .inactive {
+    color: $neutral-400;
+  }
+
+  .text {
+    position: relative;
+  }
+}

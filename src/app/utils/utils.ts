@@ -14,3 +14,15 @@ export function getAverageTimeoutMs(
   const timeToReadSec = (numberOfWords / wpm) * 60;
   return (timeToReadSec / numberOfPhrases) * 1000;
 }
+
+export function calculateSpeed(
+  startTime: number,
+  wordPhrases: string[]
+): number {
+  const totalCharacters: number = wordPhrases.reduce(
+    (total, currentWord) => total + currentWord.length,
+    0
+  );
+  const elapsedTimeMin = (Date.now() - startTime) / (1000 * 60);
+  return Math.floor(totalCharacters / 5.5 / elapsedTimeMin);
+}
