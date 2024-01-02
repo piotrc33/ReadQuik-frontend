@@ -46,7 +46,7 @@
       </button>
     </section>
 
-    <section class="exercise center">
+    <section class="exercise center" *ngIf="state.currentExercise">
       <h2 class="number">Exercise {{ state.currentExercise }}</h2>
       <div class="repetition-indicator">
         <div class="circle active"></div>
@@ -54,7 +54,7 @@
       </div>
       <div class="repetition-info">#1 of 10</div>
 
-      <h1 class="title">Stationary phrases</h1>
+      <h1 class="title">{{exerciseTitles[state.currentExercise]}}</h1>
 
       <div class="advice">
         <span class="highlight">Visualize</span> what you read

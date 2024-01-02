@@ -9,6 +9,16 @@ import { ResultsService } from 'src/app/features/services/results.service';
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent implements OnInit {
+  exerciseTitles: Record<number, string> = {
+    1: 'Stationary Phrases',
+    2: 'Surrounding Text',
+    3: 'Surrounding Text - Auto Mode',
+    4: 'Horizontal Scanning',
+    5: 'Horizontal Scanning - Smaller Font',
+    6: 'Horizontal Scanning - Smaller Font Auto Mode',
+    7: 'Black & Gray Text',
+  }
+
   constructor(
     public state: ExercisesStateService,
     private readonly router: Router,

@@ -100,8 +100,8 @@
     .title {
       font-size: 22px;
       font-weight: 600;
-      margin-top: $spacing-06;
-      margin-bottom: $spacing-07;
+      margin: $spacing-06 auto $spacing-07;
+      max-width: 350px;
     }
 
     .advice {
