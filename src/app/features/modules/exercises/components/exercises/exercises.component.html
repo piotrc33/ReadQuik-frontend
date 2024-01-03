@@ -36,13 +36,13 @@
                 )
               "
             >
-              Switch
+              {{ t("switch") }}
             </button>
           </div>
         </div>
       </ng-container>
       <button routerLink="/library" class="secondary change-button">
-        Change Book
+        {{ t("changeBook") }}
       </button>
     </section>
 
@@ -67,7 +67,7 @@
       </div>
 
       <div class="button-container learn-more">
-        <button class="secondary">Learn more</button>
+        <button class="secondary">{{ t("learnMore") }}</button>
       </div>
 
       <button
@@ -75,7 +75,7 @@
         *ngIf="!state.started && (state.bookService.wordPhrases$ | async)"
         (click)="state.start()"
       >
-        start
+        {{ t("start") }}
       </button>
 
       <ng-container *ngIf="state.started && state.currentExercise">
@@ -108,7 +108,9 @@
           <div class="date">{{ result.date | relativeDate }}</div>
         </div>
       </ng-container>
-      <button class="secondary progress-button">Check full progress</button>
+      <button class="secondary progress-button">
+        {{ t("checkFullProgress") }}
+      </button>
     </section>
   </div>
 </div>

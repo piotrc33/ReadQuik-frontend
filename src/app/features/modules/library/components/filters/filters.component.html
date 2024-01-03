@@ -1,13 +1,18 @@
-<form class="filters" [formGroup]="filterForm" (ngSubmit)="searchBooks()">
+<form
+  class="filters"
+  [formGroup]="filterForm"
+  (ngSubmit)="searchBooks()"
+  *transloco="let t; read: 'library'"
+>
   <input-with-label
     size="medium"
-    label="Title"
+    [label]="t('title')"
     formControlName="title"
   ></input-with-label>
 
   <input-with-label
     size="medium"
-    label="Author"
+    [label]="t('author')"
     formControlName="author"
   ></input-with-label>
 
@@ -17,7 +22,8 @@
       class="secondary"
       (click)="dropdownOpened = !dropdownOpened"
     >
-      Tags <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
+      {{ t("tags") }}
+      <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
     </button>
     <div *ngIf="dropdownOpened" class="dropdown-panel">
       <section class="dropdown-header">Tags</section>
@@ -35,7 +41,7 @@
   </div>
 
   <button type="submit" class="primary">
-    Search
+    {{ t("search") }}
     <img
       class="icon svg"
       src="./assets/images/magnifying-glass.svg"
@@ -44,7 +50,7 @@
   </button>
 
   <button class="secondary add-book" routerLink="add-book">
-    Add book
+    {{ t("addBook") }}
     <img class="icon svg" src="./assets/images/plus.svg" alt="plus" />
   </button>
 </form>

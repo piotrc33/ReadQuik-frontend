@@ -1,9 +1,41 @@
 {
-  "navbar" : {
+  "navbar": {
     "exercises": "Exercises",
     "library": "Library",
-    "progress": "Progress"
+    "progress": "Progress",
+    "settings": "Settings",
+    "logout": "Logout"
   },
   "exercise": "Exercise",
-  "recentResults": "Recent Results"
+  "recentResults": "Recent Results",
+  "switch": "Switch",
+  "changeBook": "Change Book",
+  "checkFullProgress": "Check Full Progress",
+  "learnMore": "Learn More",
+  "start": "Start",
+  "library": {
+    "title": "Title",
+    "author": "Author",
+    "tags": "Tags",
+    "search": "Search",
+    "addBook": "Add Book",
+    "language": "Language",
+    "English": "English",
+    "Polish": "Polish",
+    "choose": "Choose",
+    "loadingBooks": "Loading books...",
+    "tagList": {
+      "Drama": "Drama",
+      "Comedy": "Comedy",
+      "Philosophy": "Philosophy",
+      "Romantic": "Romantic",
+      "Classic": "Classic",
+      "Criminal": "Criminal",
+      "Fantasy": "Fantasy",
+      "Fiction": "Fiction",
+      "Ethics": "Ethics"
+    },
+    "coverImageUrl": "Cover Image URL",
+    "upload": "Upload"
+  }
 }

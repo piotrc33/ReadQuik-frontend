@@ -2,8 +2,40 @@
   "navbar": {
     "exercises": "Ćwiczenia",
     "library": "Biblioteka",
-    "progress": "Postęp"
+    "progress": "Postęp",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj"
   },
   "exercise": "Ćwiczenie",
-  "recentResults": "Ostatnie wyniki"
+  "recentResults": "Ostatnie wyniki",
+  "switch": "Zmień",
+  "changeBook": "Wymień książkę",
+  "checkFullProgress": "Sprawdź cały postęp",
+  "learnMore": "Więcej",
+  "start": "Start",
+  "library": {
+    "title": "Tytuł",
+    "author": "Autor",
+    "tags": "Tagi",
+    "search": "Szukaj",
+    "addBook": "Dodaj książkę",
+    "language": "Język",
+    "English": "Angielski",
+    "Polish": "Polski",
+    "choose": "Wybierz",
+    "loadingBooks": "Ładowanie książek...",
+    "tagList": {
+      "Drama": "Dramat",
+      "Comedy": "Komedia",
+      "Philosophy": "Filozofia",
+      "Romantic": "Romans",
+      "Classic": "Klasyka",
+      "Criminal": "Kryminał",
+      "Fantasy": "Fantastyka",
+      "Fiction": "Fikcja",
+      "Ethics": "Etyka"
+    },
+    "coverImageUrl": "URL okładki",
+    "upload": "Dodaj"
+  }
 }

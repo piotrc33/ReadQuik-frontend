@@ -1,22 +1,35 @@
-<form [formGroup]="bookForm" class="add-book">
-  <input-with-label label="Title" formControlName="title"></input-with-label>
-  <input-with-label label="Author" formControlName="author"></input-with-label>
+<form
+  [formGroup]="bookForm"
+  class="add-book"
+  *transloco="let t; read: 'library'"
+>
   <input-with-label
-    label="Cover Image URL"
+    [label]="t('title')"
+    formControlName="title"
+  ></input-with-label>
+  <input-with-label
+    [label]="t('author')"
+    formControlName="author"
+  ></input-with-label>
+  <input-with-label
+    [label]="t('coverImageUrl')"
     formControlName="coverUrl"
   ></input-with-label>
   <div class="input-container">
-    <label for="language" class="input-label">Language</label>
+    <label for="language" class="input-label">{{ t("language") }}</label>
     <select formControlName="language">
-      <option value="Polish">Polish</option>
-      <option value="English">English</option>
+      <option value="Polish">{{ t('Polish') }}</option>
+      <option value="English">{{ t('English') }}</option>
     </select>
   </div>
   <div class="tags" *ngIf="tags$ | async as tags">
     <ng-container *ngFor="let tag of tags">
-      <pill [clickable]="isTagClickable(tag)" (clicked)="handlePill(tag)">{{
-        tag
-      }}</pill>
+      <pill
+        *transloco="let t; read: 'library.tagList'"
+        [clickable]="isTagClickable(tag)"
+        (clicked)="handlePill(tag)"
+        >{{ t(tag) }}</pill
+      >
     </ng-container>
   </div>
   <div>
@@ -33,5 +46,5 @@
   </div>
   <input type="file" (change)="fileChanged($event)" />
   <button (click)="checkFormValue()">Check form</button>
-  <button (click)="upload()">Upload</button>
+  <button (click)="upload()">{{ t('upload') }}</button>
 </form>

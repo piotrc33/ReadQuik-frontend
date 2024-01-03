@@ -1,19 +1,23 @@
-<div class="book-card" *ngIf="book">
-  <img
-    [src]="book.coverUrl"
-    alt="cover"
-  />
-  <div class="info-container">
-    <div class="title">{{ book.title }}</div>
-    <div class="author">{{ book.author }}</div>
-    <div class="language-container">
-      Language: <span class="code-and-flag">{{ book.language }} {{ flags[book.language] }}</span>
+<ng-container *transloco="let t; read: 'library'">
+  <div class="book-card" *ngIf="book">
+    <img [src]="book.coverUrl" alt="cover" />
+    <div class="info-container">
+      <div class="title">{{ book.title }}</div>
+      <div class="author">{{ book.author }}</div>
+      <div class="language-container">
+        {{ t('language') }}:
+        <span class="code-and-flag"
+          >{{ t(book.language) }} {{ flags[book.language] }}</span
+        >
+      </div>
+      <div class="tags" *transloco="let t; read: 'library.tagList'">
+        <ng-container *ngFor="let tag of book.tags">
+          <pill>{{ t(tag) }}</pill>
+        </ng-container>
+      </div>
+      <button class="choose-btn secondary small" (click)="choose.emit()">
+        {{ t('choose') }}
+      </button>
     </div>
-    <div class="tags">
-      <ng-container *ngFor="let tag of book.tags">
-        <pill>{{ tag }}</pill>
-      </ng-container>
-    </div>
-    <button class="choose-btn secondary small" (click)="choose.emit()">Choose</button>
   </div>
-</div>
+</ng-container>

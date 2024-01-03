@@ -1,4 +1,4 @@
-<div class="library">
+<div class="library" *transloco="let t; read: 'library'">
   <filters
     [tags]="bookService.tags$ | async"
     (filter)="handleFilter($event)"
@@ -16,6 +16,6 @@
       ></book-card>
     </ng-container>
 
-    <ng-template #loading> Loading books... </ng-template>
+    <ng-template #loading>{{ t("loadingBooks") }}</ng-template>
   </section>
 </div>
