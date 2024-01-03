@@ -16,6 +16,7 @@ import { KeyboardService } from './services/keyboard.service';
 import { TextService } from './services/text.service';
 import { Exercise6Component } from './components/exercise6/exercise6.component';
 import { Exercise7Component } from './components/exercise7/exercise7.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,12 @@ import { Exercise7Component } from './components/exercise7/exercise7.component';
     Exercise6Component,
     Exercise7Component,
   ],
-  imports: [CommonModule, ExercisesRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    ExercisesRoutingModule,
+    SharedModule,
+    TranslocoModule,
+  ],
   exports: [Exercise1Component, Exercise2Component],
   providers: [
     TextService,

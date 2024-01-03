@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 import { MainRoutingModule } from './main-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 
@@ -19,7 +20,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MainRoutingModule,
     CommonModule,
     ExercisesModule,
-    SharedModule
+    SharedModule,
+    TranslocoModule
   ],
   exports: [
     MainComponent

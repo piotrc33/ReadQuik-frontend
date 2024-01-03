@@ -1,0 +1,9 @@
+{
+  "navbar": {
+    "exercises": "Ćwiczenia",
+    "library": "Biblioteka",
+    "progress": "Postęp"
+  },
+  "exercise": "Ćwiczenie",
+  "recentResults": "Ostatnie wyniki"
+}

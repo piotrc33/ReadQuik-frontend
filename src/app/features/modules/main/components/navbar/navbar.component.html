@@ -1,22 +1,22 @@
-<nav class="navbar">
+<nav class="navbar" *transloco="let t; read: 'navbar'">
   <div class="nav-container limit-width">
     <a class="logo" routerLink="/">ReadQuik</a>
     <div class="link-container">
-      <a class="navbar-link" routerLink="exercises" routerLinkActive="active"
-        >Exercises</a
-      >
-      <a class="navbar-link" routerLink="library" routerLinkActive="active"
-        >Library</a
-      >
-      <a class="navbar-link">Progress</a>
+      <a class="navbar-link" routerLink="exercises" routerLinkActive="active">{{
+        t("exercises")
+      }}</a>
+      <a class="navbar-link" routerLink="library" routerLinkActive="active">{{
+        t("library")
+      }}</a>
+      <a class="navbar-link">{{ t("progress") }}</a>
       <div class="user" (click)="handleDropdown()">
-        <div class="username">{{username}}</div>
-        <div class="user-circle">{{username[0].toUpperCase()}}</div>
+        <div class="username">{{ username }}</div>
+        <div class="user-circle">{{ username[0].toUpperCase() }}</div>
       </div>
       <div *ngIf="dropdownOpened" class="dropdown-panel user-dropdown">
         <section class="dropdown-header">
-          <div class="user-circle">{{username[0].toUpperCase()}}</div>
-          <div class="username">{{username}}</div>
+          <div class="user-circle">{{ username[0].toUpperCase() }}</div>
+          <div class="username">{{ username }}</div>
         </section>
         <section class="dropdown-options">
           <div class="option">
@@ -40,6 +40,10 @@
             <div>Logout</div>
           </div>
         </section>
+      </div>
+      <div>
+        <span class="lang" (click)="changeLang('Polish')">{{ flags["Polish"] }}</span>
+        <span class="lang" (click)="changeLang('English')">{{ flags["English"] }}</span>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<div class="exercises">
+<div class="exercises" *transloco="let t">
   <div class="nav">
     <app-exercise-nav></app-exercise-nav>
   </div>
@@ -47,14 +47,14 @@
     </section>
 
     <section class="exercise center" *ngIf="state.currentExercise">
-      <h2 class="number">Exercise {{ state.currentExercise }}</h2>
+      <h2 class="number">{{ t("exercise") }} {{ state.currentExercise }}</h2>
       <div class="repetition-indicator">
         <div class="circle active"></div>
         <div *ngFor="let i of [].constructor(9)" class="circle"></div>
       </div>
       <div class="repetition-info">#1 of 10</div>
 
-      <h1 class="title">{{exerciseTitles[state.currentExercise]}}</h1>
+      <h1 class="title">{{ exerciseTitles[state.currentExercise] }}</h1>
 
       <div class="advice">
         <span class="highlight">Visualize</span> what you read
@@ -79,7 +79,10 @@
       </button>
 
       <ng-container *ngIf="state.started && state.currentExercise">
-        <div [style.font-size.px]="state.currentExercise < 5 ? 18 : 16" class="exercises-overlay">
+        <div
+          [style.font-size.px]="state.currentExercise < 5 ? 18 : 16"
+          class="exercises-overlay"
+        >
           <app-exercise-panel>
             <router-outlet></router-outlet>
           </app-exercise-panel>
@@ -88,7 +91,7 @@
     </section>
 
     <section class="recents">
-      <h2 class="center title">Recent Results</h2>
+      <h2 class="center title">{{ t("recentResults") }}</h2>
       <ng-container
         *ngIf="resultsService.recentResults$ | async as recentResults"
       >

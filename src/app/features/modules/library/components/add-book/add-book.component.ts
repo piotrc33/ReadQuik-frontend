@@ -20,6 +20,7 @@ import { SegmentI } from '../../../../../api/model/segment.i';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from './../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
+import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 
 @Component({
   selector: 'app-add-book',
@@ -37,7 +38,7 @@ export class AddBookComponent implements OnDestroy, OnInit {
     title: ['', [Validators.required]],
     author: ['', [Validators.required]],
     coverUrl: ['', [Validators.required]],
-    language: new FormControl<'Polish' | 'English'>('Polish'),
+    language: new FormControl<AvailableLanguages>('Polish'),
     tags: this.fb.array([]),
   }) as FormGroup<AddBookFormI>;
   file: any;

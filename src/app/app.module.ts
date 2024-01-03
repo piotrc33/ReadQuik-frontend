@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './features/modules/auth/auth.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorService } from './api/interceptors/auth-interceptor.service';
 import { AuthGuard } from './api/guards/auth.guard';
 import { ExercisesModule } from './features/modules/exercises/exercises.module';
 import { MainModule } from './features/modules/main/main.module';
 import { LibraryModule } from './features/modules/library/library.module';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,9 @@ import { LibraryModule } from './features/modules/library/library.module';
     AuthModule,
     ExercisesModule,
     MainModule,
-    LibraryModule
+    LibraryModule,
+    HttpClientModule,
+    TranslocoRootModule
   ],
   providers: [
     {
