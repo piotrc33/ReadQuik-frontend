@@ -128,10 +128,6 @@ export class AddBookComponent implements OnDestroy, OnInit {
     }
   }
 
-  checkFormValue() {
-    console.log(this.bookForm.value);
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

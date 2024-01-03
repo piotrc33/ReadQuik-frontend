@@ -3,25 +3,33 @@
   class="add-book"
   *transloco="let t; read: 'library'"
 >
+  <h1 class="page-title">{{ t("addBook") }}</h1>
   <input-with-label
     [label]="t('title')"
     formControlName="title"
   ></input-with-label>
+
   <input-with-label
     [label]="t('author')"
     formControlName="author"
   ></input-with-label>
+
   <input-with-label
     [label]="t('coverImageUrl')"
     formControlName="coverUrl"
   ></input-with-label>
-  <div class="input-container">
-    <label for="language" class="input-label">{{ t("language") }}</label>
-    <select formControlName="language">
-      <option value="Polish">{{ t('Polish') }}</option>
-      <option value="English">{{ t('English') }}</option>
-    </select>
+
+  <div class="flex-container">
+    <div class="input-container">
+      <label for="language" class="input-label">{{ t("language") }}</label>
+      <select class="select medium" formControlName="language">
+        <option value="Polish">{{ t("Polish") }}</option>
+        <option value="English">{{ t("English") }}</option>
+      </select>
+    </div>
+    <input type="file" (change)="fileChanged($event)" />
   </div>
+
   <div class="tags" *ngIf="tags$ | async as tags">
     <ng-container *ngFor="let tag of tags">
       <pill
@@ -32,7 +40,7 @@
       >
     </ng-container>
   </div>
-  <div>
+  <!-- <div>
     <div class="label">New Tag:</div>
     <div class="choose">
       <input type="text" class="input medium" #newTagInput />
@@ -43,8 +51,6 @@
         Add
       </button>
     </div>
-  </div>
-  <input type="file" (change)="fileChanged($event)" />
-  <button (click)="checkFormValue()">Check form</button>
-  <button (click)="upload()">{{ t('upload') }}</button>
+  </div> -->
+  <button class="primary" (click)="upload()">{{ t("upload") }}</button>
 </form>
