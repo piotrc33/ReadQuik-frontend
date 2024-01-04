@@ -1,70 +1,31 @@
-<app-auth-panel title="Sign up">
+<app-auth-panel [title]="t('signup')" *transloco="let t; read: 'auth'">
   <form class="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <div class="input-container">
-      <label for="email" class="input-label">Email</label>
-      <input
-        type="email"
-        name="email"
-        class="input"
-        [class.error]="isInputInvalid('email')"
-        formControlName="email"
-        required
-      />
-      <div *ngIf="showError('email', 'required')" class="error-info">
-        Email is required.
-      </div>
-      <div *ngIf="showError('email', 'pattern')" class="error-info">
-        Please enter valid email
-      </div>
-    </div>
-    <div class="input-container">
-      <label for="username" class="input-label">Username</label>
-      <input
-      type="username"
-      name="username"
-      class="input"
-      [class.error]="isInputInvalid('username')"
-      formControlName="username"
-      required
-      />
-      <div *ngIf="showError('username', 'required')" class="error-info">
-        Username is required.
-      </div>
-      <div class="error-info" *ngIf="showError('username', 'minlength')">
-        Username must have at least 2 characters.
-      </div>
-      <div class="error-info" *ngIf="showError('username', 'maxlength')">
-        Username must not exceed 20 characters.
-      </div>
-      <div class="error-info" *ngIf="showError('username', 'pattern')">
-        Username must contain only letters and numbers.
-      </div>
-    </div>
-    <div class="input-container">
-      <label for="password" class="input-label">Password</label>
-      <input
-        type="password"
-        name="password"
-        class="input"
-        [class.error]="isInputInvalid('password')"
-        formControlName="password"
-        required
-      />
-      <div *ngIf="showError('password', 'required')" class="error-info">
-        Password is required.
-      </div>
-      <div *ngIf="showError('password', 'minlength')" class="error-info">
-        Password should be at least 8 characters
-      </div>
-      <div *ngIf="showError('password', 'pattern')" class="error-info">
-        Your password contains forbidden characters
-      </div>
-    </div>
+    <text-input-with-validation
+      [label]="t('email')"
+      [control]="signupForm.controls['email']"
+    ></text-input-with-validation>
 
-    <button type="submit" class="continue-button" [class.disabled]="signupForm.invalid" [disabled]="signupForm.invalid">Continue</button>
+    <text-input-with-validation
+      [label]="t('username')"
+      [control]="signupForm.controls['username']"
+    ></text-input-with-validation>
+
+    <text-input-with-validation
+      [label]="t('password')"
+      [control]="signupForm.controls['password']"
+    ></text-input-with-validation>
+
+    <button
+      type="submit"
+      class="continue-button"
+      [class.disabled]="signupForm.invalid"
+      [disabled]="signupForm.invalid"
+    >
+      {{ t('continue') }}
+    </button>
     <div class="alt-info">
-      Already have an account?
-      <a routerLink="/auth/login" class="alt-link">Log in</a>
+      {{ t('haveAnAccountQuestion') }}
+      <a routerLink="/auth/login" class="alt-link">{{ t('logIn') }}</a>
     </div>
   </form>
 </app-auth-panel>

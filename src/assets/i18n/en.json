@@ -37,5 +37,15 @@
     },
     "coverImageUrl": "Cover Image URL",
     "upload": "Upload"
+  },
+  "auth": {
+    "signup": "Sign up",
+    "email": "Email",
+    "username": "Username",
+    "password": "Password",
+    "continue": "Continue",
+    "haveAnAccountQuestion": "Already have an account?",
+    "dontHaveAnAccountQuestion": "Don't have an account?",
+    "logIn": "Log in"
   }
 }

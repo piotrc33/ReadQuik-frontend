@@ -1,0 +1,18 @@
+<ng-container *ngIf="errors">
+  <div class="error-info" *ngIf="errors['required']">
+    This field is required!
+  </div>
+  <div class="error-info" *ngIf="errors['email']">This is not valid email</div>
+  <div class="error-info" *ngIf="errors['pattern']">
+    This is not valid pattern!
+  </div>
+  <div class="error-info" *ngIf="errors['minlength']">
+    Minimum length is {{ errors["minlength"].requiredLength }}
+  </div>
+  <div class="error-info" *ngIf="errors['maxlength']">
+    Maximum length is {{ errors["maxlength"].requiredLength }}
+  </div>
+  <div class="error-info" *ngIf="errors['forbiddenCharacters']">
+    This field contains forbidden characters!
+  </div>
+</ng-container>

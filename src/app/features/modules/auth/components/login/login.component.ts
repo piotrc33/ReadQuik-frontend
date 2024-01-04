@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginDataI } from 'src/app/api/model/login-data.i';
+import { CustomValidators } from 'src/app/shared/misc/custom-validators';
+import { LoginFormI } from '../../model/login-form.i';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loginForm = this.fb.group({
-    email: ['', Validators.required],
+  loginForm: FormGroup<LoginFormI> = this.fb.nonNullable.group({
+    email: ['', [Validators.required, CustomValidators.email]],
     password: ['', Validators.required],
   });
   constructor(
@@ -20,10 +23,10 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    this.authService.login(this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.value as LoginDataI).subscribe({
       next: (res: any) => {
         console.log('Login successful', res);
-        if(res.loginSuccessful) {
+        if (res.loginSuccessful) {
           this.authService.saveToken(res.jwtToken);
           this.router.navigate(['']);
         }

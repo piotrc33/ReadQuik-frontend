@@ -37,5 +37,14 @@
     },
     "coverImageUrl": "URL okładki",
     "upload": "Dodaj"
+  },
+  "auth": {
+    "signup": "Rejestracja",
+    "email": "Email",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "continue": "Kontynuuj",
+    "haveAnAccountQuestion": "Masz już konto?","dontHaveAnAccountQuestion": "Nie masz konta?",
+    "logIn": "Zaloguj się"
   }
 }

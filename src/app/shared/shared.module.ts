@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { InputWithLabelComponent } from './components/input-with-label/input-with-label.component';
 import { PillComponent } from './components/pill/pill.component';
+import { TextInputWithValidationComponent } from './components/text-input-with-validation/text-input-with-validation.component';
+import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
 import { RelativeDatePipe } from './pipes/relative-date.pipe';
 
 const exportedComponents = [
-  InputWithLabelComponent,
   RelativeDatePipe,
   PillComponent,
+  ValidationErrorsComponent,
+  TextInputWithValidationComponent,
 ];
 
 @NgModule({

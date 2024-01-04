@@ -6,13 +6,19 @@
   flex-direction: column;
   margin: $spacing-03 $spacing-05;
 
+  .back {
+    border-radius: 20px;
+    margin-right: auto;
+    padding: $spacing-02;
+  }
+
   .page-title {
     font-size: 20px;
     font-weight: 600;
     margin-bottom: $spacing-05;
   }
 
-  input-with-label {
+  text-input-with-validation {
     margin-bottom: $spacing-05;
     width: 300px;
   }

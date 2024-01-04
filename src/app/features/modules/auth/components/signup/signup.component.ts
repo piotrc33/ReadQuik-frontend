@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { SignupFormI } from '../../model/signup-form.i';
+import { UserI } from 'src/app/api/model/user.i';
+import { CustomValidators } from 'src/app/shared/misc/custom-validators';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
-  trueBool: boolean = true;
-
-  signupForm = this.fb.group({
+  signupForm: FormGroup<SignupFormI> = this.fb.nonNullable.group({
     email: [
       '',
       [
         Validators.required,
-        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        Validators.email
+        CustomValidators.email,
       ],
     ],
     username: [
@@ -25,7 +25,7 @@ export class SignupComponent {
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(20),
-        Validators.pattern(/^[a-zA-Z0-9]*$/),
+        CustomValidators.usernameCharacters
       ],
     ],
     password: [
@@ -33,7 +33,7 @@ export class SignupComponent {
       [
         Validators.required,
         Validators.minLength(8),
-        Validators.pattern(/^[a-zA-Z0-9!@#$&*]+$/),
+        CustomValidators.passwordCharacters,
       ],
     ],
   });
@@ -42,17 +42,6 @@ export class SignupComponent {
     private readonly authService: AuthService
   ) {}
 
-  isInputInvalid(name: string): boolean | undefined{
-    return (
-      this.signupForm.get(name)?.invalid &&
-      (this.signupForm.get(name)?.touched)
-    );
-  }
-
-  showError(name: string, errorType: string): boolean | undefined {
-    return this.signupForm.get(name)?.hasError(errorType) && this.isInputInvalid(name);
-  }
-
   onSubmit() {
     console.log(
       'submitted',
@@ -60,7 +49,7 @@ export class SignupComponent {
       'valid?',
       this.signupForm.valid
     );
-    this.authService.signup(this.signupForm.value).subscribe({
+    this.authService.signup(this.signupForm.value as UserI).subscribe({
       next: (res) => {
         console.log('Registration successful', res);
       },

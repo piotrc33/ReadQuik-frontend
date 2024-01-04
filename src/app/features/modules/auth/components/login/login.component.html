@@ -1,11 +1,26 @@
-<app-auth-panel title="Log in">
+<app-auth-panel [title]="t('logIn')" *transloco="let t; read: 'auth'">
   <form class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <input-with-label label="Email" formControlName="email"></input-with-label>
-    <input-with-label label="Password" formControlName="password"></input-with-label>
+    <text-input-with-validation
+      [label]="t('email')"
+      [control]="loginForm.controls['email']"
+    ></text-input-with-validation>
 
-    <button type="submit" class="continue-button">Continue</button>
+    <text-input-with-validation
+      [label]="t('password')"
+      [control]="loginForm.controls['password']"
+    ></text-input-with-validation>
+
+    <button
+      type="submit"
+      class="continue-button"
+      [class.disabled]="loginForm.invalid"
+      [disabled]="loginForm.invalid"
+    >
+      {{ t("continue") }}
+    </button>
     <div class="alt-info">
-      Don't have an account? <a routerLink="/auth/signup" class="alt-link">Sign up</a>
+      {{ t("dontHaveAnAccountQuestion") }}
+      <a routerLink="/auth/signup" class="alt-link">{{ t("signup") }}</a>
     </div>
   </form>
 </app-auth-panel>

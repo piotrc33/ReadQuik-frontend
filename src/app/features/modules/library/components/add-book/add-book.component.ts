@@ -14,13 +14,13 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, take, takeUntil } from 'rxjs';
-import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
-import { BookDataI } from '../../../../../api/model/book-data.i';
-import { SegmentI } from '../../../../../api/model/segment.i';
+import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from './../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
-import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
+import { BookDataI } from 'src/app/api/model/book-data.i';
+import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
+import { SegmentI } from 'src/app/api/model/segment.i';
 
 @Component({
   selector: 'app-add-book',
@@ -35,16 +35,16 @@ export class AddBookComponent implements OnDestroy, OnInit {
 
   readonly destroy$ = new Subject<void>();
   readonly bookForm: FormGroup<AddBookFormI> = this.fb.nonNullable.group({
-    title: ['', [Validators.required]],
+    title: ['', [Validators.required, Validators.minLength(4)]],
     author: ['', [Validators.required]],
     coverUrl: ['', [Validators.required]],
     language: new FormControl<AvailableLanguages>('Polish'),
     tags: this.fb.array([]),
   }) as FormGroup<AddBookFormI>;
-  file: any;
+  file: any = undefined;
 
-  tagsSubject = new BehaviorSubject<string[]>([]);
-  tags$ = this.tagsSubject.asObservable();
+  readonly tagsSubject = new BehaviorSubject<string[]>([]);
+  readonly tags$ = this.tagsSubject.asObservable();
 
   @ViewChild('newTagInput') newTagInput?: ElementRef;
 

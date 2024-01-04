@@ -4,17 +4,17 @@
   (ngSubmit)="searchBooks()"
   *transloco="let t; read: 'library'"
 >
-  <input-with-label
+  <text-input-with-validation
     size="medium"
     [label]="t('title')"
-    formControlName="title"
-  ></input-with-label>
+    [control]="filterForm.controls['title']"
+  ></text-input-with-validation>
 
-  <input-with-label
+  <text-input-with-validation
     size="medium"
     [label]="t('author')"
-    formControlName="author"
-  ></input-with-label>
+    [control]="filterForm.controls['author']"
+  ></text-input-with-validation>
 
   <div class="tags">
     <button

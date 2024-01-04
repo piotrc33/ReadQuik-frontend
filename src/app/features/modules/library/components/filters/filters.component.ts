@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { FiltersI } from '../../../../../api/model/filters.i';
 
@@ -14,7 +7,7 @@ import { FiltersI } from '../../../../../api/model/filters.i';
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
 })
-export class FiltersComponent implements OnInit {
+export class FiltersComponent {
   readonly fb = inject(FormBuilder);
 
   @Input() tags: string[] | null = [];
@@ -22,15 +15,13 @@ export class FiltersComponent implements OnInit {
   @Output()
   filter = new EventEmitter<FiltersI>();
 
-  filterForm = this.fb.nonNullable.group({
+  readonly filterForm = this.fb.nonNullable.group({
     title: '',
     author: '',
     tags: this.fb.nonNullable.array<string>([]),
   });
 
   dropdownOpened = false;
-
-  ngOnInit(): void {}
 
   get tagsFormArray() {
     return this.filterForm.controls['tags'];

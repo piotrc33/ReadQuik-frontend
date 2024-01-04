@@ -10,16 +10,23 @@ import { AuthPanelComponent } from './components/ui/auth-panel/auth-panel.compon
 import { CommonModule } from '@angular/common';
 import { AuthContainerComponent } from './components/ui/auth-container/auth-container.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, AuthPanelComponent, AuthContainerComponent],
+  declarations: [
+    LoginComponent,
+    SignupComponent,
+    AuthPanelComponent,
+    AuthContainerComponent,
+  ],
   imports: [
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
     RouterModule,
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    TranslocoModule,
   ],
   providers: [AuthService],
 })

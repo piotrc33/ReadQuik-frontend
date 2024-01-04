@@ -3,21 +3,27 @@
   class="add-book"
   *transloco="let t; read: 'library'"
 >
+  <img class="back clickable icon svg medium" src="assets/images/arrow-left.svg" alt="left arrow" routerLink="/library" />
+
   <h1 class="page-title">{{ t("addBook") }}</h1>
-  <input-with-label
+
+  <text-input-with-validation
+    [control]="bookForm.controls['title']"
     [label]="t('title')"
-    formControlName="title"
-  ></input-with-label>
+    size="medium"
+  ></text-input-with-validation>
 
-  <input-with-label
+  <text-input-with-validation
+    [control]="bookForm.controls['author']"
     [label]="t('author')"
-    formControlName="author"
-  ></input-with-label>
+    size="medium"
+  ></text-input-with-validation>
 
-  <input-with-label
+  <text-input-with-validation
+    [control]="bookForm.controls['coverUrl']"
     [label]="t('coverImageUrl')"
-    formControlName="coverUrl"
-  ></input-with-label>
+    size="medium"
+  ></text-input-with-validation>
 
   <div class="flex-container">
     <div class="input-container">
@@ -52,5 +58,12 @@
       </button>
     </div>
   </div> -->
-  <button class="primary" (click)="upload()">{{ t("upload") }}</button>
+  <button
+    class="primary"
+    (click)="upload()"
+    [class.disabled]="bookForm.invalid && this.file === undefined"
+    [disabled]="bookForm.invalid && this.file === undefined"
+  >
+    {{ t("upload") }}
+  </button>
 </form>
