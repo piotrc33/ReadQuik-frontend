@@ -7,6 +7,7 @@ import { Exercise4Component } from './components/exercise4/exercise4.component';
 import { Exercise5Component } from './components/exercise5/exercise5.component';
 import { Exercise6Component } from './components/exercise6/exercise6.component';
 import { Exercise7Component } from './components/exercise7/exercise7.component';
+import { Exercise8Component } from './components/exercise8/exercise8.component';
 
 const routes: Routes = [
   { path: '1', component: Exercise1Component },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: '5', component: Exercise5Component },
   { path: '6', component: Exercise6Component },
   { path: '7', component: Exercise7Component },
+  { path: '8', component: Exercise8Component },
 ];
 
 @NgModule({

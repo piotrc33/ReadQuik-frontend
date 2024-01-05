@@ -17,6 +17,7 @@ import { TextService } from './services/text.service';
 import { Exercise6Component } from './components/exercise6/exercise6.component';
 import { Exercise7Component } from './components/exercise7/exercise7.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { Exercise8Component } from './components/exercise8/exercise8.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TranslocoModule } from '@ngneat/transloco';
     ExercisePanelComponent,
     Exercise6Component,
     Exercise7Component,
+    Exercise8Component,
   ],
   imports: [
     CommonModule,
