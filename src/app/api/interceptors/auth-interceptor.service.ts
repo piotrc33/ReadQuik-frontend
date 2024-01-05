@@ -1,4 +1,4 @@
-import { AuthService } from '../../features/modules/auth/services/auth.service';
+import { AuthService } from '../../features/auth/services/auth.service';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './features/modules/main/components/main/main.component';
+import { MainComponent } from './features/main/components/main/main.component';
 import { AuthGuard } from './api/guards/auth.guard';
-import { AuthContainerComponent } from './features/modules/auth/components/ui/auth-container/auth-container.component';
+import { AuthContainerComponent } from './features/auth/components/ui/auth-container/auth-container.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./features/modules/main/main-routing.module').then(
+      import('./features/main/main-routing.module').then(
         (m) => m.MainRoutingModule
       ),
   },
@@ -18,7 +18,7 @@ const routes: Routes = [
     path: 'auth',
     component: AuthContainerComponent,
     loadChildren: () =>
-      import('./features/modules/auth/auth-routing.module').then(
+      import('./features/auth/auth-routing.module').then(
         (m) => m.AuthRoutingModule
       ),
   },

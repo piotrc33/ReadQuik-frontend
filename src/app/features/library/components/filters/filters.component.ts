@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { FiltersI } from '../../../../../api/model/filters.i';
+import { FiltersI } from '../../../../api/model/filters.i';
 
 @Component({
   selector: 'filters',

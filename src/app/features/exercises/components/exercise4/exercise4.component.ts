@@ -5,7 +5,7 @@ import {
   OnInit
 } from '@angular/core';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
-import { TextService } from './../../services/text.service';
+import { TextService } from '../../services/text.service';
 
 @Component({
   selector: 'exercise4',

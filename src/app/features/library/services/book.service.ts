@@ -7,11 +7,11 @@ import { NewBookResponseI } from 'src/app/api/model/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { TagI } from 'src/app/api/model/tag.i';
 import { baseUrl } from 'src/app/shared/variables';
-import { BookDataI } from '../../../../api/model/book-data.i';
+import { BookDataI } from '../../../api/model/book-data.i';
 import { TextService } from '../../exercises/services/text.service';
-import { BookSegmentsI } from './../../../../api/model/book-segments.i';
-import { SegmentI } from './../../../../api/model/segment.i';
-import { UserI } from './../../../../api/model/user.i';
+import { BookSegmentsI } from '../../../api/model/book-segments.i';
+import { SegmentI } from '../../../api/model/segment.i';
+import { UserI } from '../../../api/model/user.i';
 
 @Injectable()
 export class BookService {

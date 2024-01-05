@@ -26,14 +26,14 @@
       <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
     </button>
     <div *ngIf="dropdownOpened" class="dropdown-panel">
-      <section class="dropdown-header">Tags</section>
-      <section class="dropdown-content">
+      <section class="dropdown-header">{{ t("tags") }}</section>
+      <section class="dropdown-content" *transloco="let t; read: 'library.tagList'">
         <ng-container *ngFor="let tag of tags">
           <pill
             [isActive]="tagsFormArray.value.includes(tag)"
             [clickable]="true"
             (clicked)="handlePill(tag)"
-            >{{ tag }}</pill
+            >{{ t(tag) }}</pill
           >
         </ng-container>
       </section>

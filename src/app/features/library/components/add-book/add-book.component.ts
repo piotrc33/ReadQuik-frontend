@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subject, take, takeUntil } from 'rxjs';
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
-import { BookService } from './../../services/book.service';
+import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
 import { BookDataI } from 'src/app/api/model/book-data.i';
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
