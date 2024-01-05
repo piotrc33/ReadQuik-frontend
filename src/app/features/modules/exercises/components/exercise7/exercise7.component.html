@@ -4,9 +4,15 @@
       *ngFor="let phrase of state.bookService.phrasesWithNewlines; index as i"
     >
       <ng-container *ngIf="!textService.isNewline(phrase); else newline">
-        <span class="phrase" [ngClass]="i % 2 === 0 ? 'active' : 'inactive'">{{
-          phrase
-        }}</span>
+        <span
+          class="phrase"
+          [ngClass]="i % 2 === 0 ? 'strong' : ''"
+          [class.active]="
+            wordIndexes[state.phraseNumber] === i &&
+            state.exerciseMode === 'auto'
+          "
+          >{{ phrase }}</span
+        >
       </ng-container>
 
       <ng-template #newline>

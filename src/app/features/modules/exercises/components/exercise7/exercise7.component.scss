@@ -12,10 +12,15 @@
   .phrase {
     margin: 2px 3px 2px;
     display: inline-block;
+    color: $neutral-400;
   }
 
-  .inactive {
-    color: $neutral-400;
+  .active {
+    text-decoration: underline;
+  }
+
+  .strong {
+    color: $neutral-950;
   }
 
   .text {

@@ -17,6 +17,7 @@ export class ExercisesComponent implements OnInit {
     5: 'Horizontal Scanning - Smaller Font',
     6: 'Horizontal Scanning - Smaller Font Auto Mode',
     7: 'Black & Gray Text',
+    8: 'Black & Gray Text - Auto Mode',
   }
 
   constructor(
