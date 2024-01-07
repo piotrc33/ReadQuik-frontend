@@ -1,0 +1,20 @@
+@import 'variables';
+
+.left {
+  text-align: left;
+}
+
+.instruction-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: $spacing-04;
+  color: $neutral-900;
+}
+
+p {
+  margin: $spacing-03 0;
+  color: $neutral-700;
+  font-size: 18px;
+  line-height: 1.2em;
+}

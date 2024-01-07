@@ -1,30 +1,26 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { ResultsService } from 'src/app/features/services/results.service';
+import { InstructionsService } from '../../services/instructions.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExercisesComponent implements OnInit {
-  exerciseTitles: Record<number, string> = {
-    1: 'Stationary Phrases',
-    2: 'Surrounding Text',
-    3: 'Surrounding Text - Auto Mode',
-    4: 'Horizontal Scanning',
-    5: 'Horizontal Scanning - Smaller Font',
-    6: 'Horizontal Scanning - Smaller Font Auto Mode',
-    7: 'Black & Gray Text',
-    8: 'Black & Gray Text - Auto Mode',
-  }
+  instructionsOpened: boolean = false;
+  readonly instructions$ = this.instructionService.getExerciseInstructions();
 
   constructor(
     public state: ExercisesStateService,
     private readonly router: Router,
     private changeDetectorRef: ChangeDetectorRef,
-    public resultsService: ResultsService
+    public resultsService: ResultsService,
+    private readonly instructionService: InstructionsService
   ) {
     const exerciseNumber = Number(router.url.split('/').pop());
     if (exerciseNumber) {
@@ -61,5 +57,9 @@ export class ExercisesComponent implements OnInit {
   nextPage() {
     const panelBox = this.state.panelContentElement?.getBoundingClientRect();
     this.state.pageYPosition -= panelBox!.height;
+  }
+
+  showInstructions() {
+    this.instructionsOpened = true;
   }
 }

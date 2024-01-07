@@ -11,8 +11,9 @@
   "switch": "Zmień",
   "changeBook": "Wymień książkę",
   "checkFullProgress": "Sprawdź cały postęp",
-  "learnMore": "Więcej",
+  "instructionsButton": "Instrukcje",
   "start": "Start",
+  "nextPhrase": "Następna fraza",
   "library": {
     "title": "Tytuł",
     "author": "Autor",
@@ -44,7 +45,69 @@
     "username": "Nazwa użytkownika",
     "password": "Hasło",
     "continue": "Kontynuuj",
-    "haveAnAccountQuestion": "Masz już konto?","dontHaveAnAccountQuestion": "Nie masz konta?",
+    "haveAnAccountQuestion": "Masz już konto?",
+    "dontHaveAnAccountQuestion": "Nie masz konta?",
     "logIn": "Zaloguj się"
+  },
+  "instructions": {
+    "instruction1": {
+      "sectionTitle": "Zrozumienie jest najważniejsze",
+      "paragraph1": "Czytanie JEST zrozumieniem. Jeśli nie zrozumiałeś tekstu, to go nie przeczytałeś - rozpoznałeś tylko słowa.\n Aby poprawić rozumienie, musisz skupić się na informacjach, które są bardziej znaczące i łatwiejsze do zrozumienia. W tym celu należy czytać całe frazy naraz. Całe frazy mają większe znaczenie niż pojedyncze słowa",
+      "paragraph2": "Aby przejść do następnej frazy, użyj przycisku lub kliknij spację, strzałkę w dół lub strzałkę w prawo"
+    },
+    "instruction2": {
+      "sectionTitle": "Myśl o tym co czytasz",
+      "paragraph1": "Czy kiedykolwiek przeczytałeś/aś stronę, a potem zastanawiałeś się, co właśnie przeczytałeś/aś? Przeczytanie strony było całkowitą stratą 2-3 (lub więcej) minut!",
+      "paragraph2": "Tak naprawdę nic nie przeczytałeś/aś - po prostu rozpoznałeś kilka słów",
+      "paragraph3": "Kluczem do zrozumienia jest: MYŚLENIE O TYM, CO CZYTASZ. Myślenie o tym, co czytasz, oznacza wizualizację pojęć - widzenie pomysłów w swoim umyśle",
+      "paragraph4": "Tym razem frazy będą wyświetlane z otaczającym tekstem, aby przyzwyczaić cię do większej ilości tekstu, nie rozpraszaj się!"
+    },
+    "instruction3": {
+      "sectionTitle": "Myśl we frazach",
+      "paragraph1": "Frazy mają większe znaczenie niż pojedyncze słowa. Im bardziej znaczący jest pomysł, tym łatwiej jest go sobie wyobrazić i tym szybciej można go zrozumieć",
+      "paragraph2": "Próba przeczytania 3, 4, a nawet 7 słów jednocześnie może wydawać się dziwna - ale tak naprawdę nie jest to dziwniejsze niż czytanie 7 liter na raz. Słowo \"litery\" składa się z 6 liter, a Ty czytasz je wszystkie naraz",
+      "paragraph3": "Czytanie jednego słowa na raz jest nie tylko bardzo powolne, ale także marnotrawne i nieefektywne. Po co myśleć o \"dużym\", potem o \"czarnym\", a potem o \"psie\", zamiast spojrzeć na frazę jako jedną kompletną ideę?",
+      "paragraph4": "Frazy będą wyświetlane jak w poprzednim ćwiczeniu, przeczytasz ten sam tekst dwa razy - najpierw z automatycznym przełączaniem fraz z prędkością 120% ostatnich 3 wyników. Następnie będziesz czytać w trybie ręcznym, tak jak poprzednio"
+    },
+    "instruction4": {
+      "sectionTitle": "Nadawaj atrybuty abstrakcyjnym ideom",
+      "paragraph1": "Wizualizacja obiektów fizycznych to jedno, ale co z abstrakcyjnymi ideami? To właśnie wtedy wykorzystujemy umiejętność, w której ludzie przodują; jest to rozumowanie o nieobserwowalnych, wyimaginowanych rzeczach - wyobrażanie sobie rzeczy konceptualnie",
+      "paragraph2": "Konceptualizacja oznacza rozpoznawanie atrybutów. Atrybuty opisują istotę rzeczy, niezależnie od tego, czy jest ona fizyczna czy abstrakcyjna",
+      "paragraph3": "Pomyśl o dowolnej fizycznej lub niefizycznej rzeczy lub idei - ale bez nazywania jej. Nazwa jest tylko kolejnym atrybutem, ale często jest używana jako skrót myślowy. Pomyśl o czymś bez nazywania tego, a będziesz zmuszony myśleć konceptualnie o tym, czym to naprawdę jest",
+      "paragraph4": "Na przykład, jeśli myślisz o jabłku, możesz myśleć o jego smaku, kształcie, kolorze, grupie żywności, teksturze itp. Nazwa jest tylko jednym z atrybutów i nie jest nawet wymagana do wyobrażenia sobie, czym ono jest"
+    },
+    "instruction5": {
+      "sectionTitle": "Skup się na wizualizacji - złe nawyki znikną same",
+      "paragraph1": "Subwokalizacja jest nawykiem, ale w rzeczywistości jest korzystna. Jestem pewien, że zauważyłeś, że pomaga ci to lepiej zrozumieć; szczególnie trudny materiał. Ale kiedy poprawiasz rozumienie poprzez wizualizację, subwokalizacja zanika sama z siebie",
+      "paragraph2": "Próba NIE subwokalizowania przynosi efekt przeciwny do zamierzonego; tak samo jak próba NIE ziewania",
+      "paragraph3": "Skoncentruj się na widzeniu całych pomysłów, wizualizowaniu pomysłów, aby nadać im większe znaczenie; a przekonasz się, że podgłos zniknie. W rzeczywistości próba jednoczesnej wizualizacji i wokalizacji jest tak trudna, jak jednoczesne pocieranie brzucha i klepanie się po głowie"
+    },
+    "instruction6": {
+      "sectionTitle": "Szybkie czytanie wymaga praktyki",
+      "paragraph1": "Efektywne czytanie to umiejętność. Jak każda umiejętność, może być trudna do wyjaśnienia słowami, a ponadto wymaga praktyki i odrobiny eksperymentów, aby ją zdobyć",
+      "paragraph2": "Pomyśl o tym, jak nauczyłeś się jeździć na rowerze. Nikt nie mógł powiedzieć ci słowami, co dokładnie masz robić. Mogliby opisać, co robią, ale i tak musiałeś wyjść na zewnątrz i chwiać się, aż to zrozumiesz"
+    },
+    "instruction7": {
+      "sectionTitle": "Ćwicz na innych tekstach",
+      "paragraph1": "Najważniejszą rzeczą, na którą należy uważać podczas czytania normalnego tekstu, jest to, aby nie iść zbyt szybko. W rzeczywistości na początku musisz być skłonny nieco zwolnić, ponieważ samodzielne identyfikowanie fraz będzie wymagało nieco więcej koncentracji",
+      "paragraph2": "Może to być bardzo kuszące, aby przyspieszyć, ale pamiętaj, że możesz czytać tylko tak szybko, jak jesteś w stanie zrozumieć. Szybsze tempo to tylko kręcenie się w kółko - dużo hałasu i emocji, ale mało scenerii",
+      "paragraph3": "Teraz możesz dać odpocząć palcom i kontrolować prędkość za pomocą oczu, będziesz przełączać się tylko między stronami, nie frazami"
+    },
+    "instruction8": {
+      "sectionTitle": "Uważaj by nie stracić koncentracji",
+      "paragraph1": "Jak czytamy, koncentracja będzie się stale zmieniać. To jak światło, które staje się jaśniejsze i ciemniejsze. Ale może się również wyłączyć; kiedy zauważysz, że czytasz bez zrozumienia",
+      "paragraph2": "Zwykle oznacza to, że minąłeś jakiś tekst, którego tak naprawdę nie zrozumiałeś. Ta luka informacyjna sprawia, że poniższy tekst jest mniej znaczący, więc twój umysł po prostu całkowicie go odrzuca",
+      "paragraph3": "Oprócz rozjaśniania koncentracji, musisz także zawęzić ją jak światło punktowe, unikając rozpraszania uwagi. Aby skupić swoją uwagę, skoncentruj się na wizualizacji pojęć. Łatwiej jest skupić się na czymś, co się rozumie, a wizualizacja sprawia, że tekst nabiera większego znaczenia"
+    }
+  },
+  "exerciseTitles": {
+    "exercise1": "Pojedyncze frazy",
+    "exercise2": "Otaczający tekst",
+    "exercise3": "Otaczający tekst - tryb auto",
+    "exercise4": "Poziome skanowanie",
+    "exercise5": "Poziome skanowanie - mniejsza czcionka",
+    "exercise6": "Poziome skanowanie - mniejsza czcionka, tryb auto",
+    "exercise7": "Czarny i szary tekst",
+    "exercise8": "Czarny i szary tekst - tryb auto"
   }
 }

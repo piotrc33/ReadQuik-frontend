@@ -1,0 +1,12 @@
+<ng-container
+  *transloco="let t; read: 'instructions.instruction' + instructionNumber"
+>
+  <div class="left">
+    <p
+      *ngFor="let key of instructionKeys; let i = index"
+      [class.instruction-title]="i === 0"
+    >
+      {{ t(key) }}
+    </p>
+  </div>
+</ng-container>

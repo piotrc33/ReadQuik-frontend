@@ -1,0 +1,18 @@
+<div class="dialog-overlay">
+  <dialog class="dialog">
+    <div class="dialog-header">
+      <img
+        (click)="close.emit()"
+        class="close-icon"
+        src="./assets/images/close-icon.svg"
+        alt="close"
+      />
+    </div>
+    <div class="dialog-content">
+      <ng-content select="[content]"></ng-content>
+    </div>
+    <div class="dialog-footer">
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </dialog>
+</div>

@@ -11,8 +11,9 @@
   "switch": "Switch",
   "changeBook": "Change Book",
   "checkFullProgress": "Check Full Progress",
-  "learnMore": "Learn More",
+  "instructionsButton": "Instructions",
   "start": "Start",
+  "nextPhrase": "Next phrase",
   "library": {
     "title": "Title",
     "author": "Author",
@@ -47,5 +48,66 @@
     "haveAnAccountQuestion": "Already have an account?",
     "dontHaveAnAccountQuestion": "Don't have an account?",
     "logIn": "Log in"
+  },
+  "instructions": {
+    "instruction1": {
+      "sectionTitle": "Comprehension Comes First",
+      "paragraph1": "Reading IS Comprehension. If you didn't comprehend it, then you didn't read it - you only recognized the words. To improve comprehension, you need to focus on information that is more meaningful and easier to comprehend. You do this by reading whole phrases at a time. Complete phrases hold more meaning than the individual words",
+      "paragraph2": "To move to the next phrase use the button or click either space, down arrow, right arrow"
+    },
+    "instruction2": {
+      "sectionTitle": "Think About What You Read",
+      "paragraph1": "Did you ever read a page - then wonder what you just read? Reading the page was just a total waste of 2-3 (or more) minutes of your time!",
+      "paragraph2": "But, you didn't really read anything - you just recognized a bunch of words",
+      "paragraph3": "The key to comprehension is: THINK ABOUT WHAT YOU READ. Thinking about what you read, means visualizing the concepts - seeing the ideas in your mind's eye",
+      "paragraph4": "This time the phrases will be shown with surrounding text to make you used to more text, don't get distracted!"
+    },
+    "instruction3": {
+      "sectionTitle": "Think in Phrases",
+      "paragraph1": "Phrases are more meaningful than individual words. The more meaningful an idea, the easier it is to conceptualize, and the faster it is to understand",
+      "paragraph2": "It might seem strange to try reading 3, 4, or even 7 words at the same time - but it's really no stranger than reading 7 letters at a time. The word \"letters\" has 7 letters, and you read that all at once ",
+      "paragraph3": "Reading one-word-at-a-time is not only very slow, but it's also wasteful and inefficient. Why think of 'big' and then 'black' and then 'dog', instead of looking at the phrase as one complete idea?",
+      "paragraph4": "Phrases will be shown as in the previous exercise, you will read the same text twice - firstly with automatic phrase switching at 120% speed of your last 3 results. After that you will read in manual mode as before"
+    },
+    "instruction4": {
+      "sectionTitle": "Give Attributes to Abstract Ideas",
+      "paragraph1": "It's one thing to visualize physical objects, but what about abstract ideas? This is when we use a skill that humans excel at; that is reasoning about unobservable, imaginary things - envisioning things conceptually",
+      "paragraph2": "Conceptualizing means recognizing attributes. Attributes describe the essence of a thing, whether it is physical or abstract",
+      "paragraph3": "Think of any physical or non-physical thing or idea - but without naming it. A name is just another attribute, but it is often used as a shortcut for thinking. Think about without naming something, and you are forced to think conceptually about what it really is",
+      "paragraph4": "For example, if you think of an apple you might think of its taste, shape, color, food group, texture, etc. The name is only one attribute, and not even required to imagine what it is."
+    },
+    "instruction5": {
+      "sectionTitle": "Focus on Visualization - Bad Habits Will Go Away By Themselves",
+      "paragraph1": "Sub-Vocalizing is a habit, but it actually is beneficial. I'm sure you've noticed it helps you understand better; especially difficult material. But when you improve comprehension through visualization, sub-vocalization fades away on its own",
+      "paragraph2": "Trying to NOT sub-vocalize is counter-productive; the same way that trying to NOT yawn is",
+      "paragraph3": "Concentrate on seeing whole ideas, visualizing the ideas to make them more meaningful; and you will find the sub-vocalizing will disappear. In fact trying to visualize and vocalize together, is as difficult as trying to rub your tummy and pat your head at the same time"
+    },
+    "instruction6": {
+      "sectionTitle": "Speed Reading Requires Practice",
+      "paragraph1": "Effective reading is a skill. Like any skill, it can be difficult to explain in words, plus it takes practice, and a little experimentation to get it",
+      "paragraph2": "Think of how you learned to ride a bike. No one could tell you in words exactly what to do. They could describe what they do, but you still had to get out there and wobble about until you got it"
+    },
+    "instruction7": {
+      "sectionTitle": "Train on Normal Texts",
+      "paragraph1": "The main thing to be careful of when reading normal text, is not to go too fast. In fact you must be willing to slow down a bit at first and because it will take a bit more concentration to identify phrases on your own",
+      "paragraph2": "It can be very tempting to push your speed, but remember that you can only read as fast as you can comprehend. Any faster and you are merely spinning your wheels - lots of noise and excitement, but little scenery",
+      "paragraph3": "Now you can give your fingers a rest and control the speed with your eyes, you will just switch between the pages, not phrases"
+    },
+    "instruction8": {
+      "sectionTitle": "Realize When You Lost Concentration",
+      "paragraph1": "As read, your concentration will constantly vary. It's like a light that gets brighter and dimmer. But it can also shut off; where you'll notice you've been reading without understanding",
+      "paragraph2": "This usually means you passed some text you didn't really understand. This information gap makes the following text less meaningful, and so your mind simply tunes it out altogether.",
+      "paragraph3": "Besides brightening your concentration, you also have to narrow it like a spot light, avoiding distractions. To focus your attention, concentrate on visualizing concepts. It's easier to keep your mind on something you understand, and visualizing makes text more meaningful"
+    }
+  },
+  "exerciseTitles": {
+    "exercise1": "Stationary Phrases",
+    "exercise2": "Surrounding Text",
+    "exercise3": "Surrounding Text - Auto Mode",
+    "exercise4": "Horizontal Scanning",
+    "exercise5": "Horizontal Scanning - Smaller Font",
+    "exercise6": "Horizontal Scanning - Smaller Font Auto Mode",
+    "exercise7": "Black & Gray Text",
+    "exercise8": "Black & Gray Text - Auto Mode"
   }
 }

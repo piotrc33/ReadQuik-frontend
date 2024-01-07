@@ -54,7 +54,9 @@
       </div>
       <div class="repetition-info">#1 of 10</div>
 
-      <h1 class="title">{{ exerciseTitles[state.currentExercise] }}</h1>
+      <ng-container *transloco="let t; read: 'exerciseTitles'">
+        <h1 class="title">{{ t("exercise" + state.currentExercise) }}</h1>
+      </ng-container>
 
       <div class="advice">
         <span class="highlight">Visualize</span> what you read
@@ -67,8 +69,20 @@
       </div>
 
       <div class="button-container learn-more">
-        <button class="secondary">{{ t("learnMore") }}</button>
+        <button class="secondary" (click)="showInstructions()">
+          {{ t("instructionsButton") }}
+        </button>
       </div>
+      <app-dialog
+        (close)="instructionsOpened = false"
+        *ngIf="instructionsOpened"
+      >
+        <instruction
+          content
+          [instructionNumber]="state.currentExercise"
+          [instructionObject]="(instructions$ | async)['instruction' + state.currentExercise]"
+        ></instruction>
+      </app-dialog>
 
       <button
         class="primary start-button"
@@ -78,16 +92,9 @@
         {{ t("start") }}
       </button>
 
-      <ng-container *ngIf="state.started && state.currentExercise">
-        <div
-          [style.font-size.px]="state.currentExercise < 5 ? 18 : 16"
-          class="exercises-overlay"
-        >
-          <app-exercise-panel>
-            <router-outlet></router-outlet>
-          </app-exercise-panel>
-        </div>
-      </ng-container>
+      <exercise-panel
+        *ngIf="state.started && state.currentExercise"
+      ></exercise-panel>
     </section>
 
     <section class="recents">

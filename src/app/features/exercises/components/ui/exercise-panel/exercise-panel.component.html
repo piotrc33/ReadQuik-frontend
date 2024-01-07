@@ -1,11 +1,17 @@
-<div class="exercise-panel">
-  <div class="panel-header">
-    <img (click)="state.exit$.next()" class="close-icon" src="./assets/images/close-icon.svg" alt="close">
-  </div>
-  <div class="panel-content">
-    <ng-content></ng-content>
-  </div>
-  <div class="panel-footer">
-    <button class="secondary" *ngIf="state.exerciseMode === 'manual'" (click)="handleClick()" (keydown.space)="$event.preventDefault()">next phrase</button>
-  </div>
-</div>
+<app-dialog
+  (close)="state.exit$.next()"
+  *ngIf="state.currentExercise"
+  [style.font-size.px]="state.currentExercise < 5 ? 18 : 16"
+>
+  <router-outlet content></router-outlet>
+  <ng-container footer *transloco="let t">
+    <button
+      class="secondary"
+      *ngIf="state.exerciseMode === 'manual'"
+      (click)="handleClick()"
+      (keydown.space)="$event.preventDefault()"
+    >
+      {{ t('nextPhrase') }}
+    </button>
+  </ng-container>
+</app-dialog>
