@@ -13,13 +13,14 @@ import { Exercise8Component } from './components/exercise8/exercise8.component';
 import { ExercisesComponent } from './components/exercises/exercises.component';
 import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.component';
 import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
-import { InstructionComponent } from './components/ui/instructions/instruction/instruction.component';
+import { InstructionComponent } from './components/ui/instruction/instruction.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ExercisesHttpService } from './services/exercises-http.service';
 import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { TextService } from './services/text.service';
 import { InstructionsService } from './services/instructions.service';
+import { AdviceComponent } from './components/ui/advice/advice.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { InstructionsService } from './services/instructions.service';
     Exercise7Component,
     Exercise8Component,
     InstructionComponent,
+    AdviceComponent,
   ],
   imports: [
     CommonModule,

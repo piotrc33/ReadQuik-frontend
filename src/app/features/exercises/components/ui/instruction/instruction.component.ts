@@ -12,7 +12,7 @@ export class InstructionComponent {
   instructionNumber?: number;
 
   @Input()
-  set instructionObject(value: Record<string, string>) {
+  set instructionObject(value: any) {
     this.instructionKeys = Object.keys(value);
   };
 

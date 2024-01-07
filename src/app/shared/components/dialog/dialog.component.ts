@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
 
 @Component({
@@ -15,5 +15,10 @@ export class DialogComponent {
   ngOnInit(): void {
     this.state.panelContentElement =
       this.el.nativeElement.querySelector('.dialog-content');
+  }
+
+  @HostListener('document:keydown.escape', ['$event'])
+  handleEscapeKey() {
+    this.close.emit();
   }
 }

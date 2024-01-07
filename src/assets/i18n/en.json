@@ -109,5 +109,14 @@
     "exercise6": "Horizontal Scanning - Smaller Font Auto Mode",
     "exercise7": "Black & Gray Text",
     "exercise8": "Black & Gray Text - Auto Mode"
+  },
+  "advice": {
+    "visualize": "Visualize",
+    "whatYouRead": "what you read",
+    "focusOn": "Focus on",
+    "comprehension": "comprehension",
+    "thinkIn": "Think in",
+    "ideas": "ideas",
+    "notWords": "not words"
   }
 }

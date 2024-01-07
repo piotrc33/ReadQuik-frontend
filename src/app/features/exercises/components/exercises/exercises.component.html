@@ -46,7 +46,7 @@
       </button>
     </section>
 
-    <section class="exercise center" *ngIf="state.currentExercise">
+    <section class="exercise center" *ngIf="state.currentExercise && (instructions$ | async) as instruction">
       <h2 class="number">{{ t("exercise") }} {{ state.currentExercise }}</h2>
       <div class="repetition-indicator">
         <div class="circle active"></div>
@@ -58,15 +58,7 @@
         <h1 class="title">{{ t("exercise" + state.currentExercise) }}</h1>
       </ng-container>
 
-      <div class="advice">
-        <span class="highlight">Visualize</span> what you read
-      </div>
-      <div class="advice">
-        Focus on <span class="highlight">comprehension</span>
-      </div>
-      <div class="advice">
-        Think in <span class="highlight">ideas</span> not words
-      </div>
+      <advice></advice>
 
       <div class="button-container learn-more">
         <button class="secondary" (click)="showInstructions()">
@@ -80,7 +72,9 @@
         <instruction
           content
           [instructionNumber]="state.currentExercise"
-          [instructionObject]="(instructions$ | async)['instruction' + state.currentExercise]"
+          [instructionObject]="
+            instruction['instruction' + state.currentExercise]
+          "
         ></instruction>
       </app-dialog>
 

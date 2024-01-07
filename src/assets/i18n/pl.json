@@ -109,5 +109,14 @@
     "exercise6": "Poziome skanowanie - mniejsza czcionka, tryb auto",
     "exercise7": "Czarny i szary tekst",
     "exercise8": "Czarny i szary tekst - tryb auto"
+  },
+  "advice": {
+    "visualize": "Wizualizuj",
+    "whatYouRead": "to co czytasz",
+    "focusOn": "Skup się na",
+    "comprehension": "zrozumieniu",
+    "thinkIn": "Myśl o",
+    "ideas": "ideach",
+    "notWords": "a nie słowach"
   }
 }
