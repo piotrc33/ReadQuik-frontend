@@ -17,6 +17,7 @@ export class ExercisesStateService {
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   currentExercise?: number;
+  progressPercent: number = 0;
 
   pageYPosition: number = 0;
 
@@ -84,5 +85,6 @@ export class ExercisesStateService {
 
   nextFragment(): void {
     this.phraseNumber++;
+    this.progressPercent = Math.round((this.phraseNumber / this.bookService.wordPhrases.length) * 100); 
   }
 }

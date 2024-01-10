@@ -57,6 +57,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   reset(): void {
     this.state.phraseNumber = 0;
     this.state.pageYPosition = 0;
+    this.state.progressPercent = 0;
   }
 
   override ngOnDestroy(): void {

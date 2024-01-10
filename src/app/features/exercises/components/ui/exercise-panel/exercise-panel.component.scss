@@ -1,0 +1,9 @@
+@import 'variables';
+
+.progress-bar {
+  height: 6px;
+  width: 100%;
+  background-color: $violet-600;
+  margin-bottom: 12px;
+  border-radius: 10px;
+}

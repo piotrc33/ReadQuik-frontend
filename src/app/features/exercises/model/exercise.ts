@@ -34,6 +34,7 @@ export class Exercise implements OnDestroy {
   ngOnDestroy(): void {
     this.state.phraseNumber = 0;
     this.state.pageYPosition = 0;
+    this.state.progressPercent = 0;
     this.subs.dispose();
   }
 
