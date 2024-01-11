@@ -1,0 +1,19 @@
+@import "variables";
+
+.repetition-indicator {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-04;
+  margin-bottom: $spacing-03;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border: 1px solid $violet-500;
+  border-radius: 50%;
+
+  &.active {
+    background-color: $violet-500;
+  }
+}

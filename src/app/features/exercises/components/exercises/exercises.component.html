@@ -46,13 +46,18 @@
       </button>
     </section>
 
-    <section class="exercise center" *ngIf="state.currentExercise && (instructions$ | async) as instruction">
+    <section
+      class="exercise center"
+      *ngIf="state.currentExercise && (instructions$ | async) as instruction"
+    >
       <h2 class="number">{{ t("exercise") }} {{ state.currentExercise }}</h2>
-      <div class="repetition-indicator">
-        <div class="circle active"></div>
-        <div *ngFor="let i of [].constructor(9)" class="circle"></div>
+      <repetition-indicator
+        [totalCount]="10"
+        [activeCount]="getCurrentExerciseRepetitions() - 1"
+      ></repetition-indicator>
+      <div class="repetition-info">
+        #{{ getCurrentExerciseRepetitions() + 1 }} of 10
       </div>
-      <div class="repetition-info">#1 of 10</div>
 
       <ng-container *transloco="let t; read: 'exerciseTitles'">
         <h1 class="title">{{ t("exercise" + state.currentExercise) }}</h1>

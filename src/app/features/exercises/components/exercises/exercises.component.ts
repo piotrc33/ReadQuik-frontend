@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { ExercisesStateService } from '../../services/exercises-state.service';
 import { ResultsService } from 'src/app/features/services/results.service';
+import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'exercises',
@@ -11,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./exercises.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExercisesComponent implements OnInit {
+export class ExercisesComponent implements OnInit, AfterViewChecked {
   instructionsOpened: boolean = false;
   readonly instructions$ = this.instructionService.getExerciseInstructions();
 
@@ -31,6 +30,15 @@ export class ExercisesComponent implements OnInit {
     }
 
     resultsService.updateRecentResults();
+  }
+
+  getCurrentExerciseRepetitions(): number {
+    if(this.state.progress) {
+      return this.state.progress.find(
+        (item) => item.exerciseNumber === this.state.currentExercise
+      )?.repetitions || 0;
+    }
+    return 0;
   }
 
   ngOnInit(): void {

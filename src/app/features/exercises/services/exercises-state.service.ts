@@ -6,6 +6,7 @@ import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
+import { SingleProgressI } from 'src/app/api/model/single-progress.i';
 
 @Injectable()
 export class ExercisesStateService {
@@ -18,6 +19,7 @@ export class ExercisesStateService {
   exerciseMode: ExerciseModeT = 'manual';
   currentExercise?: number;
   progressPercent: number = 0;
+  progress?: SingleProgressI[];
 
   pageYPosition: number = 0;
 
@@ -72,6 +74,10 @@ export class ExercisesStateService {
       this.exHttpService
         .saveResult(this.speed, this.currentExercise, bookId)
         .subscribe(console.log);
+
+        this.exHttpService
+        .updateExercisesProgress$(this.currentExercise)
+        .subscribe(data => this.progress = data);
       if (this.bookService.currentSegment) {
         this.bookService
           .updateBookProgress(bookId, this.bookService.currentSegment.number)

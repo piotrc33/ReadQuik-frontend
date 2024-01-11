@@ -60,7 +60,7 @@
       "paragraph1": "Czy kiedykolwiek przeczytałeś/aś stronę, a potem zastanawiałeś się, co właśnie przeczytałeś/aś? Przeczytanie strony było całkowitą stratą 2-3 (lub więcej) minut!",
       "paragraph2": "Tak naprawdę nic nie przeczytałeś/aś - po prostu rozpoznałeś kilka słów",
       "paragraph3": "Kluczem do zrozumienia jest: MYŚLENIE O TYM, CO CZYTASZ. Myślenie o tym, co czytasz, oznacza wizualizację pojęć - widzenie pomysłów w swoim umyśle",
-      "paragraph4": "Tym razem frazy będą wyświetlane z otaczającym tekstem, aby przyzwyczaić cię do większej ilości tekstu, nie rozpraszaj się!"
+      "paragraph4": "Tym razem frazy będą wyświetlane z sąsiadującym tekstem, aby przyzwyczaić cię do większej ilości tekstu, nie rozpraszaj się!"
     },
     "instruction3": {
       "sectionTitle": "Myśl we frazach",
@@ -102,8 +102,8 @@
   },
   "exerciseTitles": {
     "exercise1": "Pojedyncze frazy",
-    "exercise2": "Otaczający tekst",
-    "exercise3": "Otaczający tekst - tryb auto",
+    "exercise2": "Sąsiadujący tekst",
+    "exercise3": "Sąsiadujący tekst - tryb auto",
     "exercise4": "Poziome skanowanie",
     "exercise5": "Poziome skanowanie - mniejsza czcionka",
     "exercise6": "Poziome skanowanie - mniejsza czcionka, tryb auto",
