@@ -3,10 +3,10 @@ import { Subject } from 'rxjs';
 import { ResultsService } from 'src/app/features/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
+import { ExercisesProgressStateService } from '../../services/exercises-progress-state.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
-import { SingleProgressI } from 'src/app/api/model/single-progress.i';
 
 @Injectable()
 export class ExercisesStateService {
@@ -19,7 +19,6 @@ export class ExercisesStateService {
   exerciseMode: ExerciseModeT = 'manual';
   currentExercise?: number;
   progressPercent: number = 0;
-  progress?: SingleProgressI[];
 
   pageYPosition: number = 0;
 
@@ -33,7 +32,8 @@ export class ExercisesStateService {
     readonly text: TextService,
     private exHttpService: ExercisesHttpService,
     readonly bookService: BookService,
-    private resultsService: ResultsService
+    private resultsService: ResultsService,
+    private progressService: ExercisesProgressStateService
   ) {}
 
   get started(): boolean {
@@ -77,7 +77,7 @@ export class ExercisesStateService {
 
         this.exHttpService
         .updateExercisesProgress$(this.currentExercise)
-        .subscribe(data => this.progress = data);
+        .subscribe(data => this.progressService.next(data));
       if (this.bookService.currentSegment) {
         this.bookService
           .updateBookProgress(bookId, this.bookService.currentSegment.number)

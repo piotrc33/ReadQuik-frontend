@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../../library/services/book.service';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
+import { ExercisesProgressStateService } from 'src/app/features/services/exercises-progress-state.service';
 
 @Component({
   selector: 'app-main',
@@ -14,12 +15,13 @@ export class MainComponent {
     public readonly authService: AuthService,
     private router: Router,
     readonly bookService: BookService,
-    readonly state: ExercisesStateService
+    readonly state: ExercisesStateService,
+    readonly progressService: ExercisesProgressStateService
   ) {
     bookService.initialData$().subscribe((data) => {
       if (data) {
         bookService.readingData$.next(data);
-        state.progress = data.exercisesProgress;
+        progressService.next(data.exercisesProgress);
       }
     });
   }

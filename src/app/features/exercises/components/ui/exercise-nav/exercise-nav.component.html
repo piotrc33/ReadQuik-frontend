@@ -2,7 +2,7 @@
   <a
     *ngFor="let _ of [].constructor(8); let i = index"
     class="exercise-link"
-    [ngClass]="unlocked.includes(i + 1) ? 'unlocked' : 'locked'"
+    [ngClass]="i < totalUnlocked ? 'unlocked' : 'locked'"
     routerLinkActive="active"
     [routerLink]="'./' + (i + 1)"
     >{{ i + 1 }}</a

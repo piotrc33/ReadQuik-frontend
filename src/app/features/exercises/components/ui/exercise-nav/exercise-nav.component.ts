@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'exercise-nav',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./exercise-nav.component.scss']
 })
 export class ExerciseNavComponent {
-  unlocked = [1, 2, 3, 4, 5, 6, 7, 8];
+  @Input()
+  totalUnlocked: number = 1;
 }

@@ -1,6 +1,8 @@
 <div class="exercises" *transloco="let t">
   <div class="nav">
-    <exercise-nav></exercise-nav>
+    <exercise-nav
+      [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
+    ></exercise-nav>
   </div>
   <div class="content">
     <section class="book">
@@ -51,13 +53,32 @@
       *ngIf="state.currentExercise && (instructions$ | async) as instruction"
     >
       <h2 class="number">{{ t("exercise") }} {{ state.currentExercise }}</h2>
-      <repetition-indicator
-        [totalCount]="10"
-        [activeCount]="getCurrentExerciseRepetitions() - 1"
-      ></repetition-indicator>
-      <div class="repetition-info">
-        #{{ getCurrentExerciseRepetitions() + 1 }} of 10
-      </div>
+      <ng-container
+        *ngIf="
+          progressState.getRepetitions(state.currentExercise)
+            | async as repetitions;
+          else zeroIndicator
+        "
+      >
+        <repetition-indicator
+          [totalCount]="10"
+          [activeCount]="repetitions"
+        ></repetition-indicator>
+        <div class="repetition-info">#{{ repetitions + 1 }} of 10</div>
+      </ng-container>
+      <ng-template #zeroIndicator>
+        <repetition-indicator
+          [totalCount]="10"
+          [activeCount]="0"
+        ></repetition-indicator>
+        <div class="repetition-info">
+          {{
+            (progressState.isExerciseUnlocked(state.currentExercise) | async)
+              ? "#1 of 10"
+              : t("willNotSave")
+          }}
+        </div>
+      </ng-template>
 
       <ng-container *transloco="let t; read: 'exerciseTitles'">
         <h1 class="title">{{ t("exercise" + state.currentExercise) }}</h1>

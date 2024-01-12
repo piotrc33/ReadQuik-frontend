@@ -14,6 +14,7 @@
   "instructionsButton": "Instrukcje",
   "start": "Start",
   "nextPhrase": "Następna fraza",
+  "willNotSave": "Twój postęp nie zostanie zapisany! Najpierw ukończ poprzednie ćwiczenia",
   "library": {
     "title": "Tytuł",
     "author": "Autor",

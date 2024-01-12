@@ -1,5 +1,6 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { ExercisesProgressStateService } from 'src/app/features/services/exercises-progress-state.service';
 import { ResultsService } from 'src/app/features/services/results.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
@@ -8,7 +9,6 @@ import { InstructionsService } from '../../services/instructions.service';
   selector: 'exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExercisesComponent implements OnInit, AfterViewChecked {
   instructionsOpened: boolean = false;
@@ -19,7 +19,8 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
     private readonly router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     public resultsService: ResultsService,
-    private readonly instructionService: InstructionsService
+    private readonly instructionService: InstructionsService,
+    public readonly progressState: ExercisesProgressStateService
   ) {
     const exerciseNumber = Number(router.url.split('/').pop());
     if (exerciseNumber) {
@@ -30,15 +31,6 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
     }
 
     resultsService.updateRecentResults();
-  }
-
-  getCurrentExerciseRepetitions(): number {
-    if(this.state.progress) {
-      return this.state.progress.find(
-        (item) => item.exerciseNumber === this.state.currentExercise
-      )?.repetitions || 0;
-    }
-    return 0;
   }
 
   ngOnInit(): void {

@@ -14,6 +14,7 @@
   "instructionsButton": "Instructions",
   "start": "Start",
   "nextPhrase": "Next phrase",
+  "willNotSave": "Your progress will not be saved! Please finish previous exercise",
   "library": {
     "title": "Title",
     "author": "Author",
