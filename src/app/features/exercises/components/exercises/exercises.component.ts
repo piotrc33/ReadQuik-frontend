@@ -1,18 +1,28 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ExercisesProgressStateService } from 'src/app/features/services/exercises-progress-state.service';
 import { ResultsService } from 'src/app/features/services/results.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
+import { SubscriptionContainer } from 'src/app/utils/subscription-container';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
 })
-export class ExercisesComponent implements OnInit, AfterViewChecked {
+export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
   instructionsOpened: boolean = false;
   readonly instructions$ = this.instructionService.getExerciseInstructions();
+
+  subs = new SubscriptionContainer();
 
   constructor(
     public state: ExercisesStateService,
@@ -24,9 +34,9 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
   ) {
     const exerciseNumber = Number(router.url.split('/').pop());
     if (exerciseNumber) {
-      this.state.currentExercise = exerciseNumber;
+      this.state.currentExercise$.next(exerciseNumber);
     } else {
-      this.state.currentExercise = this.state.lastPracticed;
+      this.state.currentExercise$.next(this.state.lastPracticed);
       this.router.navigate([`exercises/${this.state.lastPracticed}`]);
     }
 
@@ -36,11 +46,16 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        this.state.currentExercise = Number(e.url.split('/').pop());
+        const exNum = Number(e.url.split('/').pop())
+        this.state.currentExercise$.next(exNum);
         if (e.url === '/exercises')
           this.router.navigate([`exercises/${this.state.lastPracticed}`]);
       }
     });
+
+    this.subs.add = this.state.currentExercise$.pipe(
+      switchMap(ex => this.progressState.shouldShowInstruction(ex))
+    ).subscribe(val => this.instructionsOpened = val);
   }
 
   ngAfterViewChecked(): void {
@@ -61,5 +76,9 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
 
   showInstructions() {
     this.instructionsOpened = true;
+  }
+
+  ngOnDestroy(): void {
+    this.subs.dispose()
   }
 }

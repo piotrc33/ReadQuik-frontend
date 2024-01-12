@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ResultsService } from 'src/app/features/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
@@ -17,8 +17,8 @@ export class ExercisesStateService {
   phraseNumber: number = 0;
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
-  currentExercise?: number;
   progressPercent: number = 0;
+  currentExercise$ = new BehaviorSubject<number>(1);
 
   pageYPosition: number = 0;
 
@@ -70,13 +70,13 @@ export class ExercisesStateService {
     console.log(this.speed, 'wpm');
 
     const bookId = this.bookService.currentBookId();
-    if (this.currentExercise) {
+    if (this.currentExercise$.value) {
       this.exHttpService
-        .saveResult(this.speed, this.currentExercise, bookId)
+        .saveResult(this.speed, this.currentExercise$.value, bookId)
         .subscribe(console.log);
 
         this.exHttpService
-        .updateExercisesProgress$(this.currentExercise)
+        .updateExercisesProgress$(this.currentExercise$.value)
         .subscribe(data => this.progressService.next(data));
       if (this.bookService.currentSegment) {
         this.bookService

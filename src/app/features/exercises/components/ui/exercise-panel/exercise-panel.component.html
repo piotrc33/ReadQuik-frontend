@@ -1,11 +1,11 @@
 <app-dialog
   (close)="state.exit$.next()"
-  *ngIf="state.currentExercise"
-  [style.font-size.px]="state.currentExercise < 5 ? 18 : 16"
+  *ngIf="state.currentExercise$ | async as exNum"
+  [style.font-size.px]="exNum < 5 ? 18 : 16"
 >
   <router-outlet content></router-outlet>
   <ng-container footer *transloco="let t">
-    <div class="progress-bar" *ngIf="state.currentExercise < 7" [style.width]="state.progressPercent + '%'"></div>
+    <div class="progress-bar" *ngIf="exNum < 7" [style.width]="state.progressPercent + '%'"></div>
     <button
       class="secondary"
       *ngIf="state.exerciseMode === 'manual'"

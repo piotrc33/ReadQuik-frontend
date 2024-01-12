@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, ReplaySubject, combineLatest, map, take } from 'rxjs';
 import { SingleProgressI } from 'src/app/api/model/single-progress.i';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExercisesProgressStateService {
-  private exercisesProgress$ = new BehaviorSubject<SingleProgressI[]>([]);
+  private exercisesProgress$ = new ReplaySubject<SingleProgressI[]>(1);
 
   unlockedExercisesCount$ = this.exercisesProgress$.asObservable().pipe(
     map((array) => {
@@ -43,5 +43,17 @@ export class ExercisesProgressStateService {
     return this.unlockedExercisesCount$.pipe(
       map(count => exerciseNumber <= count)
     )    
+  }
+
+  shouldShowInstruction(exerciseNumber: number): Observable<boolean> {
+    const repetitions$ = this.getRepetitions(exerciseNumber);
+    const isUnlocked$ = this.isExerciseUnlocked(exerciseNumber);
+
+    return combineLatest([repetitions$, isUnlocked$]).pipe(
+      map(([repetitions, isUnlocked]) => {
+        return (repetitions === 0 && isUnlocked);
+      }),
+      take(1)
+    )
   }
 }
