@@ -15,4 +15,7 @@ export class TextInputWithValidationComponent {
 
   @Input()
   label?: string;
+
+  @Input()
+  inputType?: string = 'text';
 }

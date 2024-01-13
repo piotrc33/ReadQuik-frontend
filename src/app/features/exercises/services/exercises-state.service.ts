@@ -63,21 +63,17 @@ export class ExercisesStateService {
 
   finish(): void {
     this.end();
-    this.speed = calculateSpeed(
-      this.startTime,
-      this.bookService.wordPhrases
-    );
-    console.log(this.speed, 'wpm');
+    this.speed = calculateSpeed(this.startTime, this.bookService.wordPhrases);
 
     const bookId = this.bookService.currentBookId();
-    if (this.currentExercise$.value) {
+    if (this.currentExercise$.value && this.progressService.currentExerciseUnlocked$.value) {
       this.exHttpService
         .saveResult(this.speed, this.currentExercise$.value, bookId)
         .subscribe(console.log);
 
-        this.exHttpService
+      this.exHttpService
         .updateExercisesProgress$(this.currentExercise$.value)
-        .subscribe(data => this.progressService.next(data));
+        .subscribe((data) => this.progressService.next(data));
       if (this.bookService.currentSegment) {
         this.bookService
           .updateBookProgress(bookId, this.bookService.currentSegment.number)
@@ -91,6 +87,8 @@ export class ExercisesStateService {
 
   nextFragment(): void {
     this.phraseNumber++;
-    this.progressPercent = Math.round((this.phraseNumber / this.bookService.wordPhrases.length) * 100); 
+    this.progressPercent = Math.round(
+      (this.phraseNumber / this.bookService.wordPhrases.length) * 100
+    );
   }
 }

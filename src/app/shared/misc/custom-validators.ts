@@ -2,13 +2,13 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export class CustomValidators {
   static email(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+    const value: string = control.value;
 
     if (!value) {
       return null;
     }
 
-    const isValidEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/.test(
+    const isValidEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(
       value
     );
 

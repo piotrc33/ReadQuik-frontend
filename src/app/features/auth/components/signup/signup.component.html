@@ -11,6 +11,7 @@
     ></text-input-with-validation>
 
     <text-input-with-validation
+      inputType="password"
       [label]="t('password')"
       [control]="signupForm.controls['password']"
     ></text-input-with-validation>
@@ -21,11 +22,11 @@
       [class.disabled]="signupForm.invalid"
       [disabled]="signupForm.invalid"
     >
-      {{ t('continue') }}
+      {{ t("continue") }}
     </button>
     <div class="alt-info">
-      {{ t('haveAnAccountQuestion') }}
-      <a routerLink="/auth/login" class="alt-link">{{ t('logIn') }}</a>
+      {{ t("haveAnAccountQuestion") }}
+      <a routerLink="/auth/login" class="alt-link">{{ t("logIn") }}</a>
     </div>
   </form>
 </app-auth-panel>
