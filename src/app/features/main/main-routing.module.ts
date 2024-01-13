@@ -18,6 +18,7 @@ const routes: Routes = [
         (m) => m.LibraryRoutingModule
       ),
   },
+  { path: '**', redirectTo: 'exercises' },
 ];
 
 @NgModule({
