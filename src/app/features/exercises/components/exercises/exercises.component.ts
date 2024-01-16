@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { ExercisesProgressStateService } from 'src/app/features/services/exercises-progress-state.service';
-import { ResultsService } from 'src/app/features/services/results.service';
+import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
+import { ResultsService } from 'src/app/services/results.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';

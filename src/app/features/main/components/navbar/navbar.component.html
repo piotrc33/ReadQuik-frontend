@@ -8,11 +8,15 @@
       <a class="navbar-link" routerLink="library" routerLinkActive="active">{{
         t("library")
       }}</a>
-      <a class="navbar-link">{{ t("progress") }}</a>
+      <a class="navbar-link" routerLink="progress" routerLinkActive="active">{{
+        t("progress")
+      }}</a>
+
       <div class="user" (click)="handleDropdown()">
         <div class="username">{{ username }}</div>
         <div class="user-circle">{{ username[0].toUpperCase() }}</div>
       </div>
+
       <div *ngIf="dropdownOpened" class="dropdown-panel user-dropdown">
         <section class="dropdown-header">
           <div class="user-circle">{{ username[0].toUpperCase() }}</div>
@@ -25,7 +29,7 @@
               src="./assets/images/cog-8-tooth.svg"
               alt="cog"
             />
-            <div>{{ t('settings') }}</div>
+            <div>{{ t("settings") }}</div>
           </div>
           <div
             class="option"
@@ -37,13 +41,17 @@
               src="./assets/images/arrow-left-on-rectangle.svg"
               alt="arrow-left"
             />
-            <div>{{ t('logout') }}</div>
+            <div>{{ t("logout") }}</div>
           </div>
         </section>
       </div>
       <div>
-        <span class="lang" (click)="changeLang('Polish')">{{ flags["Polish"] }}</span>
-        <span class="lang" (click)="changeLang('English')">{{ flags["English"] }}</span>
+        <span class="lang" (click)="changeLang('Polish')">{{
+          flags["Polish"]
+        }}</span>
+        <span class="lang" (click)="changeLang('English')">{{
+          flags["English"]
+        }}</span>
       </div>
     </div>
   </div>

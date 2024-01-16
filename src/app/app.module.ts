@@ -12,6 +12,7 @@ import { MainModule } from './features/main/main.module';
 import { LibraryModule } from './features/library/library.module';
 import { TranslocoRootModule } from './transloco-root.module';
 import { SharedModule } from './shared/shared.module';
+import { ProgressModule } from './features/progress/progress.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { SharedModule } from './shared/shared.module';
     ExercisesModule,
     MainModule,
     LibraryModule,
+    ProgressModule,
     HttpClientModule,
     TranslocoRootModule,
     SharedModule

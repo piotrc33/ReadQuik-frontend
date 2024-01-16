@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { ResultsService } from 'src/app/features/services/results.service';
+import { ResultsService } from 'src/app/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
-import { ExercisesProgressStateService } from '../../services/exercises-progress-state.service';
+import { ExercisesProgressStateService } from '../../../services/exercises-progress-state.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';

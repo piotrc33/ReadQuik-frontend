@@ -18,6 +18,13 @@ const routes: Routes = [
         (m) => m.LibraryRoutingModule
       ),
   },
+  {
+    path: 'progress',
+    loadChildren: () =>
+      import('../progress/progress-routing.module').then(
+        (m) => m.ProgressRoutingModule
+      ),
+  },
   { path: '**', redirectTo: 'exercises' },
 ];
 

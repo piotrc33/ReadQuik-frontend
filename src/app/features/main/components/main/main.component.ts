@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../../library/services/book.service';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
-import { ExercisesProgressStateService } from 'src/app/features/services/exercises-progress-state.service';
+import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
 
 @Component({
   selector: 'app-main',
