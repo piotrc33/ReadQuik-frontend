@@ -6,12 +6,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
 import { ResultsService } from 'src/app/services/results.service';
+import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
-import { SubscriptionContainer } from 'src/app/utils/subscription-container';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'exercises',
@@ -30,7 +30,8 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     public resultsService: ResultsService,
     private readonly instructionService: InstructionsService,
-    public readonly progressState: ExercisesProgressStateService
+    public readonly progressState: ExercisesProgressStateService,
+    private readonly cookieService: CookieService
   ) {
     const exerciseNumber = Number(router.url.split('/').pop());
     if (exerciseNumber) {
@@ -46,16 +47,24 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
   ngOnInit(): void {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        const exNum = Number(e.url.split('/').pop())
+        const exNum = Number(e.url.split('/').pop());
         this.state.currentExercise$.next(exNum);
         if (e.url === '/exercises')
           this.router.navigate([`exercises/${this.state.lastPracticed}`]);
       }
     });
 
-    this.subs.add = this.state.currentExercise$.pipe(
-      switchMap(ex => this.progressState.shouldShowInstruction(ex))
-    ).subscribe(val => this.instructionsOpened = val);
+    this.subs.add = this.state.currentExercise$.subscribe((val) => {
+      const cookieValue = this.cookieService.get(
+        `instruction${val}Opened`
+      );
+      const instructionsOpenedInPast = cookieValue
+        ? JSON.parse(cookieValue)
+        : false;
+      if (!instructionsOpenedInPast) {
+        this.showInstructionsAndSetCookie();
+      }
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -74,11 +83,16 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.state.pageYPosition -= panelBox!.height;
   }
 
-  showInstructions() {
+  showInstructionsAndSetCookie() {
     this.instructionsOpened = true;
+    this.cookieService.set(
+      `instruction${this.state.currentExercise$.value}Opened`,
+      'true',
+      2
+    );
   }
 
   ngOnDestroy(): void {
-    this.subs.dispose()
+    this.subs.dispose();
   }
 }

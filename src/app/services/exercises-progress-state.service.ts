@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
-  combineLatest,
   map,
-  take,
   tap
 } from 'rxjs';
 import { SingleProgressI } from 'src/app/api/model/single-progress.i';
@@ -55,18 +53,6 @@ export class ExercisesProgressStateService {
       tap((val) => {
         this.currentExerciseUnlocked$.next(val);
       })
-    );
-  }
-
-  shouldShowInstruction(exerciseNumber: number): Observable<boolean> {
-    const repetitions$ = this.getRepetitions(exerciseNumber);
-    const isUnlocked$ = this.isExerciseUnlocked(exerciseNumber);
-
-    return combineLatest([repetitions$, isUnlocked$]).pipe(
-      map(([repetitions, isUnlocked]) => {
-        return repetitions === 0 && isUnlocked;
-      }),
-      take(1)
     );
   }
 }

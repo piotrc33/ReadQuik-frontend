@@ -8,6 +8,7 @@ import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class ExercisesStateService {
@@ -34,6 +35,7 @@ export class ExercisesStateService {
     readonly bookService: BookService,
     private resultsService: ResultsService,
     private progressService: ExercisesProgressStateService,
+    private readonly cookieService: CookieService,
     private readonly router: Router
   ) {}
 
@@ -85,6 +87,9 @@ export class ExercisesStateService {
             (el) => el.exerciseNumber === this.currentExercise$.value
           );
           if(currentExerciseProgress?.repetitions === 0) {
+            this.cookieService.delete(
+              `instruction${this.currentExercise$.value + 1}Opened`
+            );
             this.router.navigate([`/exercises/${this.currentExercise$.value + 1}`]);
           }
         });
