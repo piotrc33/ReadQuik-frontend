@@ -35,7 +35,8 @@
       "Criminal": "Kryminał",
       "Fantasy": "Fantastyka",
       "Fiction": "Fikcja",
-      "Ethics": "Etyka"
+      "Ethics": "Etyka",
+      "Biography": "Biografia"
     },
     "coverImageUrl": "URL okładki",
     "upload": "Dodaj"
@@ -120,5 +121,9 @@
     "ideas": "ideach",
     "notWords": "a nie słowach"
   },
-  "speeds": "Szybkości(słowa na minutę)"
+  "speeds": "Szybkości(słowa na minutę)",
+  "tendency": "Tendencja",
+  "trialNumber": "Numer próby",
+  "wpmLabel": "Słowa na minutę",
+  "resultsChartTitle": "Twoje wszystkie wyniki"
 }

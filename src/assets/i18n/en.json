@@ -35,7 +35,8 @@
       "Criminal": "Criminal",
       "Fantasy": "Fantasy",
       "Fiction": "Fiction",
-      "Ethics": "Ethics"
+      "Ethics": "Ethics",
+      "Biography": "Biography"
     },
     "coverImageUrl": "Cover Image URL",
     "upload": "Upload"
@@ -120,5 +121,9 @@
     "ideas": "ideas",
     "notWords": "not words"
   },
-  "speeds": "Speeds(Words Per Minute)"
+  "speeds": "Speeds(Words Per Minute)",
+  "tendency": "Tendency",
+  "trialNumber": "Trial Number",
+  "wpmLabel": "Words Per Minute",
+  "resultsChartTitle": "Your All Time Speed Results"
 }

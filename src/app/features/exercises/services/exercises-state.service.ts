@@ -7,6 +7,7 @@ import { ExercisesProgressStateService } from '../../../services/exercises-progr
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ExercisesStateService {
@@ -26,14 +27,14 @@ export class ExercisesStateService {
   activeElement?: HTMLElement;
 
   startTime!: number;
-  speed?: number;
 
   constructor(
     readonly text: TextService,
     private exHttpService: ExercisesHttpService,
     readonly bookService: BookService,
     private resultsService: ResultsService,
-    private progressService: ExercisesProgressStateService
+    private progressService: ExercisesProgressStateService,
+    private readonly router: Router
   ) {}
 
   get started(): boolean {
@@ -63,17 +64,30 @@ export class ExercisesStateService {
 
   finish(): void {
     this.end();
-    this.speed = calculateSpeed(this.startTime, this.bookService.wordPhrases);
+    const speed = calculateSpeed(this.startTime, this.bookService.wordPhrases);
+
+    if (speed > 1000) return;
 
     const bookId = this.bookService.currentBookId();
-    if (this.currentExercise$.value && this.progressService.currentExerciseUnlocked$.value) {
+    if (
+      this.currentExercise$.value &&
+      this.progressService.currentExerciseUnlocked$.value
+    ) {
       this.exHttpService
-        .saveResult(this.speed, this.currentExercise$.value, bookId)
+        .saveResult(speed, this.currentExercise$.value, bookId)
         .subscribe(console.log);
 
       this.exHttpService
         .updateExercisesProgress$(this.currentExercise$.value)
-        .subscribe((data) => this.progressService.next(data));
+        .subscribe((data) => {
+          this.progressService.next(data);
+          const currentExerciseProgress = data.find(
+            (el) => el.exerciseNumber === this.currentExercise$.value
+          );
+          if(currentExerciseProgress?.repetitions === 0) {
+            this.router.navigate([`/exercises/${this.currentExercise$.value + 1}`]);
+          }
+        });
       if (this.bookService.currentSegment) {
         this.bookService
           .updateBookProgress(bookId, this.bookService.currentSegment.number)

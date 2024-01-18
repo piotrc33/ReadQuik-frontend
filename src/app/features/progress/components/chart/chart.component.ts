@@ -49,7 +49,7 @@ export class ChartComponent implements AfterViewInit {
           },
           {
             data: this.regressionPoints,
-            label: this.translocoService.translate('speeds'),
+            label: this.translocoService.translate('tendency'),
             pointRadius: 0,
             pointHitRadius: 0,
             borderColor: '#a3a3a3',
@@ -66,24 +66,39 @@ export class ChartComponent implements AfterViewInit {
         maintainAspectRatio: false,
         scales: {
           xAxis: {
-            min: 0.5,
+            min: 0,
+            max: this.dataPoints[this.dataPoints.length - 1].x + 0.5,
             ticks: {
               stepSize: 1,
             },
             title: {
               display: true,
-              text: 'Nr próby',
+              text: this.translocoService.translate('trialNumber'),
             },
           },
           yAxis: {
             min: 0,
+            suggestedMax: this.getMaxY() + 100,
             title: {
               display: true,
-              text: 'WPM(słowa na minutę)',
+              text: this.translocoService.translate('wpmLabel'),
             },
           },
         },
+        plugins: {
+          title: {
+            display: true,
+            text: this.translocoService.translate('resultsChartTitle'),
+          },
+          legend: {
+            display: false
+          }
+        },
       },
     });
+  }
+
+  getMaxY() {
+    return Math.max(...this.dataPoints.map(point => point.y));
   }
 }
