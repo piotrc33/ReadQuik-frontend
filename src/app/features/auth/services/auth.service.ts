@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
-import { UserI } from "src/app/api/model/user.i";
-import { LoginDataI } from "src/app/api/model/login-data.i";
+import { UserI } from "src/app/api/model/auth/user.i";
+import { LoginDataI } from "src/app/api/model/auth/login-data.i";
 import { jwtDecode } from "jwt-decode";
 
 @Injectable()

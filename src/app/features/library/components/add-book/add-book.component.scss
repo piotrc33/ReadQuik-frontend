@@ -39,27 +39,8 @@
       margin: $spacing-01;
     }
   }
+}
 
-  .select {
-    border: 1px solid $neutral-400;
-    border-radius: 8px;
-    color: $neutral-900;
-    background-color: #fff;
-    margin-bottom: $spacing-04;
-
-    &.small {
-      padding: 6px $spacing-03;
-      font-size: 14px;
-    }
-
-    &.medium {
-      padding: $spacing-03 $spacing-04;
-      font-size: 15px;
-    }
-
-    &.large {
-      padding: 12px 16px;
-      font-size: 16px;
-    }
-  }
+.select {
+  margin-bottom: $spacing-04;
 }

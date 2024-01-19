@@ -1,4 +1,4 @@
-import { ReadingProgressI } from "./reading-progress.i"
+import { ReadingProgressI } from "../reading-progress.i"
 
 export interface UserI {
   email: string,

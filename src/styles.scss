@@ -1,7 +1,7 @@
 @import "./reset.scss";
 @import "./variables.scss";
 @import "./fonts";
-@import '../src/app/features/exercises/exercises.module.scss';
+@import "../src/app/features/exercises/exercises.module.scss";
 
 body {
   font-family: "Roboto";
@@ -53,6 +53,28 @@ button {
     width: 16px;
     vertical-align: bottom;
     margin-left: $spacing-01;
+  }
+}
+
+.select {
+  border: 1px solid $neutral-400;
+  border-radius: 8px;
+  color: $neutral-900;
+  background-color: #fff;
+
+  &.small {
+    padding: 6px $spacing-03;
+    font-size: 14px;
+  }
+
+  &.medium {
+    padding: $spacing-03 $spacing-04;
+    font-size: 15px;
+  }
+
+  &.large {
+    padding: 12px 16px;
+    font-size: 16px;
   }
 }
 

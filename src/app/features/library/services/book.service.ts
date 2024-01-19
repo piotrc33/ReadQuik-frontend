@@ -11,7 +11,7 @@ import { BookDataI } from '../../../api/model/book-data.i';
 import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { SegmentI } from '../../../api/model/segment.i';
-import { UserI } from '../../../api/model/user.i';
+import { UserI } from '../../../api/model/auth/user.i';
 
 @Injectable()
 export class BookService {
@@ -65,6 +65,7 @@ export class BookService {
     params = params.set('title', filters.title);
     params = params.set('author', filters.author);
     params = params.set('tags', filters.tags.join(','));
+    params = params.set('language', filters.language);
 
     return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
   }

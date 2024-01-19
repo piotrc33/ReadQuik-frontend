@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginDataI } from 'src/app/api/model/login-data.i';
+import { LoginDataI } from 'src/app/api/model/auth/login-data.i';
 import { CustomValidators } from 'src/app/shared/misc/custom-validators';
 import { LoginFormI } from '../../model/login-form.i';
 import { AuthService } from '../../services/auth.service';

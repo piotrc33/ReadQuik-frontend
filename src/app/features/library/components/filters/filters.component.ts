@@ -1,5 +1,6 @@
+import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { FiltersI } from '../../../../api/model/filters.i';
 
 @Component({
@@ -18,6 +19,9 @@ export class FiltersComponent {
   readonly filterForm = this.fb.nonNullable.group({
     title: '',
     author: '',
+    language: new FormControl<AvailableLanguages | ''>('', {
+      nonNullable: true,
+    }),
     tags: this.fb.nonNullable.array<string>([]),
   });
 

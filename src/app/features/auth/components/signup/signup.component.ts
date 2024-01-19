@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SignupFormI } from '../../model/signup-form.i';
-import { UserI } from 'src/app/api/model/user.i';
+import { UserI } from 'src/app/api/model/auth/user.i';
 import { CustomValidators } from 'src/app/shared/misc/custom-validators';
 import { Router } from '@angular/router';
 

@@ -16,6 +16,15 @@
     [control]="filterForm.controls['author']"
   ></text-input-with-validation>
 
+  <div class="input-container">
+    <label for="language" class="input-label">{{ t("language") }}</label>
+    <select class="select medium" formControlName="language">
+      <option value="">{{ t("any") }}</option>
+      <option value="Polish">{{ t("Polish") }}</option>
+      <option value="English">{{ t("English") }}</option>
+    </select>
+  </div>
+
   <div class="tags">
     <button
       type="button"
@@ -27,7 +36,10 @@
     </button>
     <div *ngIf="dropdownOpened" class="dropdown-panel">
       <section class="dropdown-header">{{ t("tags") }}</section>
-      <section class="dropdown-content" *transloco="let t; read: 'library.tagList'">
+      <section
+        class="dropdown-content"
+        *transloco="let t; read: 'library.tagList'"
+      >
         <ng-container *ngFor="let tag of tags">
           <pill
             [isActive]="tagsFormArray.value.includes(tag)"
