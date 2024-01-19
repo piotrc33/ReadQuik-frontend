@@ -5,7 +5,7 @@
 >
   <router-outlet content></router-outlet>
   <ng-container footer *transloco="let t">
-    <div class="progress-bar" *ngIf="exNum < 7" [style.width]="state.progressPercent + '%'"></div>
+    <div class="progress-bar" [style.width]="state.progressPercent + '%'"></div>
     <button
       class="secondary"
       *ngIf="state.exerciseMode === 'manual'"

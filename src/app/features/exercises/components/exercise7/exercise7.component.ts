@@ -18,6 +18,8 @@ export class Exercise7Component
   exerciseTextElement?: HTMLElement;
   textBox?: DOMRect;
   panelBox?: DOMRect;
+  toScroll: number = 0;
+
   override finished$ = merge(
     this.keyService.forwardingPress$,
     this.state.next$
@@ -47,18 +49,19 @@ export class Exercise7Component
   }
 
   ngAfterViewInit(): void {
+    this.panelBox = this.state.panelContentElement?.getBoundingClientRect();
     this.exerciseTextElement = this.el.nativeElement.querySelector('.text');
     this.textBox = this.exerciseTextElement?.getBoundingClientRect();
+    this.toScroll = this.textBox!.bottom - this.panelBox!.bottom + 360;
   }
 
   override handleNextFragment(): void {
-    super.handleNextFragment();
     this.nextPage();
+    super.handleNextFragment();
   }
 
   isLastPage(): boolean {
-    const result =
-      this.textBox!.bottom < this.panelBox!.bottom;
+    const result = this.textBox!.bottom < this.panelBox!.bottom;
     this.textBox = this.exerciseTextElement?.getBoundingClientRect();
     return result;
   }
@@ -72,6 +75,20 @@ export class Exercise7Component
     if (!this.state.finished) {
       const activeElement = this.el.nativeElement.querySelector('.active');
       this.state.activeElement = activeElement;
+    }
+  }
+
+  override nextFragment(): void {
+    if (this.state.exerciseMode === 'manual') {
+      this.state.phraseNumber++;
+      this.state.progressPercent = Math.round(
+        (-this.state.pageYPosition / this.toScroll) * 100
+      );
+      if (this.state.progressPercent > 100) {
+        this.state.progressPercent = 100;
+      }
+    } else {
+      super.nextFragment();
     }
   }
 }
