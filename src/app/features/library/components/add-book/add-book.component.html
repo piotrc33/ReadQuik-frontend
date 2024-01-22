@@ -61,8 +61,8 @@
   <button
     class="primary"
     (click)="upload()"
-    [class.disabled]="bookForm.invalid && this.file === undefined"
-    [disabled]="bookForm.invalid && this.file === undefined"
+    [class.disabled]="bookForm.invalid || this.file === undefined"
+    [disabled]="bookForm.invalid || this.file === undefined"
   >
     {{ t("upload") }}
   </button>
