@@ -126,5 +126,8 @@
   "tendency": "Tendencja",
   "trialNumber": "Numer próby",
   "wpmLabel": "Słowa na minutę",
-  "resultsChartTitle": "Twoje wszystkie wyniki"
+  "resultsChartTitle": "Twoje wszystkie wyniki",
+  "allTime": "Cały okres",
+  "last7days": "Ostatnie 7 dni",
+  "today": "Dzisiaj"
 }

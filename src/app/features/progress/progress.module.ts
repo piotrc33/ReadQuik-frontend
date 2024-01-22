@@ -4,6 +4,7 @@ import { ProgressComponent } from './components/progress/progress.component';
 import { ProgressRoutingModule } from './progress-routing.module';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartComponent } from './components/chart/chart.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 
 
@@ -15,7 +16,8 @@ import { ChartComponent } from './components/chart/chart.component';
   imports: [
     CommonModule,
     ProgressRoutingModule,
-    NgChartsModule
+    NgChartsModule,
+    TranslocoModule
   ]
 })
 export class ProgressModule { }

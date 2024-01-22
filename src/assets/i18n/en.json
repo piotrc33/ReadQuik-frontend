@@ -126,5 +126,8 @@
   "tendency": "Tendency",
   "trialNumber": "Trial Number",
   "wpmLabel": "Words Per Minute",
-  "resultsChartTitle": "Your All Time Speed Results"
+  "resultsChartTitle": "Your All Time Speed Results",
+  "allTime": "All Time",
+  "last7days": "Last 7 Days",
+  "today": "Today"
 }

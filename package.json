@@ -23,6 +23,7 @@
     "chartjs-plugin-regression": "^0.2.1",
     "chartjs-plugin-trendline": "^2.0.5",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.10",
     "jwt-decode": "^4.0.0",
     "ng2-charts": "^5.0.4",
     "ngx-cookie-service": "^17.0.1",

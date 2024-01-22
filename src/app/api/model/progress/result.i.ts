@@ -4,5 +4,5 @@ export interface ResultI {
   wpm: number;
   exerciseNumber: number;
   bookId: string;
-  date: Date;
+  date: string;
 }

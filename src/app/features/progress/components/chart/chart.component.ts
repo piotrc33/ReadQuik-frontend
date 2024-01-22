@@ -4,6 +4,8 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
   inject
 } from '@angular/core';
@@ -16,7 +18,7 @@ import { Chart, Point } from 'chart.js';
   styleUrls: ['./chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChartComponent implements AfterViewInit {
+export class ChartComponent implements AfterViewInit, OnChanges {
   translocoService = inject(TranslocoService);
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
@@ -27,7 +29,16 @@ export class ChartComponent implements AfterViewInit {
   @Input()
   regressionPoints: Point[] = [];
 
+  chart?: Chart;
+
   ngAfterViewInit(): void {
+    this.createChart();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!this.chart) return;
+
+    this.chart.destroy();
     this.createChart();
   }
 
@@ -35,7 +46,7 @@ export class ChartComponent implements AfterViewInit {
     const canvas = this.chartCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
 
-    new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       data: {
         datasets: [
           {

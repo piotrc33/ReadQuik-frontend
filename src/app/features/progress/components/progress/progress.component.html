@@ -1,5 +1,30 @@
-<ng-container *ngIf="points$ | async as points">
-  <ng-container *ngIf="regressionPoints$ | async as regressionPoints">
-    <chart [dataPoints]="points" [regressionPoints]="regressionPoints"></chart>
+<section class="chart-section" *transloco="let t">
+  <ng-container *ngIf="points$ | async as points">
+    <ng-container *ngIf="regressionPoints$ | async as regressionPoints">
+      <chart
+        [dataPoints]="points"
+        [regressionPoints]="regressionPoints"
+      ></chart>
+    </ng-container>
   </ng-container>
-</ng-container>
+  <div class="buttons">
+    <button
+      [ngClass]="timeSpan$.value === 'all' ? 'primary' : 'secondary'"
+      (click)="timeSpan$.next('all')"
+    >
+      {{ t("allTime") }}
+    </button>
+    <button
+      [ngClass]="timeSpan$.value === 'week' ? 'primary' : 'secondary'"
+      (click)="timeSpan$.next('week')"
+    >
+      {{ t("last7days") }}
+    </button>
+    <button
+      [ngClass]="timeSpan$.value === 'day' ? 'primary' : 'secondary'"
+      (click)="timeSpan$.next('day')"
+    >
+      {{ t("today") }}
+    </button>
+  </div>
+</section>

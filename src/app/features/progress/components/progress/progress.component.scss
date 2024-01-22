@@ -1,0 +1,10 @@
+.chart-section {
+  display: flex;
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+}
