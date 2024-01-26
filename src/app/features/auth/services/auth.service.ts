@@ -4,6 +4,8 @@ import { Observable } from "rxjs";
 import { UserI } from "src/app/api/model/auth/user.i";
 import { LoginDataI } from "src/app/api/model/auth/login-data.i";
 import { jwtDecode } from "jwt-decode";
+import { LoginResponseI } from "src/app/api/model/auth/login-response.i";
+import { JwtDataI } from "../model/jwt-data.i";
 
 @Injectable()
 export class AuthService {
@@ -11,22 +13,22 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  signup(user: UserI): Observable<any> {
-    const url = 'http://localhost:3002/signup';
-    const body = JSON.stringify(user);
+  signup(user: UserI): Observable<UserI> {
+    const url: string = 'http://localhost:3002/signup';
+    const body: string = JSON.stringify(user);
 
-    return this.http.post(url, body, {'headers': this.headers});
+    return this.http.post<UserI>(url, body, {'headers': this.headers});
   }
 
-  login(loginData: LoginDataI): Observable<any> {
-    const url = 'http://localhost:3002/login';
-    const body = JSON.stringify(loginData);
+  login(loginData: LoginDataI): Observable<LoginResponseI> {
+    const url: string = 'http://localhost:3002/login';
+    const body: string = JSON.stringify(loginData);
 
-    return this.http.post(url, body, { headers: this.headers });
+    return this.http.post<LoginResponseI>(url, body, { headers: this.headers });
   }
 
   getUsername(): string {
-    return (jwtDecode(this.getToken() || '') as any).username;
+    return (jwtDecode(this.getToken() || '') as JwtDataI).username;
   }
 
   saveToken(token: string): void {

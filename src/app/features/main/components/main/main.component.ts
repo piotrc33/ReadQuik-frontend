@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
-import { BookService } from '../../../library/services/book.service';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
 import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { BookService } from '../../../library/services/book.service';
 
 @Component({
   selector: 'app-main',
@@ -13,7 +12,6 @@ import { ExercisesProgressStateService } from 'src/app/services/exercises-progre
 export class MainComponent {
   constructor(
     public readonly authService: AuthService,
-    private router: Router,
     readonly bookService: BookService,
     readonly state: ExercisesStateService,
     readonly progressService: ExercisesProgressStateService
@@ -24,10 +22,5 @@ export class MainComponent {
         progressService.next(data.exercisesProgress);
       }
     });
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginDataI } from 'src/app/api/model/auth/login-data.i';
+import { LoginResponseI } from 'src/app/api/model/auth/login-response.i';
 import { CustomValidators } from 'src/app/shared/misc/custom-validators';
 import { LoginFormI } from '../../model/login-form.i';
 import { AuthService } from '../../services/auth.service';
@@ -10,22 +10,23 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent {
-  loginForm: FormGroup<LoginFormI> = this.fb.nonNullable.group({
+  readonly loginForm: FormGroup<LoginFormI> = this.fb.nonNullable.group({
     email: ['', [Validators.required, CustomValidators.email]],
     password: ['', Validators.required],
   });
+
   constructor(
-    private fb: UntypedFormBuilder,
+    private readonly fb: UntypedFormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router
   ) {}
 
   onSubmit() {
-    this.authService.login(this.loginForm.value as LoginDataI).subscribe({
-      next: (res: any) => {
-        console.log('Login successful', res);
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
+      next: (res: LoginResponseI) => {
         if (res.loginSuccessful) {
           this.authService.saveToken(res.jwtToken);
           this.router.navigate(['']);

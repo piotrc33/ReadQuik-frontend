@@ -77,7 +77,7 @@ export class ExercisesStateService {
     ) {
       this.exHttpService
         .saveResult(speed, this.currentExercise$.value, bookId)
-        .subscribe(console.log);
+        .subscribe();
 
       this.exHttpService
         .updateExercisesProgress$(this.currentExercise$.value)
