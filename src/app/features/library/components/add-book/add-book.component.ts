@@ -19,7 +19,7 @@ import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
-import { BookDataI } from 'src/app/api/model/book-data.i';
+import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { SegmentI } from 'src/app/api/model/segment.i';
 

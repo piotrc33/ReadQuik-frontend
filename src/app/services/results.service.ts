@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, map } from 'rxjs';
-import { RecentResultI } from 'src/app/api/model/recent-result.i';
+import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 import { baseUrl } from 'src/app/shared/variables';
 import { ResultI } from '../api/model/progress/result.i';
 

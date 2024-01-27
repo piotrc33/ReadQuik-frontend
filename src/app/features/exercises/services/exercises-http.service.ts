@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResultI } from 'src/app/api/model/progress/result.i';
-import { SingleProgressI } from 'src/app/api/model/single-progress.i';
+import { SingleProgressI } from 'src/app/api/model/progress/single-progress.i';
 import { baseUrl } from 'src/app/shared/variables';
 
 @Injectable()

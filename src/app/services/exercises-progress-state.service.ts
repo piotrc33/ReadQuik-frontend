@@ -5,7 +5,7 @@ import {
   map,
   tap
 } from 'rxjs';
-import { SingleProgressI } from 'src/app/api/model/single-progress.i';
+import { SingleProgressI } from 'src/app/api/model/progress/single-progress.i';
 
 @Injectable({
   providedIn: 'root',

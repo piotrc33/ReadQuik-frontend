@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BookDataI } from 'src/app/api/model/book-data.i';
+import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { flags } from 'src/app/shared/misc/flags';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
-import { BookDataI } from 'src/app/api/model/book-data.i';
-import { FiltersI } from '../../../../api/model/filters.i';
+import { BookDataI } from 'src/app/api/model/library/book-data.i';
+import { FiltersI } from '../../../../api/model/library/filters.i';
 import { BookService } from '../../services/book.service';
 import { Router } from '@angular/router';
 
