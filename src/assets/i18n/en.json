@@ -129,5 +129,6 @@
   "resultsChartTitle": "Your All Time Speed Results",
   "allTime": "All Time",
   "last7days": "Last 7 Days",
-  "today": "Today"
+  "today": "Today",
+  "noData": "There is no data to show!"
 }

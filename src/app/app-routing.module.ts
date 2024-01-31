@@ -22,7 +22,7 @@ const routes: Routes = [
         (m) => m.AuthRoutingModule
       ),
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '/exercises' },
 ];
 
 @NgModule({

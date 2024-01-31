@@ -25,6 +25,10 @@ const routes: Routes = [
         (m) => m.ProgressRoutingModule
       ),
   },
+  {
+    path: '**',
+    redirectTo: 'exercises'
+  }
 ];
 
 @NgModule({

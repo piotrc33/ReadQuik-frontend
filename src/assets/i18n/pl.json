@@ -129,5 +129,6 @@
   "resultsChartTitle": "Twoje wszystkie wyniki",
   "allTime": "Cały okres",
   "last7days": "Ostatnie 7 dni",
-  "today": "Dzisiaj"
+  "today": "Dzisiaj",
+  "noData": "Brak danych do wyświetlenia!"
 }
