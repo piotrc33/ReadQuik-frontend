@@ -50,7 +50,8 @@
     "continue": "Kontynuuj",
     "haveAnAccountQuestion": "Masz już konto?",
     "dontHaveAnAccountQuestion": "Nie masz konta?",
-    "logIn": "Zaloguj się"
+    "logIn": "Zaloguj się",
+    "loginFailed": "Logowanie nie powiodło się"
   },
   "instructions": {
     "instruction1": {

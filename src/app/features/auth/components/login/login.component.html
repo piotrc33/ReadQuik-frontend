@@ -11,6 +11,8 @@
       [control]="loginForm.controls['password']"
     ></text-input-with-validation>
 
+    <div class="login-error" *ngIf="showLoginError()">{{ t('loginFailed') }}</div>
+
     <button
       type="submit"
       class="continue-button"

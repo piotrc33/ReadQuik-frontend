@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 import { LoginResponseI } from 'src/app/api/model/auth/login-response.i';
 import { CustomValidators } from 'src/app/shared/misc/custom-validators';
 import { LoginFormI } from '../../model/login-form.i';
@@ -10,13 +11,15 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
   readonly loginForm: FormGroup<LoginFormI> = this.fb.nonNullable.group({
     email: ['', [Validators.required, CustomValidators.email]],
     password: ['', Validators.required],
   });
+
+  showLoginError = signal<boolean>(false);
 
   constructor(
     private readonly fb: UntypedFormBuilder,
@@ -25,16 +28,21 @@ export class LoginComponent {
   ) {}
 
   onSubmit() {
-    this.authService.login(this.loginForm.getRawValue()).subscribe({
-      next: (res: LoginResponseI) => {
+    this.authService
+      .login(this.loginForm.getRawValue())
+      .pipe(
+        catchError((error: any) => {
+          console.error('Login failed', error);
+          this.showLoginError.set(true);
+          throw error;
+        })
+      )
+      .subscribe((res: LoginResponseI) => {
         if (res.loginSuccessful) {
           this.authService.saveToken(res.jwtToken);
           this.router.navigate(['']);
+          this.showLoginError.set(false);
         }
-      },
-      error: (error: any) => {
-        console.error('Login failed', error);
-      },
-    });
+      });
   }
 }
