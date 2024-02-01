@@ -26,8 +26,9 @@ const routes: Routes = [
       ),
   },
   {
-    path: '**',
-    redirectTo: 'exercises'
+    path: '',
+    redirectTo: 'exercises',
+    pathMatch: 'full'
   }
 ];
 

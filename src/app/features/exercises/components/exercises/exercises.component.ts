@@ -25,39 +25,37 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
   subs = new SubscriptionContainer();
 
   constructor(
-    public state: ExercisesStateService,
-    private readonly router: Router,
-    private changeDetectorRef: ChangeDetectorRef,
-    public resultsService: ResultsService,
-    private readonly instructionService: InstructionsService,
+    public readonly state: ExercisesStateService,
+    public readonly resultsService: ResultsService,
     public readonly progressState: ExercisesProgressStateService,
+    private readonly router: Router,
+    private readonly changeDetectorRef: ChangeDetectorRef,
+    private readonly instructionService: InstructionsService,
     private readonly cookieService: CookieService
-  ) {
-    const exerciseNumber = Number(router.url.split('/').pop());
+  ) {}
+
+  ngOnInit(): void {
+    this.resultsService.updateRecentResults();
+
+    const exerciseNumber = Number(this.router.url.split('/').pop());
     if (exerciseNumber) {
       this.state.currentExercise$.next(exerciseNumber);
     } else {
       this.state.currentExercise$.next(this.state.lastPracticed);
-      this.router.navigate([`exercises/${this.state.lastPracticed}`]);
+      this.router.navigate([`/app/exercises/${this.state.lastPracticed}`]);
     }
 
-    resultsService.updateRecentResults();
-  }
-
-  ngOnInit(): void {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         const exNum = Number(e.url.split('/').pop());
         this.state.currentExercise$.next(exNum);
-        if (e.url === '/exercises')
-          this.router.navigate([`exercises/${this.state.lastPracticed}`]);
+        if (e.url === '/app/exercises')
+          this.router.navigate([`/app/exercises/${this.state.lastPracticed}`]);
       }
     });
 
     this.subs.add = this.state.currentExercise$.subscribe((val) => {
-      const cookieValue = this.cookieService.get(
-        `instruction${val}Opened`
-      );
+      const cookieValue = this.cookieService.get(`instruction${val}Opened`);
       const instructionsOpenedInPast = cookieValue
         ? JSON.parse(cookieValue)
         : false;

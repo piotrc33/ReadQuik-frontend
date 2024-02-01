@@ -6,7 +6,7 @@ import { AuthContainerComponent } from './features/auth/components/ui/auth-conta
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'app',
     component: MainComponent,
     canActivate: [AuthGuard],
     loadChildren: () =>
@@ -22,7 +22,7 @@ const routes: Routes = [
         (m) => m.AuthRoutingModule
       ),
   },
-  { path: '**', redirectTo: '/exercises' },
+  { path: '**', redirectTo: '/app/exercises' },
 ];
 
 @NgModule({

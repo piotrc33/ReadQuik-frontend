@@ -10,8 +10,9 @@ import { AuthService } from '../../../auth/services/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  readonly loco = inject(TranslocoService);
-  readonly authService = inject(AuthService);
+  private readonly loco = inject(TranslocoService);
+  public readonly authService = inject(AuthService);
+
 
   dropdownOpened: boolean = false;
   username = this.authService.getUsername();
