@@ -2,9 +2,9 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  OnInit,
+  Signal,
   ViewChild,
-  inject,
+  inject
 } from '@angular/core';
 import {
   FormArray,
@@ -14,21 +14,21 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, take, takeUntil } from 'rxjs';
+import { Subject, take } from 'rxjs';
+import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
+import { BookDataI } from 'src/app/api/model/library/book-data.i';
+import { SegmentI } from 'src/app/api/model/segment.i';
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
-import { SegmentI } from 'src/app/api/model/segment.i';
 
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.scss'],
 })
-export class AddBookComponent implements OnDestroy, OnInit {
+export class AddBookComponent implements OnDestroy {
   readonly bookService = inject(BookService);
   readonly text = inject(TextService);
   readonly fb = inject(FormBuilder);
@@ -44,17 +44,9 @@ export class AddBookComponent implements OnDestroy, OnInit {
   }) as FormGroup<AddBookFormI>;
 
   file?: File;
-
-  readonly tagsSubject = new BehaviorSubject<string[]>([]);
-  readonly tags$: Observable<string[]> = this.tagsSubject.asObservable();
+  tags: Signal<string[] | undefined> = this.bookService.tags;
 
   @ViewChild('newTagInput') newTagInput?: ElementRef;
-
-  ngOnInit(): void {
-    this.bookService.tags$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((tags) => this.tagsSubject.next(tags));
-  }
 
   fileChanged(event: Event): void {
     const element = event.target as HTMLInputElement;
@@ -118,14 +110,14 @@ export class AddBookComponent implements OnDestroy, OnInit {
     return true;
   }
 
-  addTag(newTag: string) {
-    this.bookService
-      .addTag(newTag)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((tag) => {
-        this.tagsSubject.next([...this.tagsSubject.value, tag.name]);
-      });
-  }
+  // addTag(newTag: string) {
+  //   this.bookService
+  //     .addTag(newTag)
+  //     .pipe(takeUntil(this.destroy$))
+  //     .subscribe((tag) => {
+  //       this.tagsSubject.next([...this.tagsSubject.value, tag.name]);
+  //     });
+  // }
 
   clearInput(): void {
     if (this.newTagInput) {

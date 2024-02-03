@@ -3,8 +3,9 @@ import { Exercise } from './exercise';
 import { ExerciseModeT } from './exercise-mode.type';
 import { ResultsService } from 'src/app/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
-import { timer } from 'rxjs';
+import { map, timer } from 'rxjs';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   template: '',
@@ -15,13 +16,12 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   @Input()
   mode: ExerciseModeT = 'manual';
 
-  wpmSpeed?: number;
+  autoSpeed = toSignal(
+    this.resultsService.last3Avg$.pipe(map((avg) => avg * 1.2))
+  );
   subsContainer = new SubscriptionContainer();
 
   ngOnInit(): void {
-    this.subsContainer.add = this.resultsService.last3Avg$.subscribe((val) => {
-      this.wpmSpeed = val * 1.2;
-    });
     this.state.exerciseMode = this.mode;
     if (this.mode === 'auto') {
       this.startAutoTimer();
@@ -36,7 +36,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
       getAverageTimeoutMs(
         this.state.bookService.currentSegment.text.length,
         this.state.bookService.wordPhrases.length,
-        this.wpmSpeed || 200
+        this.autoSpeed() || 200
       )
     ).subscribe(() => {
       this.handleAutoNextFragment();

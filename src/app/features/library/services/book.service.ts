@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, Signal, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
@@ -12,6 +12,7 @@ import { TextService } from '../../exercises/services/text.service';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { SegmentI } from '../../../api/model/segment.i';
 import { UserI } from '../../../api/model/auth/user.i';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class BookService {
@@ -51,7 +52,7 @@ export class BookService {
     tap((phrases) => (this.wordPhrases = phrases))
   );
 
-  tags$ = this.http.get<string[]>(`${baseUrl}/books/all-tags`);
+  tags: Signal<string[] | undefined> = toSignal(this.http.get<string[]>(`${baseUrl}/books/all-tags`));
 
   constructor(private http: HttpClient, private router: Router) {}
 

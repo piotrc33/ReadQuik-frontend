@@ -1,21 +1,16 @@
 <div class="library" *transloco="let t; read: 'library'">
   <filters
-    [tags]="bookService.tags$ | async"
-    (filter)="handleFilter($event)"
+    [tags]="bookService.tags() || null"
+    (filter)="filtering$.next($event)"
   ></filters>
 
-  <section class="book-list">
-    <ng-container *ngIf="books$ | async as books; else loading">
-      <book-card
-        *ngFor="let book of books"
-        [book]="book"
-        (choose)="
-          bookService.getNextReadingData(book._id);
-          router.navigate(['/exercises'])
-        "
-      ></book-card>
-    </ng-container>
-
-    <ng-template #loading>{{ t("loadingBooks") }}</ng-template>
+  <section class="book-list" *ngIf="books(); else loading">
+    <book-card
+      *ngFor="let book of books()"
+      [book]="book"
+      (choose)="chooseBook(book._id)"
+    ></book-card>
   </section>
+  
+  <ng-template #loading>{{ t("loadingBooks") }}</ng-template>
 </div>

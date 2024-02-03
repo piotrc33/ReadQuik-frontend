@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, ReplaySubject, map } from 'rxjs';
 import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 import { baseUrl } from 'src/app/shared/variables';
@@ -9,7 +9,7 @@ import { ResultI } from '../api/model/progress/result.i';
   providedIn: 'root',
 })
 export class ResultsService {
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   readonly recentResults$ = new ReplaySubject<RecentResultI[]>(1);
 

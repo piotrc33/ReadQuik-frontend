@@ -3,7 +3,12 @@
   class="add-book"
   *transloco="let t; read: 'library'"
 >
-  <img class="back clickable icon svg medium" src="assets/images/arrow-left.svg" alt="left arrow" routerLink="/library" />
+  <img
+    class="back clickable icon svg medium"
+    src="assets/images/arrow-left.svg"
+    alt="left arrow"
+    routerLink="/app/library"
+  />
 
   <h1 class="page-title">{{ t("addBook") }}</h1>
 
@@ -36,15 +41,13 @@
     <input type="file" (change)="fileChanged($event)" />
   </div>
 
-  <div class="tags" *ngIf="tags$ | async as tags">
-    <ng-container *ngFor="let tag of tags">
-      <pill
-        *transloco="let t; read: 'library.tagList'"
-        [clickable]="isTagClickable(tag)"
-        (clicked)="handlePill(tag)"
-        >{{ t(tag) }}</pill
-      >
-    </ng-container>
+  <div class="tags" *transloco="let t; read: 'library.tagList'">
+    <pill
+      *ngFor="let tag of tags()"
+      [clickable]="isTagClickable(tag)"
+      (clicked)="handlePill(tag)"
+      >{{ t(tag) }}</pill
+    >
   </div>
   <!-- <div>
     <div class="label">New Tag:</div>

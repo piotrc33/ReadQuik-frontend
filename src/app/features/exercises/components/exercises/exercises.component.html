@@ -4,7 +4,7 @@
       [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
     ></exercise-nav>
   </div>
-  <div class="content" *ngIf="state.currentExercise$ | async as exNum">
+  <div class="content" *ngIf="currentExercise()">
     <section class="book">
       <ng-container *ngIf="state.bookService.bookData$ | async as book">
         <div class="header">
@@ -50,12 +50,12 @@
 
     <section
       class="exercise center"
-      *ngIf="exNum && (instructions$ | async) as instruction"
+      *ngIf="currentExercise() && (instructions$ | async) as instruction"
     >
-      <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
+      <h2 class="number">{{ t("exercise") }} {{ currentExercise() }}</h2>
       <ng-container
         *ngIf="
-          progressState.getRepetitions(exNum)
+          progressState.getRepetitions(currentExercise() || 1)
             | async as repetitions;
           else zeroIndicator
         "
@@ -73,7 +73,7 @@
         ></repetition-indicator>
         <div class="repetition-info">
           {{
-            (progressState.isExerciseUnlocked(exNum) | async)
+            (progressState.isExerciseUnlocked(currentExercise() || 1))
               ? "#1 of 10"
               : t("willNotSave")
           }}
@@ -81,7 +81,7 @@
       </ng-template>
 
       <ng-container *transloco="let t; read: 'exerciseTitles'">
-        <h1 class="title">{{ t("exercise" + exNum) }}</h1>
+        <h1 class="title">{{ t("exercise" + currentExercise()) }}</h1>
       </ng-container>
 
       <advice></advice>
@@ -97,9 +97,9 @@
       >
         <instruction
           content
-          [instructionNumber]="exNum"
+          [instructionNumber]="currentExercise()"
           [instructionObject]="
-            instruction['instruction' + exNum]
+            instruction['instruction' + currentExercise()]
           "
         ></instruction>
       </app-dialog>
@@ -113,7 +113,7 @@
       </button>
 
       <exercise-panel
-        *ngIf="state.started && exNum"
+        *ngIf="state.started && currentExercise()"
       ></exercise-panel>
     </section>
 

@@ -4,6 +4,7 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  Signal,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -12,6 +13,7 @@ import { ResultsService } from 'src/app/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'exercises',
@@ -23,6 +25,8 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
   readonly instructions$ = this.instructionService.getExerciseInstructions();
 
   subs = new SubscriptionContainer();
+
+  currentExercise: Signal<number | undefined> = toSignal(this.state.currentExercise$);
 
   constructor(
     public readonly state: ExercisesStateService,

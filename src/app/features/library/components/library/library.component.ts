@@ -1,36 +1,41 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { BehaviorSubject, take } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Signal,
+  inject
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
+import { Subject, merge, switchMap } from 'rxjs';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { FiltersI } from '../../../../api/model/library/filters.i';
 import { BookService } from '../../services/book.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
   styleUrls: ['./library.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LibraryComponent implements OnInit {
-  readonly bookService = inject(BookService);
-  public readonly router = inject(Router);
-  booksSubject = new BehaviorSubject<BookDataI[]>([]);
-  books$ = this.booksSubject.asObservable();
+export class LibraryComponent {
+  private readonly router = inject(Router);
+  public readonly bookService = inject(BookService);
 
-  ngOnInit(): void {
-    this.bookService
-      .getBooks()
-      .pipe(take(1))
-      .subscribe((books) => {
-        this.booksSubject.next(books);
-      });
-  }
+  allBooks$ = this.bookService.getBooks();
 
-  handleFilter(filters: FiltersI) {
-    this.bookService
-      .getFilteredBooks$(filters)
-      .pipe(take(1))
-      .subscribe((filteredBooks) => {
-        this.booksSubject.next(filteredBooks);
-      });
+  filtering$ = new Subject<FiltersI>();
+  filteredBooks$ = this.filtering$.pipe(
+    switchMap((filters: FiltersI) =>
+      this.bookService.getFilteredBooks$(filters)
+    )
+  );
+
+  books: Signal<BookDataI[] | undefined> = toSignal(
+    merge(this.allBooks$, this.filteredBooks$)
+  );
+
+  chooseBook(bookId: string) {
+    this.bookService.getNextReadingData(bookId);
+    this.router.navigate(['/exercises']);
   }
 }
