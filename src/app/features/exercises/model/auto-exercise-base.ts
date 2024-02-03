@@ -32,10 +32,11 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
     if (this.state.bookService.currentSegment === null) {
       return;
     }
+    const wordPhrases = this.state.bookService.wordPhrasesSignal();
     this.subsContainer.add = timer(
       getAverageTimeoutMs(
         this.state.bookService.currentSegment.text.length,
-        this.state.bookService.wordPhrases.length,
+        wordPhrases ? wordPhrases.length : 1,
         this.autoSpeed() || 200
       )
     ).subscribe(() => {
@@ -56,6 +57,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
 
   reset(): void {
     this.state.phraseNumber = 0;
+    this.state.phraseNumberSignal.set(0);
     this.state.pageYPosition = 0;
     this.state.progressPercent = 0;
   }

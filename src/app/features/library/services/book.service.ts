@@ -1,18 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Signal, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Observable, ReplaySubject, filter, map, of, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { TagI } from 'src/app/api/model/tag.i';
 import { baseUrl } from 'src/app/shared/variables';
-import { BookDataI } from '../../../api/model/library/book-data.i';
-import { TextService } from '../../exercises/services/text.service';
-import { BookSegmentsI } from '../../../api/model/book-segments.i';
-import { SegmentI } from '../../../api/model/segment.i';
 import { UserI } from '../../../api/model/auth/user.i';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { BookSegmentsI } from '../../../api/model/book-segments.i';
+import { BookDataI } from '../../../api/model/library/book-data.i';
+import { SegmentI } from '../../../api/model/segment.i';
+import { TextService } from '../../exercises/services/text.service';
 
 @Injectable()
 export class BookService {
@@ -52,9 +51,17 @@ export class BookService {
     tap((phrases) => (this.wordPhrases = phrases))
   );
 
-  tags: Signal<string[] | undefined> = toSignal(this.http.get<string[]>(`${baseUrl}/books/all-tags`));
+  wordPhrasesSignal: Signal<string[] | undefined> = toSignal(
+    this.phrasesWithNewlines$.pipe(
+      map((fragments: string[]) => this.textService.removeNewlines(fragments))
+    )
+  );
 
-  constructor(private http: HttpClient, private router: Router) {}
+  tags: Signal<string[] | undefined> = toSignal(
+    this.http.get<string[]>(`${baseUrl}/books/all-tags`)
+  );
+
+  constructor(private http: HttpClient) {}
 
   getBook(id: string): Observable<BookDataI> {
     const url = `${baseUrl}/books/book/${id}`;

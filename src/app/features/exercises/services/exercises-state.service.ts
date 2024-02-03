@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ResultsService } from 'src/app/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
@@ -17,6 +17,7 @@ export class ExercisesStateService {
 
   private _started: boolean = false;
   phraseNumber: number = 0;
+  phraseNumberSignal: WritableSignal<number> = signal(0);
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   progressPercent: number = 0;
@@ -52,7 +53,10 @@ export class ExercisesStateService {
   }
 
   get finished(): boolean {
-    return this.phraseNumber === this.bookService.wordPhrases.length;
+    return (
+      this.phraseNumber === this.bookService.wordPhrases.length ||
+      this.phraseNumberSignal() === this.bookService.wordPhrasesSignal()?.length
+    );
   }
 
   start(): void {
@@ -86,11 +90,13 @@ export class ExercisesStateService {
           const currentExerciseProgress = data.find(
             (el) => el.exerciseNumber === this.currentExercise$.value
           );
-          if(currentExerciseProgress?.repetitions === 0) {
+          if (currentExerciseProgress?.repetitions === 0) {
             this.cookieService.delete(
               `instruction${this.currentExercise$.value + 1}Opened`
             );
-            this.router.navigate([`/exercises/${this.currentExercise$.value + 1}`]);
+            this.router.navigate([
+              `/exercises/${this.currentExercise$.value + 1}`,
+            ]);
           }
         });
       if (this.bookService.currentSegment) {
@@ -106,8 +112,13 @@ export class ExercisesStateService {
 
   nextFragment(): void {
     this.phraseNumber++;
-    this.progressPercent = Math.round(
-      (this.phraseNumber / this.bookService.wordPhrases.length) * 100
-    );
+    this.phraseNumberSignal.update((val) => val + 1);
+    const wordPhrases = this.bookService.wordPhrasesSignal();
+    if(wordPhrases) {
+      this.progressPercent = Math.round(
+        (this.phraseNumber / wordPhrases.length) * 100
+      );
+
+    }
   }
 }

@@ -4,7 +4,7 @@
       [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
     ></exercise-nav>
   </div>
-  <div class="content" *ngIf="currentExercise()">
+  <div class="content" *ngIf="state.currentExercise$ | async as exNum">
     <section class="book">
       <ng-container *ngIf="state.bookService.bookData$ | async as book">
         <div class="header">
@@ -43,19 +43,19 @@
           </div>
         </div>
       </ng-container>
-      <button routerLink="/library" class="secondary change-button">
+      <button routerLink="/app/library" class="secondary change-button">
         {{ t("changeBook") }}
       </button>
     </section>
 
     <section
       class="exercise center"
-      *ngIf="currentExercise() && (instructions$ | async) as instruction"
+      *ngIf="exNum && (instructions$ | async) as instruction"
     >
-      <h2 class="number">{{ t("exercise") }} {{ currentExercise() }}</h2>
+      <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
       <ng-container
         *ngIf="
-          progressState.getRepetitions(currentExercise() || 1)
+          progressState.getRepetitions(exNum)
             | async as repetitions;
           else zeroIndicator
         "
@@ -66,6 +66,7 @@
         ></repetition-indicator>
         <div class="repetition-info">#{{ repetitions + 1 }} of 10</div>
       </ng-container>
+
       <ng-template #zeroIndicator>
         <repetition-indicator
           [totalCount]="10"
@@ -73,7 +74,7 @@
         ></repetition-indicator>
         <div class="repetition-info">
           {{
-            (progressState.isExerciseUnlocked(currentExercise() || 1))
+            (progressState.isExerciseUnlocked(exNum) | async)
               ? "#1 of 10"
               : t("willNotSave")
           }}
@@ -81,7 +82,7 @@
       </ng-template>
 
       <ng-container *transloco="let t; read: 'exerciseTitles'">
-        <h1 class="title">{{ t("exercise" + currentExercise()) }}</h1>
+        <h1 class="title">{{ t("exercise" + exNum) }}</h1>
       </ng-container>
 
       <advice></advice>
@@ -97,23 +98,23 @@
       >
         <instruction
           content
-          [instructionNumber]="currentExercise()"
+          [instructionNumber]="exNum"
           [instructionObject]="
-            instruction['instruction' + currentExercise()]
+            instruction['instruction' + exNum]
           "
         ></instruction>
       </app-dialog>
 
       <button
         class="primary start-button"
-        *ngIf="!state.started && (state.bookService.wordPhrases$ | async)"
+        *ngIf="!state.started && state.bookService.wordPhrasesSignal()"
         (click)="state.start()"
       >
         {{ t("start") }}
       </button>
 
       <exercise-panel
-        *ngIf="state.started && currentExercise()"
+        *ngIf="state.started && exNum"
       ></exercise-panel>
     </section>
 
@@ -135,7 +136,7 @@
           <div class="date">{{ result.date | relativeDate }}</div>
         </div>
       </ng-container>
-      <button routerLink="/progress" class="secondary progress-button">
+      <button routerLink="/app/progress" class="secondary progress-button">
         {{ t("checkFullProgress") }}
       </button>
     </section>

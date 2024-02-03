@@ -26,8 +26,6 @@ export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   subs = new SubscriptionContainer();
 
-  currentExercise: Signal<number | undefined> = toSignal(this.state.currentExercise$);
-
   constructor(
     public readonly state: ExercisesStateService,
     public readonly resultsService: ResultsService,
