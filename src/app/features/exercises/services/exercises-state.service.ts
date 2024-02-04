@@ -44,10 +44,6 @@ export class ExercisesStateService {
     return this._started;
   }
 
-  get currentPhrase(): string {
-    return this.bookService.wordPhrases[this.phraseNumber];
-  }
-
   private set started(val: boolean) {
     this._started = val;
   }
@@ -95,7 +91,7 @@ export class ExercisesStateService {
               `instruction${this.currentExercise$.value + 1}Opened`
             );
             this.router.navigate([
-              `/exercises/${this.currentExercise$.value + 1}`,
+              `/app/exercises/${this.currentExercise$.value + 1}`,
             ]);
           }
         });

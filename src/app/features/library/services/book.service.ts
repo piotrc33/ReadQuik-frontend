@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Signal, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, ReplaySubject, filter, map, of, tap } from 'rxjs';
+import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
-import { TagI } from 'src/app/api/model/tag.i';
 import { baseUrl } from 'src/app/shared/variables';
 import { UserI } from '../../../api/model/auth/user.i';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
@@ -88,9 +87,9 @@ export class BookService {
     });
   }
 
-  initialData$(): Observable<ReadingDataI> {
+  initialData$(): Observable<ReadingDataI | null> {
     const url = `${baseUrl}/initial-data`;
-    return this.http.get<ReadingDataI>(url);
+    return this.http.get<ReadingDataI | null>(url);
   }
 
   getReadingData(bookId: string, number: number) {
@@ -107,7 +106,7 @@ export class BookService {
     lastSegmentNumber: number
   ): Observable<UserI | null> {
     const url = `${baseUrl}/results/update-progress`;
-    const body = JSON.stringify({ bookId, lastSegmentNumber });
+    const body = { bookId, lastSegmentNumber };
     return this.http.put<UserI | null>(url, body, { headers: this.headers });
   }
 
@@ -125,20 +124,19 @@ export class BookService {
       ...bookData,
       ...bookSegments,
     };
-    const body = JSON.stringify(newBook);
-    return this.http.post<NewBookResponseI>(url, body, {
+    return this.http.post<NewBookResponseI>(url, newBook, {
       headers: this.headers,
     });
   }
 
-  addTag(newTag: string): Observable<TagI> {
-    const url = `${baseUrl}/books/add-tag`;
-    const newBook = {
-      newTag,
-    };
-    const body = JSON.stringify(newBook);
-    return this.http.post<TagI>(url, body, {
-      headers: this.headers,
-    });
-  }
+  // addTag(newTag: string): Observable<TagI> {
+  //   const url = `${baseUrl}/books/add-tag`;
+  //   const newBook = {
+  //     newTag,
+  //   };
+  //   const body = JSON.stringify(newBook);
+  //   return this.http.post<TagI>(url, body, {
+  //     headers: this.headers,
+  //   });
+  // }
 }

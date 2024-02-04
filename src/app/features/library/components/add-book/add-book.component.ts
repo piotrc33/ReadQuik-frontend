@@ -80,7 +80,7 @@ export class AddBookComponent implements OnDestroy {
           .addBook(newBookData, newBookSegments)
           .pipe(take(1))
           .subscribe();
-        this.router.navigate(['/library']);
+        this.router.navigate(['/app/library']);
       }
     };
 

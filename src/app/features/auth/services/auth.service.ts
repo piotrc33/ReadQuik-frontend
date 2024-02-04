@@ -1,34 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { UserI } from 'src/app/api/model/auth/user.i';
 import { LoginDataI } from 'src/app/api/model/auth/login-data.i';
 import { jwtDecode } from 'jwt-decode';
 import { LoginResponseI } from 'src/app/api/model/auth/login-response.i';
 import { JwtDataI } from '../model/jwt-data.i';
 import { Router } from '@angular/router';
+import { baseUrl } from 'src/app/shared/variables';
 
 @Injectable()
 export class AuthService {
   headers = { 'content-type': 'application/json' };
 
+  logout$ = new Subject<void>();
+
   constructor(
     private readonly http: HttpClient,
-    private readonly router: Router
+    private readonly router: Router,
   ) {}
 
   signup(user: UserI): Observable<UserI> {
-    const url: string = 'http://localhost:3002/signup';
-    const body: string = JSON.stringify(user);
-
-    return this.http.post<UserI>(url, body, { headers: this.headers });
+    const url: string = `${baseUrl}/signup`;
+    return this.http.post<UserI>(url, user, { headers: this.headers });
   }
 
   login(loginData: LoginDataI): Observable<LoginResponseI> {
-    const url: string = 'http://localhost:3002/login';
-    const body: string = JSON.stringify(loginData);
-
-    return this.http.post<LoginResponseI>(url, body, { headers: this.headers });
+    const url: string = `${baseUrl}/login`;
+    return this.http.post<LoginResponseI>(url, loginData, { headers: this.headers });
   }
 
   getUsername(): string {
