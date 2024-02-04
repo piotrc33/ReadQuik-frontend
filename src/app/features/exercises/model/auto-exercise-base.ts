@@ -32,7 +32,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
     if (this.state.bookService.currentSegment === null) {
       return;
     }
-    const wordPhrases = this.state.bookService.wordPhrasesSignal();
+    const wordPhrases = this.state.bookService.wordPhrases();
     this.subsContainer.add = timer(
       getAverageTimeoutMs(
         this.state.bookService.currentSegment.text.length,

@@ -10,6 +10,7 @@ import { BookCardComponent } from './components/ui/book-card/book-card.component
 import { LibraryRoutingModule } from './library-routing.module';
 import { BookService } from './services/book.service';
 import { TranslocoModule } from '@ngneat/transloco';
+import { BookApiService } from './services/book-api.service';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,6 @@ import { TranslocoModule } from '@ngneat/transloco';
     SharedModule,
     TranslocoModule
   ],
-  providers: [BookService],
+  providers: [BookService, BookApiService],
 })
 export class LibraryModule {}

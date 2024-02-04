@@ -1,21 +1,20 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Signal, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
-import { baseUrl } from 'src/app/shared/variables';
 import { UserI } from '../../../api/model/auth/user.i';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { BookDataI } from '../../../api/model/library/book-data.i';
 import { SegmentI } from '../../../api/model/segment.i';
 import { TextService } from '../../exercises/services/text.service';
+import { BookApiService } from './book-api.service';
 
 @Injectable()
 export class BookService {
-  headers = { 'Content-Type': 'application/json' };
-  textService = inject(TextService);
+  private readonly textService = inject(TextService);
+  private readonly bookApiService = inject(BookApiService);
   currentBookId = signal('');
 
   readingData$ = new ReplaySubject<ReadingDataI>(1);
@@ -44,89 +43,60 @@ export class BookService {
     tap((phrases) => (this.phrasesWithNewlines = phrases))
   );
 
-  wordPhrases: string[] = [];
-  wordPhrases$: Observable<string[]> = this.phrasesWithNewlines$.pipe(
-    map((fragments: string[]) => this.textService.removeNewlines(fragments)),
-    tap((phrases) => (this.wordPhrases = phrases))
-  );
-
-  wordPhrasesSignal: Signal<string[] | undefined> = toSignal(
+  wordPhrases: Signal<string[]> = toSignal(
     this.phrasesWithNewlines$.pipe(
       map((fragments: string[]) => this.textService.removeNewlines(fragments))
-    )
+    ), { initialValue: [] }
   );
 
-  tags: Signal<string[] | undefined> = toSignal(
-    this.http.get<string[]>(`${baseUrl}/books/all-tags`)
-  );
+  tags: Signal<string[]> = toSignal(this.bookApiService.tags$, {
+    initialValue: [],
+  });
 
-  constructor(private http: HttpClient) {}
-
-  getBook(id: string): Observable<BookDataI> {
-    const url = `${baseUrl}/books/book/${id}`;
-    return this.http.get<BookDataI>(url);
-  }
-
-  getFilteredBooks$(filters: FiltersI): Observable<BookDataI[]> {
-    let params = new HttpParams();
-    params = params.set('title', filters.title);
-    params = params.set('author', filters.author);
-    params = params.set('tags', filters.tags.join(','));
-    params = params.set('language', filters.language);
-
-    return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
+  getFilteredBooks(filters: FiltersI): Observable<BookDataI[]> {
+    return this.bookApiService.getFilteredBooks(filters);
   }
 
   getNextReadingData(bookId: string) {
-    console.log('getting reading data');
-    const url = `${baseUrl}/books/reading-data/${bookId}`;
-    this.http.get<ReadingDataI>(url).subscribe((data: ReadingDataI | null) => {
-      if (data) {
-        this.readingData$.next(data);
-      }
-    });
+    this.bookApiService
+      .getNextReadingData(bookId)
+      .subscribe((data: ReadingDataI | null) => {
+        if (data) {
+          this.readingData$.next(data);
+        }
+      });
   }
 
-  initialData$(): Observable<ReadingDataI | null> {
-    const url = `${baseUrl}/initial-data`;
-    return this.http.get<ReadingDataI | null>(url);
+  getInitialData(): Observable<ReadingDataI | null> {
+    return this.bookApiService.getInitialData();
   }
 
   getReadingData(bookId: string, number: number) {
-    const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
-    this.http.get<ReadingDataI>(url).subscribe((data: ReadingDataI | null) => {
-      if (data) {
-        this.readingData$.next(data);
-      }
-    });
+    this.bookApiService
+      .getReadingData(bookId, number)
+      .subscribe((data: ReadingDataI | null) => {
+        if (data) {
+          this.readingData$.next(data);
+        }
+      });
   }
 
   updateBookProgress(
     bookId: string,
     lastSegmentNumber: number
   ): Observable<UserI | null> {
-    const url = `${baseUrl}/results/update-progress`;
-    const body = { bookId, lastSegmentNumber };
-    return this.http.put<UserI | null>(url, body, { headers: this.headers });
+    return this.bookApiService.updateBookProgress(bookId, lastSegmentNumber);
   }
 
   getBooks(): Observable<BookDataI[]> {
-    const url = `${baseUrl}/books`;
-    return this.http.get<BookDataI[]>(url);
+    return this.bookApiService.getBooks();
   }
 
   addBook(
     bookData: BookDataI,
     bookSegments: BookSegmentsI
   ): Observable<NewBookResponseI> {
-    const url = `${baseUrl}/books/add-book`;
-    const newBook = {
-      ...bookData,
-      ...bookSegments,
-    };
-    return this.http.post<NewBookResponseI>(url, newBook, {
-      headers: this.headers,
-    });
+    return this.bookApiService.addBook(bookData, bookSegments);
   }
 
   // addTag(newTag: string): Observable<TagI> {

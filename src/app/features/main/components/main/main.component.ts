@@ -12,7 +12,7 @@ export class MainComponent {
     readonly bookService: BookService,
     readonly progressService: ExercisesProgressStateService
   ) {
-    bookService.initialData$().subscribe((data) => {
+    bookService.getInitialData().subscribe((data) => {
       if (data) {
         bookService.readingData$.next(data);
         progressService.next(data.exercisesProgress);

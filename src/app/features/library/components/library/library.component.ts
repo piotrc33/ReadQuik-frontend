@@ -26,7 +26,7 @@ export class LibraryComponent {
   filtering$ = new Subject<FiltersI>();
   filteredBooks$ = this.filtering$.pipe(
     switchMap((filters: FiltersI) =>
-      this.bookService.getFilteredBooks$(filters)
+      this.bookService.getFilteredBooks(filters)
     )
   );
 

@@ -50,8 +50,7 @@ export class ExercisesStateService {
 
   get finished(): boolean {
     return (
-      this.phraseNumber === this.bookService.wordPhrases.length ||
-      this.phraseNumberSignal() === this.bookService.wordPhrasesSignal()?.length
+      this.phraseNumberSignal() === this.bookService.wordPhrases().length
     );
   }
 
@@ -66,7 +65,7 @@ export class ExercisesStateService {
 
   finish(): void {
     this.end();
-    const speed = calculateSpeed(this.startTime, this.bookService.wordPhrases);
+    const speed = calculateSpeed(this.startTime, this.bookService.wordPhrases());
 
     if (speed > 1000) return;
 
@@ -109,7 +108,7 @@ export class ExercisesStateService {
   nextFragment(): void {
     this.phraseNumber++;
     this.phraseNumberSignal.update((val) => val + 1);
-    const wordPhrases = this.bookService.wordPhrasesSignal();
+    const wordPhrases = this.bookService.wordPhrases();
     if(wordPhrases) {
       this.progressPercent = Math.round(
         (this.phraseNumber / wordPhrases.length) * 100
