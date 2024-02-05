@@ -8,7 +8,7 @@
           class="phrase"
           [ngClass]="i % 2 === 0 ? 'strong' : ''"
           [class.active]="
-            wordIndexes[state.phraseNumber] === i &&
+            wordIndexes[state.phraseNumber()] === i &&
             state.exerciseMode === 'auto'
           "
           >{{ phrase }}</span

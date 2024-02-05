@@ -1,6 +1,6 @@
 import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
+import { Observable, ReplaySubject, map, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
@@ -33,14 +33,14 @@ export class BookService {
     { initialValue: null }
   );
 
-  phrasesWithNewlines = computed(() => {
+  phrasesWithNewlines: Signal<string[]> = computed(() => {
     const currentSegment = this.currentSegment();
     if (currentSegment)
       return this.textService.getFragmentsWithNewlines(currentSegment.text);
     return [];
   });
 
-  wordPhrases = computed(() =>
+  wordPhrases: Signal<string[]> = computed(() =>
     this.textService.removeNewlines(this.phrasesWithNewlines())
   );
 

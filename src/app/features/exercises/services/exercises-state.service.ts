@@ -16,8 +16,7 @@ export class ExercisesStateService {
   readonly exit$ = new Subject<void>();
 
   private _started: boolean = false;
-  phraseNumber: number = 0;
-  phraseNumberSignal: WritableSignal<number> = signal(0);
+  phraseNumber: WritableSignal<number> = signal(0);
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   progressPercent: number = 0;
@@ -49,7 +48,7 @@ export class ExercisesStateService {
   }
 
   get finished(): boolean {
-    return this.phraseNumberSignal() === this.bookService.wordPhrases().length;
+    return this.phraseNumber() === this.bookService.wordPhrases().length;
   }
 
   start(): void {
@@ -109,12 +108,11 @@ export class ExercisesStateService {
   }
 
   nextFragment(): void {
-    this.phraseNumber++;
-    this.phraseNumberSignal.update((val) => val + 1);
+    this.phraseNumber.update((val) => val + 1);
     const wordPhrases = this.bookService.wordPhrases();
 
     this.progressPercent = Math.round(
-      (this.phraseNumber / wordPhrases.length) * 100
+      (this.phraseNumber() / wordPhrases.length) * 100
     );
   }
 }

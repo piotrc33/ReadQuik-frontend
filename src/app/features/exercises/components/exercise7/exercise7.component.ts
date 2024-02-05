@@ -80,7 +80,6 @@ export class Exercise7Component
 
   override nextFragment(): void {
     if (this.state.exerciseMode === 'manual') {
-      this.state.phraseNumber++;
       this.state.progressPercent = Math.round(
         (-this.state.pageYPosition / this.toScroll) * 100
       );

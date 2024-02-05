@@ -5,7 +5,7 @@
         <span
           class="phrase"
           [ngClass]="
-            wordIndexes[state.phraseNumber] === i
+            wordIndexes[state.phraseNumber()] === i
               ? 'active'
               : 'inactive'
           "

@@ -1,9 +1,10 @@
 <div class="exercise2 horizontal-exercise">
-  <span
-    *ngFor="let item of state.bookService.wordPhrases(); index as i"
-    class="phrase"
-    [ngClass]="state.phraseNumberSignal() === i ? 'active' : 'inactive'"
-    [ngStyle]="{ 'left.px': leftOffsetSignal()}"
-    >{{ item }}
-  </span>
+  @for (item of state.bookService.wordPhrases(); track $index) {
+    <span
+      class="phrase"
+      [ngClass]="state.phraseNumber() === $index ? 'active' : 'inactive'"
+      [ngStyle]="{ 'left.px': leftOffsetSignal() }"
+      >{{ item }}
+    </span>
+  }
 </div>
