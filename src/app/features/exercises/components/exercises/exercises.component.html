@@ -107,7 +107,7 @@
 
       <button
         class="primary start-button"
-        *ngIf="!state.started && state.bookService.wordPhrases()"
+        *ngIf="!state.started && state.bookService.wordPhrases().length > 0"
         (click)="state.start()"
       >
         {{ t("start") }}

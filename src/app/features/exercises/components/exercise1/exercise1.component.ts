@@ -10,4 +10,6 @@ export class Exercise1Component extends Exercise {
   constructor() {
     super();
   }
+
+  wordPhrases = this.state.bookService.wordPhrases;
 }

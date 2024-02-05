@@ -29,14 +29,15 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   }
 
   startAutoTimer(): void {
-    if (this.state.bookService.currentSegment === null) {
+    const currentSegment = this.state.bookService.currentSegment();
+    if (currentSegment === null) {
       return;
     }
     const wordPhrases = this.state.bookService.wordPhrases();
     this.subsContainer.add = timer(
       getAverageTimeoutMs(
-        this.state.bookService.currentSegment.text.length,
-        wordPhrases ? wordPhrases.length : 1,
+        currentSegment.text.length,
+        wordPhrases.length,
         this.autoSpeed() || 200
       )
     ).subscribe(() => {

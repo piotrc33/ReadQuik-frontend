@@ -1,4 +1,4 @@
-import { Injectable, Signal, inject, signal } from '@angular/core';
+import { Injectable, Signal, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, ReplaySubject, filter, map, tap } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
@@ -28,25 +28,20 @@ export class BookService {
 
   currentBook$ = this.readingData$.pipe(map((data) => data.bookData));
 
-  currentSegment: SegmentI | null = null;
-  currentSegment$ = this.readingData$.pipe(
-    map((data) => data.segment),
-    tap((segment) => (this.currentSegment = segment))
+  currentSegment: Signal<SegmentI | null> = toSignal(
+    this.readingData$.pipe(map((data) => data.segment)),
+    { initialValue: null }
   );
 
-  phrasesWithNewlines: string[] = [];
-  phrasesWithNewlines$: Observable<string[]> = this.currentSegment$.pipe(
-    filter((segment: SegmentI | null): segment is SegmentI => segment !== null),
-    map((segment: SegmentI) =>
-      this.textService.getFragmentsWithNewlines(segment.text)
-    ),
-    tap((phrases) => (this.phrasesWithNewlines = phrases))
-  );
+  phrasesWithNewlines = computed(() => {
+    const currentSegment = this.currentSegment();
+    if (currentSegment)
+      return this.textService.getFragmentsWithNewlines(currentSegment.text);
+    return [];
+  });
 
-  wordPhrases: Signal<string[]> = toSignal(
-    this.phrasesWithNewlines$.pipe(
-      map((fragments: string[]) => this.textService.removeNewlines(fragments))
-    ), { initialValue: [] }
+  wordPhrases = computed(() =>
+    this.textService.removeNewlines(this.phrasesWithNewlines())
   );
 
   tags: Signal<string[]> = toSignal(this.bookApiService.tags$, {

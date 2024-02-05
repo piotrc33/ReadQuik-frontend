@@ -49,9 +49,7 @@ export class ExercisesStateService {
   }
 
   get finished(): boolean {
-    return (
-      this.phraseNumberSignal() === this.bookService.wordPhrases().length
-    );
+    return this.phraseNumberSignal() === this.bookService.wordPhrases().length;
   }
 
   start(): void {
@@ -65,7 +63,10 @@ export class ExercisesStateService {
 
   finish(): void {
     this.end();
-    const speed = calculateSpeed(this.startTime, this.bookService.wordPhrases());
+    const speed = calculateSpeed(
+      this.startTime,
+      this.bookService.wordPhrases()
+    );
 
     if (speed > 1000) return;
 
@@ -94,9 +95,11 @@ export class ExercisesStateService {
             ]);
           }
         });
-      if (this.bookService.currentSegment) {
+
+      const currentSegment = this.bookService.currentSegment();
+      if (currentSegment) {
         this.bookService
-          .updateBookProgress(bookId, this.bookService.currentSegment.number)
+          .updateBookProgress(bookId, currentSegment.number)
           .subscribe(() => {
             this.bookService.getNextReadingData(bookId);
           });
@@ -109,11 +112,9 @@ export class ExercisesStateService {
     this.phraseNumber++;
     this.phraseNumberSignal.update((val) => val + 1);
     const wordPhrases = this.bookService.wordPhrases();
-    if(wordPhrases) {
-      this.progressPercent = Math.round(
-        (this.phraseNumber / wordPhrases.length) * 100
-      );
 
-    }
+    this.progressPercent = Math.round(
+      (this.phraseNumber / wordPhrases.length) * 100
+    );
   }
 }
