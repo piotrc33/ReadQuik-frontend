@@ -6,12 +6,14 @@ import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { map, timer } from 'rxjs';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { BookService } from '../../library/services/book.service';
 
 @Component({
   template: '',
 })
 export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   readonly resultsService = inject(ResultsService);
+  readonly bookService = inject(BookService);
 
   @Input()
   mode: ExerciseModeT = 'manual';
@@ -29,11 +31,11 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   }
 
   startAutoTimer(): void {
-    const currentSegment = this.state.bookService.currentSegment();
+    const currentSegment = this.bookService.currentSegment();
     if (currentSegment === null) {
       return;
     }
-    const wordPhrases = this.state.bookService.wordPhrases();
+    const wordPhrases = this.bookService.wordPhrases();
     this.subsContainer.add = timer(
       getAverageTimeoutMs(
         currentSegment.text.length,

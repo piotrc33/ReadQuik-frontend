@@ -1,5 +1,5 @@
 <div class="exercise2 horizontal-exercise">
-  @for (item of state.bookService.wordPhrases(); track $index) {
+  @for (item of bookService.wordPhrases(); track $index) {
     <span
       class="phrase"
       [ngClass]="state.phraseNumber() === $index ? 'active' : 'inactive'"

@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { BookService } from '../../../library/services/book.service';
 
 @Component({
@@ -7,16 +6,10 @@ import { BookService } from '../../../library/services/book.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent {
-  constructor(
-    readonly bookService: BookService,
-    readonly progressService: ExercisesProgressStateService
-  ) {
-    bookService.getInitialData().subscribe((data) => {
-      if (data) {
-        bookService.readingData.set(data);
-        progressService.next(data.exercisesProgress);
-      }
-    });
+export class MainComponent implements OnInit {
+  private readonly bookService = inject(BookService);
+
+  ngOnInit(): void {
+    this.bookService.initialDataAction$.next();
   }
 }

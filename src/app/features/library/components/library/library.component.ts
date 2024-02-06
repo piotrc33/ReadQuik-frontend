@@ -35,7 +35,7 @@ export class LibraryComponent {
   );
 
   chooseBook(bookId: string) {
-    this.bookService.getNextReadingData(bookId);
+    this.bookService.changeBookAction$.next(bookId);
     this.router.navigate(['/app/exercises']);
   }
 }

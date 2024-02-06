@@ -1,5 +1,5 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, firstValueFrom } from 'rxjs';
 import { ResultsService } from 'src/app/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
@@ -31,10 +31,10 @@ export class ExercisesStateService {
 
   constructor(
     readonly text: TextService,
-    private exHttpService: ExercisesHttpService,
-    readonly bookService: BookService,
-    private resultsService: ResultsService,
-    private progressService: ExercisesProgressStateService,
+    private readonly exHttpService: ExercisesHttpService,
+    private readonly bookService: BookService,
+    private readonly resultsService: ResultsService,
+    private readonly progressService: ExercisesProgressStateService,
     private readonly cookieService: CookieService,
     private readonly router: Router
   ) {}
@@ -97,11 +97,11 @@ export class ExercisesStateService {
 
       const currentSegment = this.bookService.currentSegment();
       if (currentSegment) {
-        this.bookService
-          .updateBookProgress(bookId, currentSegment.number)
-          .subscribe(() => {
-            this.bookService.getNextReadingData(bookId);
-          });
+        firstValueFrom(
+          this.bookService.updateBookProgress(bookId, currentSegment.number)
+        ).then(() => {
+          this.bookService.nextReadingDataForBookAction$.next(bookId);
+        });
       }
       this.resultsService.updateRecentResults();
     }

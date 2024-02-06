@@ -35,12 +35,12 @@ export class Exercise7Component
     super.ngOnInit();
     for (
       let i = 0;
-      i < this.state.bookService.phrasesWithNewlines().length;
+      i < this.bookService.phrasesWithNewlines().length;
       i++
     ) {
       if (
         !this.textService.isNewline(
-          this.state.bookService.phrasesWithNewlines()[i]
+          this.bookService.phrasesWithNewlines()[i]
         )
       ) {
         this.wordIndexes.push(i);

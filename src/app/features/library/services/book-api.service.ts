@@ -26,20 +26,24 @@ export class BookApiService {
     return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
   }
 
+  // ********************************
+  
   getNextReadingData(bookId: string): Observable<ReadingDataI> {
     const url = `${baseUrl}/books/reading-data/${bookId}`;
     return this.http.get<ReadingDataI>(url);
   }
 
-  getInitialData(): Observable<ReadingDataI | null> {
+  getInitialReadingData(): Observable<ReadingDataI | null> {
     const url = `${baseUrl}/initial-data`;
     return this.http.get<ReadingDataI | null>(url);
   }
 
-  getReadingData(bookId: string, number: number) {
+  getReadingDataForSegment(bookId: string, number: number) {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
     return this.http.get<ReadingDataI>(url);
   }
+
+  // ********************************
 
   updateBookProgress(
     bookId: string,

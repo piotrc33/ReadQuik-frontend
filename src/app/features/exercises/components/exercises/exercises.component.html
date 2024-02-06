@@ -6,7 +6,7 @@
   </div>
   <div class="content" *ngIf="state.currentExercise$ | async as exNum">
     <section class="book">
-      <ng-container *ngIf="state.bookService.currentBookData() as book">
+      <ng-container *ngIf="bookService.currentBookData() as book">
         <div class="header">
           <h2 class="title">
             {{ book.title }}
@@ -16,10 +16,7 @@
         <div>
           <img class="cover" [src]="book.coverUrl" alt="cover" />
         </div>
-        <div
-          class="segment"
-          *ngIf="state.bookService.segmentData() as segment"
-        >
+        <div class="segment" *ngIf="bookService.segmentData() as segment">
           <div class="label">Segment:</div>
           <div class="choose">
             <input
@@ -32,8 +29,7 @@
             <button
               class="small ternary switch-button"
               (click)="
-                state.bookService.getReadingData(
-                  book._id || '',
+                bookService.changeSegmentAction$.next(
                   segmentNumber.valueAsNumber
                 )
               "
@@ -55,8 +51,7 @@
       <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
       <ng-container
         *ngIf="
-          progressState.getRepetitions(exNum)
-            | async as repetitions;
+          progressState.getRepetitions(exNum) | async as repetitions;
           else zeroIndicator
         "
       >
@@ -99,23 +94,19 @@
         <instruction
           content
           [instructionNumber]="exNum"
-          [instructionObject]="
-            instruction['instruction' + exNum]
-          "
+          [instructionObject]="instruction['instruction' + exNum]"
         ></instruction>
       </app-dialog>
 
       <button
         class="primary start-button"
-        *ngIf="!state.started && state.bookService.wordPhrases().length > 0"
+        *ngIf="!state.started && bookService.wordPhrases().length > 0"
         (click)="state.start()"
       >
         {{ t("start") }}
       </button>
 
-      <exercise-panel
-        *ngIf="state.started && exNum"
-      ></exercise-panel>
+      <exercise-panel *ngIf="state.started && exNum"></exercise-panel>
     </section>
 
     <section class="recents">

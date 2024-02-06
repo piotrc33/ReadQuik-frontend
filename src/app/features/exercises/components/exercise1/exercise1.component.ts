@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Exercise } from '../../model/exercise';
+import { BookService } from 'src/app/features/library/services/book.service';
 
 @Component({
   selector: 'exercise1',
@@ -8,9 +9,10 @@ import { Exercise } from '../../model/exercise';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Exercise1Component extends Exercise {
+  private readonly bookService = inject(BookService);
   constructor() {
     super();
   }
 
-  wordPhrases = this.state.bookService.wordPhrases;
+  wordPhrases = this.bookService.wordPhrases;
 }

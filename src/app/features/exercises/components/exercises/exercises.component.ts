@@ -4,16 +4,16 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  Signal,
+  inject
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { BookService } from 'src/app/features/library/services/book.service';
 import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'exercises',
@@ -21,6 +21,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrls: ['./exercises.component.scss'],
 })
 export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
+  readonly bookService = inject(BookService);
+
   instructionsOpened: boolean = false;
   readonly instructions$ = this.instructionService.getExerciseInstructions();
 
