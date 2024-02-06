@@ -1,6 +1,13 @@
-import { Injectable, Signal, computed, inject, signal } from '@angular/core';
+import {
+  Injectable,
+  Signal,
+  WritableSignal,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, ReplaySubject, map, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
@@ -15,23 +22,21 @@ import { BookApiService } from './book-api.service';
 export class BookService {
   private readonly textService = inject(TextService);
   private readonly bookApiService = inject(BookApiService);
-  currentBookId = signal('');
 
-  readingData$ = new ReplaySubject<ReadingDataI>(1);
-  bookData$ = this.readingData$.pipe(
-    map((data) => data.bookData),
-    tap((book) => {
-      this.currentBookId.set(book._id);
-    })
-  );
-  segmentData$ = this.readingData$.pipe(map((data) => data.segment));
+  readingData: WritableSignal<ReadingDataI | null> = signal(null);
 
-  currentBook$ = this.readingData$.pipe(map((data) => data.bookData));
+  currentBookData = computed(() => this.readingData()?.bookData);
+  currentBookId = computed(() => {
+    const currentBook = this.currentBookData();
+    return currentBook ? currentBook._id : '';
+  })
 
-  currentSegment: Signal<SegmentI | null> = toSignal(
-    this.readingData$.pipe(map((data) => data.segment)),
-    { initialValue: null }
-  );
+  segmentData: Signal<SegmentI | undefined> = computed(() => this.readingData()?.segment);
+
+  currentSegment: Signal<SegmentI | null> = computed(() => {
+    const readingData = this.readingData();
+    return readingData ? readingData.segment : null;
+  });
 
   phrasesWithNewlines: Signal<string[]> = computed(() => {
     const currentSegment = this.currentSegment();
@@ -57,7 +62,7 @@ export class BookService {
       .getNextReadingData(bookId)
       .subscribe((data: ReadingDataI | null) => {
         if (data) {
-          this.readingData$.next(data);
+          this.readingData.set(data);
         }
       });
   }
@@ -71,7 +76,7 @@ export class BookService {
       .getReadingData(bookId, number)
       .subscribe((data: ReadingDataI | null) => {
         if (data) {
-          this.readingData$.next(data);
+          this.readingData.set(data);
         }
       });
   }

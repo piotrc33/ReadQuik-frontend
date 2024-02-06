@@ -14,7 +14,7 @@ export class MainComponent {
   ) {
     bookService.getInitialData().subscribe((data) => {
       if (data) {
-        bookService.readingData$.next(data);
+        bookService.readingData.set(data);
         progressService.next(data.exercisesProgress);
       }
     });
