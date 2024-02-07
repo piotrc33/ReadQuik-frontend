@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { BookService } from '../../../library/services/book.service';
+import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +7,9 @@ import { BookService } from '../../../library/services/book.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  private readonly bookService = inject(BookService);
+  private readonly readingDataService = inject(ReadingDataService);
 
   ngOnInit(): void {
-    this.bookService.initialDataAction$.next();
+    this.readingDataService.initialDataAction$.next();
   }
 }

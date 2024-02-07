@@ -1,14 +1,15 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { BehaviorSubject, Subject, firstValueFrom } from 'rxjs';
-import { ResultsService } from 'src/app/services/results.service';
+import { ResultsService } from 'src/app/shared/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
-import { ExercisesProgressStateService } from '../../../services/exercises-progress-state.service';
+import { ExercisesProgressStateService } from '../../../shared/services/exercises-progress-state.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
 
 @Injectable()
 export class ExercisesStateService {
@@ -36,7 +37,8 @@ export class ExercisesStateService {
     private readonly resultsService: ResultsService,
     private readonly progressService: ExercisesProgressStateService,
     private readonly cookieService: CookieService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly readingDataService: ReadingDataService
   ) {}
 
   get started(): boolean {
@@ -100,7 +102,7 @@ export class ExercisesStateService {
         firstValueFrom(
           this.bookService.updateBookProgress(bookId, currentSegment.number)
         ).then(() => {
-          this.bookService.nextReadingDataForBookAction$.next(bookId);
+          this.readingDataService.nextReadingDataForBookAction$.next(bookId);
         });
       }
       this.resultsService.updateRecentResults();

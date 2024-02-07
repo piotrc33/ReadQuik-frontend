@@ -3,7 +3,7 @@ import { Point } from 'chart.js/dist/core/core.controller';
 import { differenceInDays, isSameDay, parseISO } from 'date-fns';
 import { DataPoint, linear } from 'regression';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { ResultsService } from 'src/app/services/results.service';
+import { ResultsService } from 'src/app/shared/services/results.service';
 import { TimeSpanT } from './time-span.t';
 
 @Component({

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslocoModule } from '@ngneat/transloco';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { FiltersComponent } from './components/filters/filters.component';
@@ -9,8 +10,6 @@ import { LibraryComponent } from './components/library/library.component';
 import { BookCardComponent } from './components/ui/book-card/book-card.component';
 import { LibraryRoutingModule } from './library-routing.module';
 import { BookService } from './services/book.service';
-import { TranslocoModule } from '@ngneat/transloco';
-import { BookApiService } from './services/book-api.service';
 
 @NgModule({
   declarations: [
@@ -26,6 +25,6 @@ import { BookApiService } from './services/book-api.service';
     SharedModule,
     TranslocoModule
   ],
-  providers: [BookService, BookApiService],
+  providers: [BookService],
 })
 export class LibraryModule {}

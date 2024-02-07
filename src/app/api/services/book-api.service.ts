@@ -6,10 +6,11 @@ import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
-import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { baseUrl } from 'src/app/shared/variables';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BookApiService {
   private readonly headers = { 'Content-Type': 'application/json' };
   private readonly http = inject(HttpClient);
@@ -25,25 +26,6 @@ export class BookApiService {
 
     return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
   }
-
-  // ********************************
-  
-  getNextReadingData(bookId: string): Observable<ReadingDataI> {
-    const url = `${baseUrl}/books/reading-data/${bookId}`;
-    return this.http.get<ReadingDataI>(url);
-  }
-
-  getInitialReadingData(): Observable<ReadingDataI | null> {
-    const url = `${baseUrl}/initial-data`;
-    return this.http.get<ReadingDataI | null>(url);
-  }
-
-  getReadingDataForSegment(bookId: string, number: number) {
-    const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
-    return this.http.get<ReadingDataI>(url);
-  }
-
-  // ********************************
 
   updateBookProgress(
     bookId: string,

@@ -9,11 +9,12 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BookService } from 'src/app/features/library/services/book.service';
-import { ExercisesProgressStateService } from 'src/app/services/exercises-progress-state.service';
-import { ResultsService } from 'src/app/services/results.service';
+import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
+import { ResultsService } from 'src/app/shared/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExercisesStateService } from '../../services/exercises-state.service';
 import { InstructionsService } from '../../services/instructions.service';
+import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
 
 @Component({
   selector: 'exercises',
@@ -22,6 +23,7 @@ import { InstructionsService } from '../../services/instructions.service';
 })
 export class ExercisesComponent implements OnInit, AfterViewChecked, OnDestroy {
   readonly bookService = inject(BookService);
+  readonly readingDataService = inject(ReadingDataService);
 
   instructionsOpened: boolean = false;
   readonly instructions$ = this.instructionService.getExerciseInstructions();

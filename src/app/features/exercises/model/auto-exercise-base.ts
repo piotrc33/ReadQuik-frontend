@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Exercise } from './exercise';
 import { ExerciseModeT } from './exercise-mode.type';
-import { ResultsService } from 'src/app/services/results.service';
+import { ResultsService } from 'src/app/shared/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { map, timer } from 'rxjs';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';

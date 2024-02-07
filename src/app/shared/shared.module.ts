@@ -6,6 +6,7 @@ import { TextInputWithValidationComponent } from './components/text-input-with-v
 import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
 import { RelativeDatePipe } from './pipes/relative-date.pipe';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { ReadingDataService } from './services/reading-data.service';
 
 const exportedComponents = [
   RelativeDatePipe,
@@ -19,6 +20,6 @@ const exportedComponents = [
   declarations: exportedComponents,
   imports: [CommonModule, ReactiveFormsModule],
   exports: exportedComponents,
-  providers: [],
+  providers: [ReadingDataService],
 })
 export class SharedModule {}
