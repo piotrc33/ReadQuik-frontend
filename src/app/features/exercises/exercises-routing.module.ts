@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: '6', component: Exercise6Component },
   { path: '7', component: Exercise7Component },
   { path: '8', component: Exercise8Component },
+  { path: '**', redirectTo: '1' },
 ];
 
 @NgModule({

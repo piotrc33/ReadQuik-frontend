@@ -19,7 +19,6 @@ export class ExercisesStateService {
 
   private _started: boolean = false;
   phraseNumber: WritableSignal<number> = signal(0);
-  lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   progressPercent: number = 0;
 
@@ -73,28 +72,19 @@ export class ExercisesStateService {
     if (speed > 1000) return;
 
     const bookId = this.bookService.currentBookId();
-    if (
-      this.currentExerciseService.currentExercise$.value 
-      &&
-      this.progressService.currentExerciseUnlocked$.value
-    ) {
-      this.exHttpService
-        .saveResult(speed, this.currentExerciseService.currentExercise$.value, bookId)
-        .subscribe();
+    const exerciseNumber = this.currentExerciseService.exerciseNumber();
+    if (exerciseNumber && this.progressService.currentExerciseUnlocked$.value) {
+      this.exHttpService.saveResult(speed, exerciseNumber, bookId).subscribe();
 
       this.exHttpService
-        .updateExercisesProgress$(this.currentExerciseService.currentExercise$.value)
+        .updateExercisesProgress$(exerciseNumber)
         .subscribe((data) => {
           const currentExerciseProgress = data.find(
-            (el) => el.exerciseNumber === this.currentExerciseService.currentExercise$.value
+            (el) => el.exerciseNumber === exerciseNumber
           );
           if (currentExerciseProgress?.repetitions === 0) {
-            this.cookieService.delete(
-              `instruction${this.currentExerciseService.currentExercise$.value + 1}Opened`
-            );
-            this.router.navigate([
-              `/app/exercises/${this.currentExerciseService.currentExercise$.value + 1}`,
-            ]);
+            this.cookieService.delete(`instruction${exerciseNumber + 1}Opened`);
+            this.router.navigate([`/app/exercises/${exerciseNumber + 1}`]);
           }
         });
 

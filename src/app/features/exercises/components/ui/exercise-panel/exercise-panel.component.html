@@ -1,6 +1,6 @@
 <app-dialog
   (close)="state.exit$.next()"
-  *ngIf="currentExerciseService.currentExercise$ | async as exNum"
+  *ngIf="currentExerciseService.exerciseNumber() as exNum"
   [style.font-size.px]="exNum < 5 ? 18 : 16"
 >
   <router-outlet content></router-outlet>

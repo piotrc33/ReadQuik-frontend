@@ -6,7 +6,7 @@
   </div>
   <div
     class="content"
-    *ngIf="currentExerciseService.currentExercise$ | async as exNum"
+    *ngIf="currentExerciseService.exerciseNumber() as exNum"
   >
     <section class="book">
       <ng-container *ngIf="bookService.currentBookData() as book">
