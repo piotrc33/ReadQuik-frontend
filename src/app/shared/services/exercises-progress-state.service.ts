@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  map,
-  tap
-} from 'rxjs';
+import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable, map, shareReplay, tap } from 'rxjs';
 import { SingleProgressI } from 'src/app/api/model/progress/single-progress.i';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExercisesProgressStateService {
-  private exercisesProgress$ = new BehaviorSubject<SingleProgressI[] | null>(null);
-  currentExerciseUnlocked$ = new BehaviorSubject<boolean>(true);
+  private readonly readingDataService = inject(ReadingDataService);
 
-  unlockedExercisesCount$ = this.exercisesProgress$.asObservable().pipe(
+  private readonly exercisesProgress$: Observable<
+    SingleProgressI[] | undefined
+  > = this.readingDataService.readingData$.pipe(
+    map((readingData) => readingData?.exercisesProgress),
+    shareReplay()
+  );
+
+  currentExerciseUnlocked$ = new BehaviorSubject<boolean>(true); // this is only referenced in exercises state
+
+  // this one is only referenced in exercises.html
+  unlockedExercisesCount$ = this.exercisesProgress$.pipe(
     map((array) => {
       if (!array) return 1;
       if (array.length === 0) return 1;
@@ -23,10 +28,7 @@ export class ExercisesProgressStateService {
     })
   );
 
-  next(newValue: SingleProgressI[]) {
-    this.exercisesProgress$.next(newValue);
-  }
-
+  // this one also only in exercises.html
   getRepetitions(exerciseNumber: number): Observable<number> {
     return this.exercisesProgress$.pipe(
       map((progressArray) => {
@@ -41,6 +43,7 @@ export class ExercisesProgressStateService {
     );
   }
 
+  // this is also only in exercises.html
   isExerciseUnlocked(exerciseNumber: number): Observable<boolean> {
     return this.unlockedExercisesCount$.pipe(
       map((count) => {

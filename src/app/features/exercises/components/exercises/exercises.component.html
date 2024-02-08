@@ -4,7 +4,10 @@
       [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
     ></exercise-nav>
   </div>
-  <div class="content" *ngIf="state.currentExercise$ | async as exNum">
+  <div
+    class="content"
+    *ngIf="currentExerciseService.currentExercise$ | async as exNum"
+  >
     <section class="book">
       <ng-container *ngIf="bookService.currentBookData() as book">
         <div class="header">

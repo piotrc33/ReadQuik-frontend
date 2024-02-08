@@ -1,15 +1,16 @@
 import { Injectable, WritableSignal, signal } from '@angular/core';
-import { BehaviorSubject, Subject, firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { Subject, firstValueFrom } from 'rxjs';
+import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
 import { ResultsService } from 'src/app/shared/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
-import { ExercisesProgressStateService } from '../../../shared/services/exercises-progress-state.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
+import { CurrentExerciseService } from './../../../shared/services/current-exercise.service';
 import { ExercisesHttpService } from './exercises-http.service';
 import { TextService } from './text.service';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
+import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
 
 @Injectable()
 export class ExercisesStateService {
@@ -21,7 +22,6 @@ export class ExercisesStateService {
   lastPracticed: number = 1;
   exerciseMode: ExerciseModeT = 'manual';
   progressPercent: number = 0;
-  currentExercise$ = new BehaviorSubject<number>(1);
 
   pageYPosition: number = 0;
 
@@ -38,7 +38,8 @@ export class ExercisesStateService {
     private readonly progressService: ExercisesProgressStateService,
     private readonly cookieService: CookieService,
     private readonly router: Router,
-    private readonly readingDataService: ReadingDataService
+    private readonly readingDataService: ReadingDataService,
+    private readonly currentExerciseService: CurrentExerciseService
   ) {}
 
   get started(): boolean {
@@ -73,26 +74,26 @@ export class ExercisesStateService {
 
     const bookId = this.bookService.currentBookId();
     if (
-      this.currentExercise$.value &&
+      this.currentExerciseService.currentExercise$.value 
+      &&
       this.progressService.currentExerciseUnlocked$.value
     ) {
       this.exHttpService
-        .saveResult(speed, this.currentExercise$.value, bookId)
+        .saveResult(speed, this.currentExerciseService.currentExercise$.value, bookId)
         .subscribe();
 
       this.exHttpService
-        .updateExercisesProgress$(this.currentExercise$.value)
+        .updateExercisesProgress$(this.currentExerciseService.currentExercise$.value)
         .subscribe((data) => {
-          this.progressService.next(data);
           const currentExerciseProgress = data.find(
-            (el) => el.exerciseNumber === this.currentExercise$.value
+            (el) => el.exerciseNumber === this.currentExerciseService.currentExercise$.value
           );
           if (currentExerciseProgress?.repetitions === 0) {
             this.cookieService.delete(
-              `instruction${this.currentExercise$.value + 1}Opened`
+              `instruction${this.currentExerciseService.currentExercise$.value + 1}Opened`
             );
             this.router.navigate([
-              `/app/exercises/${this.currentExercise$.value + 1}`,
+              `/app/exercises/${this.currentExerciseService.currentExercise$.value + 1}`,
             ]);
           }
         });

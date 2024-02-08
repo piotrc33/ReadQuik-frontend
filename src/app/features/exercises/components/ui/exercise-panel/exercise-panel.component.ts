@@ -1,3 +1,4 @@
+import { CurrentExerciseService } from './../../../../../shared/services/current-exercise.service';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -13,6 +14,7 @@ import { ExercisesStateService } from '../../../services/exercises-state.service
 export class ExercisePanelComponent implements AfterViewInit {
   constructor(
     public state: ExercisesStateService,
+    public currentExerciseService: CurrentExerciseService,
     private cdr: ChangeDetectorRef
   ) {}
 

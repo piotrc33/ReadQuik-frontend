@@ -7,6 +7,7 @@ import { ValidationErrorsComponent } from './components/validation-errors/valida
 import { RelativeDatePipe } from './pipes/relative-date.pipe';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ReadingDataService } from './services/reading-data.service';
+import { CurrentExerciseService } from './services/current-exercise.service';
 
 const exportedComponents = [
   RelativeDatePipe,
@@ -20,6 +21,6 @@ const exportedComponents = [
   declarations: exportedComponents,
   imports: [CommonModule, ReactiveFormsModule],
   exports: exportedComponents,
-  providers: [ReadingDataService],
+  providers: [ReadingDataService, CurrentExerciseService],
 })
 export class SharedModule {}
