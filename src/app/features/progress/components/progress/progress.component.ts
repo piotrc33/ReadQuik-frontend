@@ -14,12 +14,11 @@ import { TimeSpanT } from './time-span.t';
 })
 export class ProgressComponent {
   private readonly resultsService = inject(ResultsService);
-  readonly allResults$ = this.resultsService.getAllResults();
 
   timeSpan$ = new BehaviorSubject<TimeSpanT>('all');
 
   points$: Observable<Point[]> = combineLatest([
-    this.allResults$,
+    this.resultsService.allResults$,
     this.timeSpan$,
   ]).pipe(
     map(([results, timeSpan]) => {

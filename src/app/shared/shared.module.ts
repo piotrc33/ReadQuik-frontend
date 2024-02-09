@@ -8,19 +8,20 @@ import { RelativeDatePipe } from './pipes/relative-date.pipe';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { ReadingDataService } from './services/reading-data.service';
 import { CurrentExerciseService } from './services/current-exercise.service';
+import { ResultsService } from './services/results.service';
 
 const exportedComponents = [
   RelativeDatePipe,
   PillComponent,
   ValidationErrorsComponent,
   TextInputWithValidationComponent,
-  DialogComponent
+  DialogComponent,
 ];
 
 @NgModule({
   declarations: exportedComponents,
   imports: [CommonModule, ReactiveFormsModule],
   exports: exportedComponents,
-  providers: [ReadingDataService, CurrentExerciseService],
+  providers: [ReadingDataService, CurrentExerciseService, ResultsService],
 })
 export class SharedModule {}

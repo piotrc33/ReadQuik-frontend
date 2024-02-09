@@ -115,7 +115,7 @@
     <section class="recents">
       <h2 class="center title">{{ t("recentResults") }}</h2>
       <ng-container
-        *ngIf="resultsService.recentResults$ | async as recentResults"
+        *ngIf="resultsService.recentResults() as recentResults"
       >
         <div class="result" *ngFor="let result of recentResults">
           <div class="main">

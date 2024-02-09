@@ -94,7 +94,7 @@ export class ExercisesStateService {
           this.readingDataService.nextReadingDataForBookAction$.next(bookId);
         });
       }
-      this.resultsService.updateRecentResults();
+      this.resultsService.loadRecentResultsAction$.next();
     }
   }
 

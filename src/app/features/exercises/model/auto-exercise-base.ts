@@ -1,12 +1,11 @@
-import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Exercise } from './exercise';
-import { ExerciseModeT } from './exercise-mode.type';
+import { Component, Input, OnDestroy, OnInit, computed, inject } from '@angular/core';
+import { timer } from 'rxjs';
 import { ResultsService } from 'src/app/shared/services/results.service';
 import { SubscriptionContainer } from 'src/app/utils/subscription-container';
-import { map, timer } from 'rxjs';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { BookService } from '../../library/services/book.service';
+import { Exercise } from './exercise';
+import { ExerciseModeT } from './exercise-mode.type';
 
 @Component({
   template: '',
@@ -18,9 +17,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   @Input()
   mode: ExerciseModeT = 'manual';
 
-  autoSpeed = toSignal(
-    this.resultsService.last3Avg$.pipe(map((avg) => avg * 1.2))
-  );
+  autoSpeed = computed(() => this.resultsService.last3Avg() * 1.2)
   subsContainer = new SubscriptionContainer();
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 import {
   AfterViewChecked,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit,
@@ -17,6 +18,7 @@ import { InstructionsService } from '../../services/instructions.service';
   selector: 'exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExercisesComponent implements OnInit, AfterViewChecked {
   readonly bookService = inject(BookService);
@@ -32,7 +34,7 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
   ) {}
 
   ngOnInit(): void {
-    this.resultsService.updateRecentResults();
+    this.resultsService.loadRecentResultsAction$.next();
     this.currentExerciseService.initialExerciseNumberAction$.next();
   }
 
