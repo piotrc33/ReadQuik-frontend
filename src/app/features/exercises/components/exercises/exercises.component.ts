@@ -33,7 +33,6 @@ export class ExercisesComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.resultsService.updateRecentResults();
-
     this.currentExerciseService.initialExerciseNumberAction$.next();
   }
 

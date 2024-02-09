@@ -17,7 +17,8 @@ export class InstructionsService {
         this.cookieService.set(
           `instruction${this.currentExerciseService.exerciseNumber()}Opened`,
           'true',
-          2
+          2,
+          '/app'
         );
       }
     });

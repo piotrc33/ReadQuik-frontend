@@ -1,7 +1,15 @@
 import { Injectable, Signal, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { Observable, Subject, filter, map, merge, shareReplay } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  filter,
+  map,
+  merge,
+  shareReplay,
+  tap
+} from 'rxjs';
 
 @Injectable()
 export class CurrentExerciseService {
@@ -10,13 +18,14 @@ export class CurrentExerciseService {
   readonly initialExerciseNumberAction$ = new Subject<void>();
   private readonly initialExerciseNumber$ =
     this.initialExerciseNumberAction$.pipe(
-      map(() => Number(this.router.url.split('/').pop()))
+      map(() => Number(this.router.url.split('/').pop())),
     );
 
   private readonly exerciseNumberFromNavigationChange$: Observable<number> =
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
-      map((e) => Number(e.url.split('/').pop()))
+      map((e) => Number(e.urlAfterRedirects.split('/').pop())),
+      filter((exercise) => !Number.isNaN(exercise)),
     );
 
   readonly exerciseNumber$: Observable<number> = merge(
