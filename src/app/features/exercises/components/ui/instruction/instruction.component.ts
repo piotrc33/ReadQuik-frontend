@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'instruction',
   templateUrl: './instruction.component.html',
-  styleUrls: ['./instruction.component.scss']
+  styleUrls: ['./instruction.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InstructionComponent {
   instructionKeys?: string[];

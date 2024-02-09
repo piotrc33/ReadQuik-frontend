@@ -4,10 +4,7 @@
       [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
     ></exercise-nav>
   </div>
-  <div
-    class="content"
-    *ngIf="currentExerciseService.exerciseNumber() as exNum"
-  >
+  <div class="content" *ngIf="currentExerciseService.exerciseNumber() as exNum">
     <section class="book">
       <ng-container *ngIf="bookService.currentBookData() as book">
         <div class="header">
@@ -47,10 +44,7 @@
       </button>
     </section>
 
-    <section
-      class="exercise center"
-      *ngIf="exNum && (instructions$ | async) as instruction"
-    >
+    <section class="exercise center" *ngIf="exNum">
       <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
       <ng-container
         *ngIf="
@@ -86,18 +80,24 @@
       <advice></advice>
 
       <div class="button-container learn-more">
-        <button class="secondary" (click)="showInstructionsAndSetCookie()">
+        <button
+          class="secondary"
+          (click)="instructionService.setInstructionsStateAction$.next(true)"
+        >
           {{ t("instructionsButton") }}
         </button>
       </div>
       <app-dialog
-        (close)="instructionsOpened = false"
-        *ngIf="instructionsOpened"
+        (close)="instructionService.setInstructionsStateAction$.next(false)"
+        *ngIf="instructionService.instructionsOpened()"
       >
         <instruction
+          *ngIf="
+            instructionService.currentInstructionObject() as instructionObject
+          "
           content
           [instructionNumber]="exNum"
-          [instructionObject]="instruction['instruction' + exNum]"
+          [instructionObject]="instructionObject"
         ></instruction>
       </app-dialog>
 

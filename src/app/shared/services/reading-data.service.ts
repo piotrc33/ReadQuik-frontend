@@ -10,7 +10,7 @@ export class ReadingDataService {
 
   readonly changeBookAction$ = new Subject<string>();
   readonly nextReadingDataForBookAction$ = new Subject<string>();
-  readonly readingDataFromBookId$ = merge(
+  private readonly readingDataFromBookId$ = merge(
     this.changeBookAction$,
     this.nextReadingDataForBookAction$
   ).pipe(
@@ -18,27 +18,26 @@ export class ReadingDataService {
   );
 
   readonly initialDataAction$ = new Subject<void>();
-  readonly readingDataFromInitialData$ = this.initialDataAction$.pipe(
+  private readonly readingDataFromInitialData$ = this.initialDataAction$.pipe(
     switchMap(() => this.readingDataApiService.getInitialReadingData())
   );
 
   readonly changeSegmentAction$ = new Subject<number>();
-  readonly readingDataFromSegmentChange$ = this.changeSegmentAction$.pipe(
-    switchMap((segmentNumber) =>
-      this.readingDataApiService.getReadingDataForSegment(
-        this.readingData()?.bookData._id || '',
-        segmentNumber
+  private readonly readingDataFromSegmentChange$ =
+    this.changeSegmentAction$.pipe(
+      switchMap((segmentNumber) =>
+        this.readingDataApiService.getReadingDataForSegment(
+          this.readingData()?.bookData._id || '',
+          segmentNumber
+        )
       )
-    )
-  );
+    );
 
   readonly readingData$: Observable<ReadingDataI | null> = merge(
     this.readingDataFromBookId$,
     this.readingDataFromInitialData$,
     this.readingDataFromSegmentChange$
-  ).pipe(
-    shareReplay()
-  );
+  ).pipe(shareReplay());
 
   readonly readingData = toSignal(this.readingData$, { initialValue: null });
 }
