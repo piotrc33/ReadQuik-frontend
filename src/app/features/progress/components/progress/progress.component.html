@@ -5,14 +5,12 @@
       regressionPoints: regressionPoints$ | async
     } as vm"
   >
-    <section
-      *ngIf="
-        vm.points && vm.points.length > 0 && vm.regressionPoints;
-        else noDataTemplate
-      "
-      class="chart-section"
-    >
+    <section class="chart-section">
       <chart
+        *ngIf="
+          vm.points && vm.points.length > 0 && vm.regressionPoints;
+          else noDataTemplate
+        "
         [dataPoints]="vm.points"
         [regressionPoints]="vm.regressionPoints"
       ></chart>
@@ -40,7 +38,9 @@
     </section>
 
     <ng-template #noDataTemplate>
-      {{ t("noData") }}
+      <div class="no-data">
+        {{ t("noData") }}
+      </div>
     </ng-template>
   </ng-container>
 </ng-container>

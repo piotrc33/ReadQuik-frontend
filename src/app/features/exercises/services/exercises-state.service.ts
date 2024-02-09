@@ -9,7 +9,6 @@ import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { CurrentExerciseService } from './../../../shared/services/current-exercise.service';
 import { ExercisesHttpService } from './exercises-http.service';
-import { TextService } from './text.service';
 import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
 
 @Injectable()
@@ -30,7 +29,6 @@ export class ExercisesStateService {
   startTime!: number;
 
   constructor(
-    readonly text: TextService,
     private readonly exHttpService: ExercisesHttpService,
     private readonly bookService: BookService,
     private readonly resultsService: ResultsService,
