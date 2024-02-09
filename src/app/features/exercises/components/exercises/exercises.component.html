@@ -1,7 +1,7 @@
 <div class="exercises" *transloco="let t">
   <div class="nav">
     <exercise-nav
-      [totalUnlocked]="(progressState.unlockedExercisesCount$ | async) || 1"
+      [totalUnlocked]="progressState.unlockedExercisesCount()"
     ></exercise-nav>
   </div>
   <div class="content" *ngIf="currentExerciseService.exerciseNumber() as exNum">
@@ -48,7 +48,7 @@
       <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
       <ng-container
         *ngIf="
-          progressState.getRepetitions(exNum) | async as repetitions;
+          progressState.currentExerciseRepetitions() as repetitions;
           else zeroIndicator
         "
       >
@@ -66,7 +66,7 @@
         ></repetition-indicator>
         <div class="repetition-info">
           {{
-            (progressState.isExerciseUnlocked(exNum) | async)
+            progressState.isCurrentExerciseUnlocked()
               ? "#1 of 10"
               : t("willNotSave")
           }}

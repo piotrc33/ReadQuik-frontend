@@ -73,7 +73,7 @@ export class ExercisesStateService {
 
     const bookId = this.bookService.currentBookId();
     const exerciseNumber = this.currentExerciseService.exerciseNumber();
-    if (exerciseNumber && this.progressService.currentExerciseUnlocked$.value) {
+    if (exerciseNumber && this.progressService.isCurrentExerciseUnlocked()) {
       this.exHttpService.saveResult(speed, exerciseNumber, bookId).subscribe();
 
       this.exHttpService
