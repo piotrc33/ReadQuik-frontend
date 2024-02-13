@@ -22,6 +22,8 @@ import { TextService } from './services/text.service';
 import { InstructionsService } from './services/instructions.service';
 import { AdviceComponent } from './components/ui/advice/advice.component';
 import { RepetitionIndicatorComponent } from './components/ui/repetition-indicator/repetition-indicator.component';
+import { ExerciseFlowService } from './services/exercise-flow.service';
+import { PercentBarService } from './services/percent-bar.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { RepetitionIndicatorComponent } from './components/ui/repetition-indicat
     ExercisesStateService,
     KeyboardService,
     ExercisesHttpService,
-    InstructionsService
+    InstructionsService,
+    ExerciseFlowService,
+    PercentBarService
   ],
 })
 export class ExercisesModule {}

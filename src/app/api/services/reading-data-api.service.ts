@@ -24,4 +24,16 @@ export class ReadingDataApiService {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
     return this.http.get<ReadingDataI>(url);
   }
+
+  completeExercise(data: {
+    wpm: number;
+    exerciseNumber: number;
+    bookId: string;
+    lastSegmentNumber: number;
+  }) {
+    return this.http.post<ReadingDataI>(
+      `${baseUrl}/progress/complete-exercise`,
+      data
+    );
+  }
 }

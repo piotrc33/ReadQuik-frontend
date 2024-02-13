@@ -1,12 +1,18 @@
-import { ReadingDataApiService } from './../../api/services/reading-data-api.service';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, Signal, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Subject, merge, switchMap, tap, Observable, shareReplay } from 'rxjs';
+import { Observable, Subject, merge, shareReplay, switchMap, tap } from 'rxjs';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
+import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
+import { BookService } from 'src/app/features/library/services/book.service';
+import { ReadingDataApiService } from './../../api/services/reading-data-api.service';
+import { ExercisesProgressStateService } from './exercises-progress-state.service';
 
 @Injectable()
 export class ReadingDataService {
   private readonly readingDataApiService = inject(ReadingDataApiService);
+  private readonly bookService = inject(BookService);
+  private readonly progressService = inject(ExercisesProgressStateService);
+  private readonly state = inject(ExercisesStateService);
 
   readonly changeBookAction$ = new Subject<string>();
   readonly nextReadingDataForBookAction$ = new Subject<string>();
@@ -33,11 +39,24 @@ export class ReadingDataService {
       )
     );
 
+  readonly readingDataFromComplete$ = this.state.dataForSave$.pipe(
+    switchMap((data) => this.readingDataApiService.completeExercise(data))
+  );
   readonly readingData$: Observable<ReadingDataI | null> = merge(
     this.readingDataFromBookId$,
     this.readingDataFromInitialData$,
-    this.readingDataFromSegmentChange$
-  ).pipe(shareReplay());
+    this.readingDataFromSegmentChange$,
+    this.readingDataFromComplete$
+  ).pipe(
+    tap((data) => {
+      this.bookService.readingData.set(data);
+      this.progressService.exercisesProgress$.next(data?.exercisesProgress);
+    }),
+    shareReplay()
+  );
 
-  readonly readingData = toSignal(this.readingData$, { initialValue: null });
+  readonly readingData: Signal<ReadingDataI | null> = toSignal(
+    this.readingData$,
+    { initialValue: null }
+  );
 }

@@ -2,8 +2,8 @@
   @for (item of bookService.wordPhrases(); track $index) {
     <span
       class="phrase"
-      [ngClass]="state.phraseNumber() === $index ? 'active' : 'inactive'"
-      [ngStyle]="{ 'left.px': leftOffsetSignal() }"
+      [ngClass]="flowService.phraseNumber() === $index ? 'active' : 'inactive'"
+      [ngStyle]="{ 'left.px': leftOffset() }"
       >{{ item }}
     </span>
   }

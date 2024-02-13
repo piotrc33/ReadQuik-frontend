@@ -1,62 +1,43 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  Signal,
+  inject,
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map, merge, scan } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 
 @Component({
   selector: 'exercise2',
   templateUrl: './exercise2.component.html',
   styleUrls: ['./exercise2.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Exercise2Component
-  extends AutoExerciseBase
-  implements 
-  OnInit
-{
-  leftOffset: number = 50;
-  leftOffsetSignal = signal(50);
-  phraseWidth?: number;
+export class Exercise2Component extends AutoExerciseBase implements OnInit {
+  private readonly el = inject(ElementRef);
 
-  constructor(private readonly el: ElementRef) {
-    super();
-  }
+  private readonly START_OFFSET = 230;
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.leftOffset = this.getDefaultOffset('.exercise2');
-    this.leftOffsetSignal.set(this.getDefaultOffset('.exercise2'));
-  }
+  private readonly phraseWidth$ = this.flowService.movedToNextPhrase$.pipe(
+    map(() => {
+      const activeElement = this.el.nativeElement.querySelector('.active');
+      return activeElement ? activeElement.offsetWidth : 0;
+    })
+  );
 
-  override handleAutoNextFragment(): void {
-    this.updatePhraseWidth();
-
-    super.handleAutoNextFragment();
-    this.leftOffset -= this.phraseWidth!;
-    this.leftOffsetSignal.update(val => val - this.phraseWidth!);
-  }
-
-  override handleNextFragment(): void {
-    this.updatePhraseWidth();
-    
-    if (this.state.exerciseMode === 'manual') {
-      super.handleNextFragment();
-      this.leftOffset -= this.phraseWidth!;
-      this.leftOffsetSignal.update((val) => val - this.phraseWidth!);
-    }
-  }
-
-  override reset(): void {
-    super.reset();
-    this.leftOffset = this.getDefaultOffset('.exercise2');
-    this.leftOffsetSignal.set(this.getDefaultOffset('.exercise2'));
-  }
-
-  getDefaultOffset(selector: string): number {
-    const container = this.el.nativeElement.querySelector(selector);
-    return container.offsetWidth / 2 - 75;
-  }
-
-  updatePhraseWidth() {
-    const activeElement = this.el.nativeElement.querySelector('.active');
-    this.phraseWidth = activeElement.offsetWidth;
-  }
+  readonly leftOffset: Signal<number> = toSignal(
+    merge(
+      this.phraseWidth$,
+      this.flowService.completedAutoMode$.pipe(map(() => 0))
+    ).pipe(
+      scan((offset, phraseWidth) => {
+        if (phraseWidth === 0) return this.START_OFFSET;
+        return offset - phraseWidth;
+      }, this.START_OFFSET)
+    ),
+    { initialValue: this.START_OFFSET }
+  );
 }

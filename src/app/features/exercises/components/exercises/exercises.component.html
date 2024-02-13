@@ -103,13 +103,13 @@
 
       <button
         class="primary start-button"
-        *ngIf="!state.started && bookService.wordPhrases().length > 0"
-        (click)="state.start()"
+        *ngIf="!flowService.exerciseOpened() && bookService.wordPhrases().length > 0"
+        (click)="flowService.startExerciseAction$.next()"
       >
         {{ t("start") }}
       </button>
 
-      <exercise-panel *ngIf="state.started && exNum"></exercise-panel>
+      <exercise-panel *ngIf="flowService.exerciseOpened() && exNum"></exercise-panel>
     </section>
 
     <section class="recents">

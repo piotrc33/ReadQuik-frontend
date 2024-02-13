@@ -1,9 +1,9 @@
-import { Injectable, Signal, computed, inject } from '@angular/core';
+import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
-import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
+import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { UserI } from '../../../api/model/auth/user.i';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { BookDataI } from '../../../api/model/library/book-data.i';
@@ -15,9 +15,8 @@ import { TextService } from '../../exercises/services/text.service';
 export class BookService {
   private readonly textService = inject(TextService);
   private readonly bookApiService = inject(BookApiService);
-  private readonly readingDataService = inject(ReadingDataService);
 
-  readonly readingData = this.readingDataService.readingData;
+  readonly readingData: WritableSignal<ReadingDataI | null> = signal(null);
 
   readonly currentBookData = computed(() => this.readingData()?.bookData);
   readonly currentBookId = computed(() => {

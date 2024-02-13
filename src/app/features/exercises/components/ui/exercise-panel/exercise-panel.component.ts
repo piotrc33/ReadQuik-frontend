@@ -1,28 +1,20 @@
-import { CurrentExerciseService } from './../../../../../shared/services/current-exercise.service';
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ExerciseFlowService } from '../../../services/exercise-flow.service';
 import { ExercisesStateService } from '../../../services/exercises-state.service';
+import { PercentBarService } from '../../../services/percent-bar.service';
+import { CurrentExerciseService } from './../../../../../shared/services/current-exercise.service';
 
 @Component({
   selector: 'exercise-panel',
   templateUrl: './exercise-panel.component.html',
   styleUrls: ['./exercise-panel.component.scss'],
 })
-export class ExercisePanelComponent implements AfterViewInit {
+export class ExercisePanelComponent {
+  public readonly flowService = inject(ExerciseFlowService);
+  public readonly percentService = inject(PercentBarService);
+
   constructor(
     public state: ExercisesStateService,
-    public currentExerciseService: CurrentExerciseService,
-    private cdr: ChangeDetectorRef
+    public currentExerciseService: CurrentExerciseService
   ) {}
-
-  handleClick(): void {
-    this.state.next$.next();
-  }
-
-  ngAfterViewInit(): void {
-    this.cdr.detectChanges();
-  }
 }

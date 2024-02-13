@@ -18,7 +18,7 @@ export class InstructionsService {
           `instruction${this.currentExerciseService.exerciseNumber()}Opened`,
           'true',
           2,
-          '/app'
+          '/'
         );
       }
     });

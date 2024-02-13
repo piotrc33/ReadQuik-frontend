@@ -10,9 +10,6 @@ import { BookService } from 'src/app/features/library/services/book.service';
 })
 export class Exercise1Component extends Exercise {
   private readonly bookService = inject(BookService);
-  constructor() {
-    super();
-  }
 
   wordPhrases = this.bookService.wordPhrases;
 }

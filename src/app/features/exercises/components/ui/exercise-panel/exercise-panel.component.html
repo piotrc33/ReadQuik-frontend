@@ -1,18 +1,25 @@
 <app-dialog
-  (close)="state.exit$.next()"
+  (close)="flowService.exitAction$.next()"
   *ngIf="currentExerciseService.exerciseNumber() as exNum"
   [style.font-size.px]="exNum < 5 ? 18 : 16"
 >
   <router-outlet content></router-outlet>
   <ng-container footer *transloco="let t">
-    <div class="progress-bar" [style.width]="state.progressPercent + '%'"></div>
+    <div
+      class="progress-bar"
+      [style.width]="
+        (percentService.paged()
+          ? percentService.pagedPercent()
+          : percentService.progressPercent()) + '%'
+      "
+    ></div>
     <button
       class="secondary"
-      *ngIf="state.exerciseMode === 'manual'"
-      (click)="handleClick()"
+      *ngIf="flowService.exerciseMode() === 'manual'"
+      (click)="flowService.nextAction$.next()"
       (keydown.space)="$event.preventDefault()"
     >
-      {{ t('nextPhrase') }}
+      {{ t("nextPhrase") }}
     </button>
   </ng-container>
 </app-dialog>

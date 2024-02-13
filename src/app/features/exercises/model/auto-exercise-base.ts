@@ -21,7 +21,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   subsContainer = new SubscriptionContainer();
 
   ngOnInit(): void {
-    this.state.exerciseMode = this.mode;
+    this.flowService.exerciseMode.set(this.mode);
     if (this.mode === 'auto') {
       this.startAutoTimer();
     }
@@ -37,7 +37,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
       getAverageTimeoutMs(
         currentSegment.text.length,
         wordPhrases.length,
-        this.autoSpeed() || 200
+        this.autoSpeed()
       )
     ).subscribe(() => {
       this.handleAutoNextFragment();
@@ -45,25 +45,18 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   }
 
   handleAutoNextFragment(): void {
-    this.nextFragment();
-    if (this.state.finished) {
-      this.reset();
-      this.state.exerciseMode = 'manual';
-      this.state.startTime = Date.now();
+    this.flowService.autoNextAction$.next();
+    if (this.flowService.completedAutoMode()) {
+      this.flowService.exerciseMode.set('manual');
+      this.flowService.startTime = Date.now();
     } else {
       this.startAutoTimer();
     }
   }
 
-  reset(): void {
-    this.state.phraseNumber.set(0);
-    this.state.pageYPosition = 0;
-    this.state.progressPercent = 0;
-  }
-
   override ngOnDestroy(): void {
     super.ngOnDestroy();
-    this.state.exerciseMode = 'manual';
+    this.flowService.exerciseMode.set('manual');
     this.subsContainer.dispose();
   }
 }

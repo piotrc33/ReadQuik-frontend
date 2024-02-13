@@ -1,7 +1,8 @@
 <div class="repetition-indicator" *ngIf="totalCount && activeCount !== undefined">
-  <div
-    *ngFor="let i of [].constructor(totalCount - 1); let j = index"
-    [class.active]="j < activeCount"
-    class="circle"
-  ></div>
+  @for (i of [].constructor(totalCount); track $index) {
+    <div
+      [class.active]="$index < activeCount"
+      class="circle"
+    ></div>
+  }
 </div>
