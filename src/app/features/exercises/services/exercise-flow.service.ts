@@ -3,7 +3,7 @@ import {
   Signal,
   WritableSignal,
   inject,
-  signal
+  signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -14,8 +14,7 @@ import {
   merge,
   scan,
   share,
-  shareReplay,
-  tap
+  tap,
 } from 'rxjs';
 import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
@@ -44,7 +43,7 @@ export class ExerciseFlowService {
     this.manualMoveToNextPhrase$
   ).pipe(
     filter(() => this.exerciseOpened()),
-    shareReplay()
+    share()
   );
 
   readonly resetPhraseNumberAction$ = new Subject<void>();
@@ -66,14 +65,12 @@ export class ExerciseFlowService {
   completedLastPage$ = new Subject<void>();
   readonly completedManualMode$ = merge(
     this.completedLastPage$,
-    this.manualMoveToNextPhrase$
-      .pipe(
-        filter(
-          () => this.phraseNumber() === this.bookService.wordPhrases().length
-        )
+    this.manualMoveToNextPhrase$.pipe(
+      filter(
+        () => this.phraseNumber() === this.bookService.wordPhrases().length
       )
-      .pipe(share())
-  );
+    )
+  ).pipe(share());
 
   readonly exitAction$ = new Subject<void>();
   readonly quitExercise$ = merge(this.keyService.exitPress$, this.exitAction$);
@@ -118,7 +115,10 @@ export class ExerciseFlowService {
         tap(() => this.resetPhraseNumberAction$.next()),
         map(() => true)
       )
-      .pipe(share())
+      .pipe(
+        tap(() => this.exerciseMode.set('manual')),
+        share()
+      )
   );
   readonly completedAutoMode: Signal<boolean> = toSignal(
     this.completedAutoMode$,

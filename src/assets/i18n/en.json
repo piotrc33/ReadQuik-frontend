@@ -13,7 +13,8 @@
   "checkFullProgress": "Check Full Progress",
   "instructionsButton": "Instructions",
   "start": "Start",
-  "nextPhrase": "Next phrase",
+  "nextPhrase": "Next Phrase",
+  "nextPage": "Next Page",
   "willNotSave": "Your progress will not be saved! Please finish previous exercise",
   "library": {
     "title": "Title",
@@ -90,7 +91,8 @@
     "instruction6": {
       "sectionTitle": "Speed Reading Requires Practice",
       "paragraph1": "Effective reading is a skill. Like any skill, it can be difficult to explain in words, plus it takes practice, and a little experimentation to get it",
-      "paragraph2": "Think of how you learned to ride a bike. No one could tell you in words exactly what to do. They could describe what they do, but you still had to get out there and wobble about until you got it"
+      "paragraph2": "Think of how you learned to ride a bike. No one could tell you in words exactly what to do. They could describe what they do, but you still had to get out there and wobble about until you got it",
+      "paragraph3": "In this exercise you will practice in auto mode again"
     },
     "instruction7": {
       "sectionTitle": "Train on Normal Texts",
@@ -132,5 +134,12 @@
   "allTime": "All Time",
   "last7days": "Last 7 Days",
   "today": "Today",
-  "noData": "There is no data to show!"
+  "noData": "There is no data to show!",
+  "validationErrors": {
+    "requiredField": "This field is required!",
+    "invalidEmail": "This is not a valid email",
+    "minLength": "Minimum length is ",
+    "maxLength": "Maximum length is ",
+    "forbiddenCharacters": "This field contains forbidden characters"
+  }
 }

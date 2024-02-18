@@ -8,13 +8,14 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Observable,
-  combineLatest,
   filter,
   map,
   merge,
   scan,
+  share,
   switchMap,
   timer,
+  zip
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { TextService } from '../../services/text.service';
@@ -42,8 +43,10 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
     }
   }
 
-  private readonly panelBox$ = timer(2).pipe(
-    map(() => this.state.panelContentElement?.getBoundingClientRect())
+  private readonly panelBox$ = this.flowService.movedToNextPhrase$.pipe(
+    switchMap(() => timer(2).pipe()),
+    map(() => this.state.panelContentElement?.getBoundingClientRect()),
+    share()
   );
   readonly panelBox = toSignal(this.panelBox$);
 
@@ -54,7 +57,7 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
     )
   );
 
-  private readonly nextPage$: Observable<boolean> = combineLatest([
+  private readonly nextPage$: Observable<boolean> = zip([
     this.activeBox$,
     this.panelBox$,
   ]).pipe(

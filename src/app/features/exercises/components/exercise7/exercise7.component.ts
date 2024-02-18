@@ -84,15 +84,15 @@ export class Exercise7Component
 
   constructor() {
     super();
-    this.subsContainer.add = this.pagedProgressPercent$.subscribe((percent) => {
+    this.subs.add = this.pagedProgressPercent$.subscribe((percent) => {
       this.percentService.pagedPercent.set(percent);
     });
 
-    this.subsContainer.add = this.isLastPage$.subscribe(() => {
+    this.subs.add = this.isLastPage$.subscribe(() => {
       this.flowService.completedLastPage$.next();
     });
 
-    this.subsContainer.add = this.flowService.completedAutoMode$.subscribe(
+    this.subs.add = this.flowService.completedAutoMode$.subscribe(
       () => {
         this.percentService.paged.set(true);
       }

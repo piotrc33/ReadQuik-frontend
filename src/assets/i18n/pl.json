@@ -14,6 +14,7 @@
   "instructionsButton": "Instrukcje",
   "start": "Start",
   "nextPhrase": "Następna fraza",
+  "nextPage": "Następna strona",
   "willNotSave": "Twój postęp nie zostanie zapisany! Najpierw ukończ poprzednie ćwiczenia",
   "library": {
     "title": "Tytuł",
@@ -90,7 +91,8 @@
     "instruction6": {
       "sectionTitle": "Szybkie czytanie wymaga praktyki",
       "paragraph1": "Efektywne czytanie to umiejętność. Jak każda umiejętność, może być trudna do wyjaśnienia słowami, a ponadto wymaga praktyki i odrobiny eksperymentów, aby ją zdobyć",
-      "paragraph2": "Pomyśl o tym, jak nauczyłeś się jeździć na rowerze. Nikt nie mógł powiedzieć ci słowami, co dokładnie masz robić. Mogliby opisać, co robią, ale i tak musiałeś wyjść na zewnątrz i chwiać się, aż to zrozumiesz"
+      "paragraph2": "Pomyśl o tym, jak nauczyłeś się jeździć na rowerze. Nikt nie mógł powiedzieć ci słowami, co dokładnie masz robić. Mogliby opisać, co robią, ale i tak musiałeś wyjść na zewnątrz i chwiać się, aż to zrozumiesz",
+      "paragraph3": "W tym ćwiczeniu ponownie zetkniesz się z trybem automatycznym"
     },
     "instruction7": {
       "sectionTitle": "Ćwicz na innych tekstach",
@@ -132,5 +134,12 @@
   "allTime": "Cały okres",
   "last7days": "Ostatnie 7 dni",
   "today": "Dzisiaj",
-  "noData": "Brak danych do wyświetlenia!"
+  "noData": "Brak danych do wyświetlenia!",
+  "validationErrors": {
+    "requiredField": "To pole jest wymagane!",
+    "invalidEmail": "To nie jest poprawny email",
+    "minLength": "Minimalna długość to ",
+    "maxLength": "Maksymalna długość to ",
+    "forbiddenCharacters": "To pole zawiera niedozwolone znaki"
+  }
 }

@@ -9,6 +9,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { ReadingDataService } from './services/reading-data.service';
 import { CurrentExerciseService } from './services/current-exercise.service';
 import { ResultsService } from './services/results.service';
+import { TranslocoModule } from '@ngneat/transloco';
 
 const exportedComponents = [
   RelativeDatePipe,
@@ -20,7 +21,7 @@ const exportedComponents = [
 
 @NgModule({
   declarations: exportedComponents,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslocoModule],
   exports: exportedComponents,
   providers: [ReadingDataService, CurrentExerciseService, ResultsService],
 })

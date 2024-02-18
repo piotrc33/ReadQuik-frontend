@@ -19,7 +19,7 @@
       (click)="flowService.nextAction$.next()"
       (keydown.space)="$event.preventDefault()"
     >
-      {{ t("nextPhrase") }}
+      {{ exNum < 7 ? t("nextPhrase") : t("nextPage") }}
     </button>
   </ng-container>
 </app-dialog>
