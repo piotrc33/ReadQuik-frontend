@@ -52,13 +52,6 @@ export class BookService {
     return this.bookApiService.getFilteredBooks(filters);
   }
 
-  updateBookProgress(
-    bookId: string,
-    lastSegmentNumber: number
-  ): Observable<UserI | null> {
-    return this.bookApiService.updateBookProgress(bookId, lastSegmentNumber);
-  }
-
   getBooks(): Observable<BookDataI[]> {
     return this.bookApiService.getBooks();
   }

@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserI } from 'src/app/api/model/auth/user.i';
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
@@ -25,15 +24,6 @@ export class BookApiService {
     params = params.set('language', filters.language);
 
     return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
-  }
-
-  updateBookProgress(
-    bookId: string,
-    lastSegmentNumber: number
-  ): Observable<UserI | null> {
-    const url = `${baseUrl}/results/update-progress`;
-    const body = { bookId, lastSegmentNumber };
-    return this.http.put<UserI | null>(url, body, { headers: this.headers });
   }
 
   getBooks(): Observable<BookDataI[]> {

@@ -1,16 +1,28 @@
 import { Injectable, Signal, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, ReplaySubject, combineLatest, map } from 'rxjs';
+import {
+  Observable,
+  ReplaySubject,
+  Subject,
+  combineLatest,
+  filter,
+  map,
+  tap,
+} from 'rxjs';
 import { SingleProgressI } from 'src/app/api/model/progress/single-progress.i';
 import { CurrentExerciseService } from './current-exercise.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExercisesProgressStateService {
   private readonly currentExerciseService = inject(CurrentExerciseService);
+  private readonly router = inject(Router);
 
-  readonly exercisesProgress$ = new ReplaySubject<SingleProgressI[] | undefined>(1);
+  readonly exercisesProgress$ = new ReplaySubject<
+    SingleProgressI[] | undefined
+  >(1);
 
   private readonly currentExerciseProgress$: Observable<
     SingleProgressI | undefined
@@ -22,6 +34,21 @@ export class ExercisesProgressStateService {
       return progressArray?.find((item) => item.exerciseNumber === exNum);
     })
   );
+
+  completedExercise$ = new Subject<void>();
+  unlockedNewExercise$ = combineLatest([
+    this.completedExercise$,
+    this.currentExerciseProgress$,
+  ]).pipe(
+    filter(([_, progress]) => {
+      return progress?.repetitions === 9 && progress.exerciseNumber !== 8;
+    }),
+    tap(([,progress]) => {
+      this.router.navigate(['/app/exercises/' + progress?.exerciseNumber + 1])
+    }),
+    map(() => true)
+  );
+  unlockedExerciseSub = toSignal(this.unlockedNewExercise$);
 
   readonly currentExerciseRepetitions: Signal<number | undefined> = toSignal(
     this.currentExerciseProgress$.pipe(

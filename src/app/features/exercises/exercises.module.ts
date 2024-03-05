@@ -15,7 +15,6 @@ import { ExerciseNavComponent } from './components/ui/exercise-nav/exercise-nav.
 import { ExercisePanelComponent } from './components/ui/exercise-panel/exercise-panel.component';
 import { InstructionComponent } from './components/ui/instruction/instruction.component';
 import { ExercisesRoutingModule } from './exercises-routing.module';
-import { ExercisesHttpService } from './services/exercises-http.service';
 import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { TextService } from './services/text.service';
@@ -53,7 +52,6 @@ import { PercentBarService } from './services/percent-bar.service';
     TextService,
     ExercisesStateService,
     KeyboardService,
-    ExercisesHttpService,
     InstructionsService,
     ExerciseFlowService,
     PercentBarService

@@ -22,15 +22,14 @@ import { KeyboardService } from './keyboard.service';
 
 @Injectable()
 export class ExerciseFlowService {
-  public readonly keyService = inject(KeyboardService);
-  public readonly bookService = inject(BookService);
+  private readonly keyService = inject(KeyboardService);
+  private readonly bookService = inject(BookService);
 
   exerciseMode: WritableSignal<ExerciseModeT> = signal('manual');
   startTime!: number;
 
   readonly nextAction$ = new Subject<void>();
-  readonly autoNextAction$ = new Subject<void>();
-  readonly manualMoveToNextPhrase$ = merge(
+  readonly manualMoveToNextPhrase$: Observable<void> = merge(
     this.keyService.forwardingPress$,
     this.nextAction$
   ).pipe(
@@ -38,7 +37,8 @@ export class ExerciseFlowService {
     share()
   );
 
-  readonly movedToNextPhrase$ = merge(
+  readonly autoNextAction$ = new Subject<void>();
+  readonly movedToNextPhrase$: Observable<void> = merge(
     this.autoNextAction$,
     this.manualMoveToNextPhrase$
   ).pipe(
