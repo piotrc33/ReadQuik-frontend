@@ -4,135 +4,41 @@
       [totalUnlocked]="progressState.unlockedExercisesCount()"
     ></exercise-nav>
   </div>
-  <div class="content" *ngIf="currentExerciseService.exerciseNumber() as exNum">
-    <section class="book">
-      <ng-container *ngIf="bookService.currentBookData() as book">
-        <div class="header">
-          <h2 class="title">
-            {{ book.title }}
-          </h2>
-          <div class="author">{{ book.author }}</div>
-        </div>
-        <div>
-          <img class="cover" [src]="book.coverUrl" alt="cover" />
-        </div>
-        <div class="segment" *ngIf="bookService.segmentData() as segment">
-          <div class="label">Segment:</div>
-          <div class="choose">
-            <input
-              type="number"
-              class="input small"
-              [value]="segment.number"
-              #segmentNumber
-            />
-            / {{ book.totalSegments }}
-            <button
-              class="small ternary switch-button"
-              (click)="
-                readingDataService.changeSegmentAction$.next(
-                  segmentNumber.valueAsNumber
-                )
-              "
-            >
-              {{ t("switch") }}
-            </button>
-          </div>
-        </div>
-      </ng-container>
-      <button routerLink="../library" class="secondary change-button">
-        {{ t("changeBook") }}
-      </button>
-    </section>
+  <div class="content">
+    <book-info
+      [book]="bookService.currentBookData()"
+      [segment]="bookService.segmentData()"
+      (changedSegment)="readingDataService.changeSegmentAction$.next($event)"
+    ></book-info>
 
-    <section class="exercise center" *ngIf="exNum">
-      <h2 class="number">{{ t("exercise") }} {{ exNum }}</h2>
-      <ng-container
+    <exercise-info
+      [exerciseNumber]="exerciseNumber()"
+      [repetitions]="progressState.currentExerciseRepetitions() ?? 0"
+      [isExerciseUnlocked]="progressState.isCurrentExerciseUnlocked()"
+      [isTextLoaded]="bookService.wordPhrases().length > 0"
+      (instructionsOpened)="
+        instructionService.openInstructionsAction$.next(true)
+      "
+      (startedExercise)="flowService.startExerciseAction$.next()"
+    ></exercise-info>
+    <app-dialog
+      (close)="instructionService.openInstructionsAction$.next(false)"
+      *ngIf="instructionService.instructionsOpened()"
+    >
+      <instruction
         *ngIf="
-          progressState.currentExerciseRepetitions() as repetitions;
-          else zeroIndicator
+          instructionService.currentInstructionObject() as instructionObject
         "
-      >
-        <repetition-indicator
-          [totalCount]="10"
-          [activeCount]="repetitions"
-        ></repetition-indicator>
-        <div class="repetition-info">#{{ repetitions + 1 }} of 10</div>
-      </ng-container>
+        content
+        [instructionNumber]="exerciseNumber()"
+        [instructionObject]="instructionObject"
+      ></instruction>
+    </app-dialog>
 
-      <ng-template #zeroIndicator>
-        <repetition-indicator
-          [totalCount]="10"
-          [activeCount]="0"
-        ></repetition-indicator>
-        <div class="repetition-info">
-          {{
-            progressState.isCurrentExerciseUnlocked()
-              ? "#1 of 10"
-              : t("willNotSave")
-          }}
-        </div>
-      </ng-template>
+    <exercise-panel *ngIf="flowService.exerciseOpened()"></exercise-panel>
 
-      <ng-container *transloco="let t; read: 'exerciseTitles'">
-        <h1 class="title">{{ t("exercise" + exNum) }}</h1>
-      </ng-container>
-
-      <advice></advice>
-
-      <div class="button-container learn-more">
-        <button
-          class="secondary"
-          (click)="instructionService.setInstructionsStateAction$.next(true)"
-        >
-          {{ t("instructionsButton") }}
-        </button>
-      </div>
-      <app-dialog
-        (close)="instructionService.setInstructionsStateAction$.next(false)"
-        *ngIf="instructionService.instructionsOpened()"
-      >
-        <instruction
-          *ngIf="
-            instructionService.currentInstructionObject() as instructionObject
-          "
-          content
-          [instructionNumber]="exNum"
-          [instructionObject]="instructionObject"
-        ></instruction>
-      </app-dialog>
-
-      <button
-        class="primary start-button"
-        *ngIf="!flowService.exerciseOpened() && bookService.wordPhrases().length > 0"
-        (click)="flowService.startExerciseAction$.next()"
-      >
-        {{ t("start") }}
-      </button>
-
-      <exercise-panel *ngIf="flowService.exerciseOpened() && exNum"></exercise-panel>
-    </section>
-
-    <section class="recents">
-      <h2 class="center title">{{ t("recentResults") }}</h2>
-      <ng-container
-        *ngIf="resultsService.recentResults() as recentResults"
-      >
-        <div class="result" *ngFor="let result of recentResults">
-          <div class="main">
-            <div class="speed">{{ result.wpm }} wpm</div>
-            <div
-              class="percent"
-              [ngClass]="result.percentDiff >= 0 ? 'positive' : 'negative'"
-            >
-              {{ result.percentDiff | percent }}
-            </div>
-          </div>
-          <div class="date">{{ result.date | relativeDate }}</div>
-        </div>
-      </ng-container>
-      <button routerLink="../progress" class="secondary progress-button">
-        {{ t("checkFullProgress") }}
-      </button>
-    </section>
+    <recent-results
+      [recentResults]="resultsService.recentResults"
+    ></recent-results>
   </div>
 </div>

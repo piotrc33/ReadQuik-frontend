@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
-import { UserI } from '../../../api/model/auth/user.i';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { BookDataI } from '../../../api/model/library/book-data.i';
 import { SegmentI } from '../../../api/model/segment.i';
@@ -18,7 +17,7 @@ export class BookService {
 
   readonly readingData: WritableSignal<ReadingDataI | null> = signal(null);
 
-  readonly currentBookData = computed(() => this.readingData()?.bookData);
+  readonly currentBookData: Signal<BookDataI | undefined> = computed(() => this.readingData()?.bookData);
   readonly currentBookId = computed(() => {
     const currentBook = this.currentBookData();
     return currentBook ? currentBook._id : '';

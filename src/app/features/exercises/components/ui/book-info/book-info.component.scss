@@ -1,0 +1,44 @@
+@import "variables";
+
+.book {
+  .header {
+    margin-bottom: $spacing-05;
+  }
+
+  .title {
+    text-align: left;
+    margin-bottom: $spacing-01;
+  }
+
+  .author {
+    font-size: 14px;
+    color: $neutral-500;
+  }
+
+  .cover {
+    height: 200px;
+    margin-bottom: $spacing-04;
+  }
+
+  .segment {
+    input {
+      width: 45px;
+    }
+
+    .label {
+      margin-bottom: $spacing-02;
+    }
+
+    margin-bottom: $spacing-03;
+  }
+
+  .switch-button {
+    display: block;
+    margin-top: $spacing-04;
+  }
+
+  .change-button {
+    margin-top: $spacing-04;
+    width: 100%;
+  }
+}

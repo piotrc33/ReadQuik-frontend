@@ -1,0 +1,34 @@
+<section class="exercise center" *transloco="let t">
+  <h2 class="number">{{ t("exercise") }} {{ exerciseNumber() }}</h2>
+  <repetition-indicator
+    [totalCount]="10"
+    [activeCount]="repetitions()"
+  ></repetition-indicator>
+  <div class="repetition-info">
+    {{
+      isExerciseUnlocked()
+        ? "#" + (repetitions() + 1) + " of 10"
+        : t("willNotSave")
+    }}
+  </div>
+
+  <ng-container *transloco="let t; read: 'exerciseTitles'">
+    <h1 class="title">{{ t("exercise" + exerciseNumber()) }}</h1>
+  </ng-container>
+
+  <advice></advice>
+
+  <div class="button-container learn-more">
+    <button class="secondary" (click)="instructionsOpened.emit()">
+      {{ t("instructionsButton") }}
+    </button>
+  </div>
+
+  <button
+    class="primary start-button"
+    *ngIf="isTextLoaded()"
+    (click)="startedExercise.emit()"
+  >
+    {{ t("start") }}
+  </button>
+</section>

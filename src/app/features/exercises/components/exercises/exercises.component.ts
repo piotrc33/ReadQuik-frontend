@@ -17,6 +17,7 @@ export class ExercisesComponent implements OnInit {
   readonly bookService = inject(BookService);
   readonly readingDataService = inject(ReadingDataService);
   readonly flowService = inject(ExerciseFlowService);
+  readonly exerciseNumber = this.currentExerciseService.exerciseNumber;
 
   constructor(
     public readonly state: ExercisesStateService,

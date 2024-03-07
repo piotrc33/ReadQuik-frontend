@@ -37,10 +37,9 @@ export class InstructionsService {
       })
     );
 
-  readonly setInstructionsStateAction$ = new Subject<boolean>();
-
+  readonly openInstructionsAction$ = new Subject<boolean>();
   readonly instructionsOpened: Signal<boolean> = toSignal(
-    merge(this.setInstructionsStateAction$, this.shouldOpenInstruction$),
+    merge(this.openInstructionsAction$, this.shouldOpenInstruction$),
     { initialValue: false }
   );
 

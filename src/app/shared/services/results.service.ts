@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, inject } from '@angular/core';
+import { Injectable, Signal, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ReplaySubject, merge, switchMap } from 'rxjs';
 import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
@@ -13,7 +13,7 @@ export class ResultsService {
   private readonly state = inject(ExercisesStateService);
 
   readonly loadRecentResultsAction$ = new ReplaySubject<void>(1);
-  readonly recentResults = toSignal(
+  readonly recentResults: Signal<RecentResultI[]> = toSignal(
     merge(this.loadRecentResultsAction$, this.state.shouldSave$).pipe(
       switchMap(() =>
         this.http.get<RecentResultI[]>(`${baseUrl}/results/recent-results`)

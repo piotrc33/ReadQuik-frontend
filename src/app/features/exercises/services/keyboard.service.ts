@@ -5,8 +5,6 @@ import { filter, fromEvent, map } from 'rxjs';
 export class KeyboardService {
   private keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown');
 
-  constructor() {}
-
   forwardingPress$ = this.keyDown$.pipe(
     filter(
       (e: KeyboardEvent) =>

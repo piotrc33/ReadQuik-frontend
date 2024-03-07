@@ -12,12 +12,12 @@
         t("progress")
       }}</a>
 
-      <div class="user" (click)="handleDropdown()">
+      <div class="user" (click)="dropdownOpened.set(!dropdownOpened())">
         <div class="username">{{ username }}</div>
         <div class="user-circle">{{ username[0].toUpperCase() }}</div>
       </div>
 
-      <div *ngIf="dropdownOpened" class="dropdown-panel user-dropdown">
+      <div *ngIf="dropdownOpened()" class="dropdown-panel user-dropdown">
         <section class="dropdown-header">
           <div class="user-circle">{{ username[0].toUpperCase() }}</div>
           <div class="username">{{ username }}</div>
@@ -47,10 +47,10 @@
       </div>
       <div>
         <span class="lang" (click)="changeLang('Polish')">{{
-          flags["Polish"]
+          flagList()["Polish"]
         }}</span>
         <span class="lang" (click)="changeLang('English')">{{
-          flags["English"]
+          flagList()["English"]
         }}</span>
       </div>
     </div>
