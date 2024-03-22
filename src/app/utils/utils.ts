@@ -9,20 +9,16 @@ export function getAverageTimeoutMs(
   numberOfPhrases: number,
   wpm: number
 ): number {
-  const avgWordLength = 5.6;
+  const avgWordLength = 5.5;
   const numberOfWords = textLength / avgWordLength;
   const timeToReadSec = (numberOfWords / wpm) * 60;
-  return (timeToReadSec / numberOfPhrases) * 1000;
+  return Math.floor((timeToReadSec / numberOfPhrases) * 1000);
 }
 
 export function calculateSpeed(
-  startTime: number,
-  wordPhrases: string[]
+  elapsedTime: number,
+  totalCharactersNumber: number
 ): number {
-  const totalCharacters: number = wordPhrases.reduce(
-    (total, currentWord) => total + currentWord.length,
-    0
-  );
-  const elapsedTimeMin = (Date.now() - startTime) / (1000 * 60);
-  return Math.floor(totalCharacters / 5.5 / elapsedTimeMin);
+  const elapsedTimeMin = elapsedTime / (1000 * 60);
+  return Math.floor(totalCharactersNumber / 5.5 / elapsedTimeMin);
 }

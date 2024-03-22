@@ -8,22 +8,19 @@ import { ExerciseFlowService } from './exercise-flow.service';
 
 @Injectable()
 export class ExercisesStateService {
-  private readonly flowService = inject(ExerciseFlowService);
-  private readonly progressService = inject(ExercisesProgressStateService);
+  readonly #flowService = inject(ExerciseFlowService);
+  readonly #progressService = inject(ExercisesProgressStateService);
+  readonly #bookService = inject(BookService);
+  readonly #currentExerciseService = inject(CurrentExerciseService);
 
   panelContentElement?: HTMLElement;
   activeElement?: HTMLElement;
 
-  constructor(
-    private readonly bookService: BookService,
-    private readonly currentExerciseService: CurrentExerciseService
-  ) {}
-
-  private readonly userWpm$ = this.flowService.completedManualMode$.pipe(
+  private readonly userWpm$ = this.#flowService.completedManualMode$.pipe(
     map(() => {
       const wpm = calculateSpeed(
-        this.flowService.startTime,
-        this.bookService.wordPhrases()
+        Date.now() - this.#flowService.startTime,
+        this.#bookService.wordPhrases().join('').length
       );
       return wpm;
     })
@@ -31,7 +28,7 @@ export class ExercisesStateService {
 
   readonly shouldSave$ = this.userWpm$.pipe(
     filter(
-      (wpm) => wpm < 1000 && this.progressService.isCurrentExerciseUnlocked()
+      (wpm) => wpm < 1000 && this.#progressService.isCurrentExerciseUnlocked()
     )
   );
 
@@ -39,9 +36,9 @@ export class ExercisesStateService {
     map((wpm) => {
       return {
         wpm: wpm,
-        bookId: this.bookService.currentBookId(),
-        exerciseNumber: this.currentExerciseService.exerciseNumber(),
-        lastSegmentNumber: this.bookService.currentSegment()?.number || 1,
+        bookId: this.#bookService.currentBookId(),
+        exerciseNumber: this.#currentExerciseService.exerciseNumber(),
+        lastSegmentNumber: this.#bookService.currentSegment()?.number || 1,
       };
     })
   );

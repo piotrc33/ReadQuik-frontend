@@ -31,7 +31,7 @@ export class ReadingDataApiService {
     bookId: string;
     lastSegmentNumber: number;
   }) {
-    return this.http.post<ReadingDataI>(
+    return this.http.post<ReadingDataI & { newUnlocked: boolean }>(
       `${baseUrl}/progress/complete-exercise`,
       data
     );

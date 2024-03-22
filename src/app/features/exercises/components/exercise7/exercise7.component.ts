@@ -30,7 +30,7 @@ export class Exercise7Component
 {
   readonly textService = inject(TextService);
   readonly el = inject(ElementRef);
-  private readonly percentService = inject(PercentBarService);
+  readonly #percentService = inject(PercentBarService);
 
   exerciseTextElement?: HTMLElement;
   textBox?: DOMRect;
@@ -85,7 +85,7 @@ export class Exercise7Component
   constructor() {
     super();
     this.subs.add = this.pagedProgressPercent$.subscribe((percent) => {
-      this.percentService.pagedPercent.set(percent);
+      this.#percentService.pagedPercent.set(percent);
     });
 
     this.subs.add = this.isLastPage$.subscribe(() => {
@@ -94,15 +94,15 @@ export class Exercise7Component
 
     this.subs.add = this.flowService.completedAutoMode$.subscribe(
       () => {
-        this.percentService.paged.set(true);
+        this.#percentService.paged.set(true);
       }
     );
   }
 
   override ngOnDestroy(): void {
     super.ngOnDestroy();
-    this.percentService.paged.set(false);
-    this.percentService.pagedPercent.set(0);
+    this.#percentService.paged.set(false);
+    this.#percentService.pagedPercent.set(0);
   }
 
   wordIndexes: number[] = [];
@@ -116,7 +116,7 @@ export class Exercise7Component
       }
     }
 
-    this.percentService.paged.set(this.mode === 'manual' ? true : false);
+    this.#percentService.paged.set(this.mode === 'manual' ? true : false);
   }
 
   ngAfterViewInit(): void {

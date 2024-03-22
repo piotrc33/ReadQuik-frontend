@@ -28,9 +28,16 @@ export class CurrentExerciseService {
       filter((exercise) => !Number.isNaN(exercise)),
     );
 
+  readonly nextExerciseNumberFromNewUnlockedAction$ = new Subject<number>();
+  private readonly exerciseNumberFromNewUnlocked$ = this.nextExerciseNumberFromNewUnlockedAction$.asObservable().pipe(
+    tap(num => {
+      this.router.navigate([`app/exercises/${num}`])
+    })
+  )
   readonly exerciseNumber$: Observable<number> = merge(
     this.initialExerciseNumber$,
-    this.exerciseNumberFromNavigationChange$
+    this.exerciseNumberFromNavigationChange$,
+    this.exerciseNumberFromNewUnlocked$
   ).pipe(shareReplay());
 
   readonly exerciseNumber: Signal<number> = toSignal(this.exerciseNumber$, {
