@@ -23,6 +23,9 @@ export class ResultsService {
   );
 
   readonly last3Avg = computed(() => {
+    if(!this.recentResults()) {
+      return 200;
+    }
     const last3Results = this.recentResults().slice(0, 3);
     const avgWpm =
       last3Results.reduce((sum, result) => sum + result.wpm, 0) /

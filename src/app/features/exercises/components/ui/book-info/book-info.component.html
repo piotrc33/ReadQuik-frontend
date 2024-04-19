@@ -13,6 +13,8 @@
       <div class="label">Segment:</div>
       <div class="choose">
         <input
+          min="1"
+          [max]="book.totalSegments"
           type="number"
           class="input small"
           [value]="segment.number"
@@ -28,7 +30,7 @@
       </div>
     </div>
   }
-  <button routerLink="../library" class="secondary change-button">
+  <button routerLink="/app/library" class="secondary change-button">
     {{ t("changeBook") }}
   </button>
 </section>

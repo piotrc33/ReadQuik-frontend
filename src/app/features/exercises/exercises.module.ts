@@ -46,12 +46,12 @@ import { ExerciseInfoComponent } from './components/ui/exercise-info/exercise-in
     ExerciseInfoComponent
   ],
   imports: [
+    BookInfoComponent,
     CommonModule,
     ExercisesRoutingModule,
     SharedModule,
     TranslocoModule,
     RecentResultsComponent,
-    BookInfoComponent,
   ],
   exports: [
     Exercise1Component,

@@ -79,7 +79,10 @@ export class ExerciseFlowService {
     this.quitExercise$,
     this.completedManualMode$
   ).pipe(
-    tap(() => this.resetPhraseNumberAction$.next()),
+    tap(() => {
+      this.resetPhraseNumberAction$.next();
+      this.exerciseMode.set('manual');
+    }),
     share()
   );
 
