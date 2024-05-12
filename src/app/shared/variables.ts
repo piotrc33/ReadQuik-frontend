@@ -1,1 +1,3 @@
-export const baseUrl = 'http://localhost:3002';
+import { environment } from "src/environments/environment";
+
+export const baseUrl = environment.domain;
