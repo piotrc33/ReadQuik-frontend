@@ -3,7 +3,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable, Subject, map, merge, shareReplay, switchMap, tap } from 'rxjs';
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
-import { BookService } from 'src/app/features/library/services/book.service';
 import { ReadingDataApiService } from '../../../api/services/reading-data-api.service';
 import { ExercisesProgressStateService } from '../exercises-progress-state.service';
 import { CurrentExerciseService } from '../current-exercise.service';
@@ -13,7 +12,6 @@ import { ReadingDataStateService } from './reading-data-state.service';
 export class ReadingDataService {
   private readonly readingDataApiService = inject(ReadingDataApiService);
   readonly #readingDataState = inject(ReadingDataStateService);
-  private readonly bookService = inject(BookService);
   private readonly progressService = inject(ExercisesProgressStateService);
   private readonly state = inject(ExercisesStateService);
   private readonly currentExerciseService = inject(CurrentExerciseService);
@@ -25,11 +23,6 @@ export class ReadingDataService {
     this.nextReadingDataForBookAction$
   ).pipe(
     switchMap((bookId) => this.readingDataApiService.getNextReadingData(bookId))
-  );
-
-  readonly initialDataAction$ = new Subject<void>();
-  private readonly readingDataFromInitialData$ = this.initialDataAction$.pipe(
-    switchMap(() => this.readingDataApiService.getInitialReadingData())
   );
 
   readonly changeSegmentAction$ = new Subject<number>();
@@ -58,9 +51,8 @@ export class ReadingDataService {
       return readingData as ReadingDataI;
     })
   );
-  readonly readingData$: Observable<ReadingDataI | null> = merge(
+  readonly readingData$: Observable<ReadingDataI> = merge(
     this.readingDataFromBookId$,
-    this.readingDataFromInitialData$,
     this.readingDataFromSegmentChange$,
     this.readingDataFromComplete$
   ).pipe(

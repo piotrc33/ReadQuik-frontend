@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExercisesComponent } from '../exercises/components/exercises/exercises.component';
+import { readingDataResolver } from './reading-data.resolver';
 
 const routes: Routes = [
   {
     path: 'exercises',
     component: ExercisesComponent,
+    resolve: {
+      data: readingDataResolver,
+    },
     loadChildren: () =>
       import('../exercises/exercises-routing.module').then(
         (m) => m.ExercisesRoutingModule
@@ -28,8 +32,8 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'exercises',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

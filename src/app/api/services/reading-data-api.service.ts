@@ -15,9 +15,9 @@ export class ReadingDataApiService {
     return this.http.get<ReadingDataI>(url);
   }
 
-  getInitialReadingData(): Observable<ReadingDataI | null> {
+  getInitialReadingData(): Observable<ReadingDataI> {
     const url = `${baseUrl}/initial-data`;
-    return this.http.get<ReadingDataI | null>(url);
+    return this.http.get<ReadingDataI>(url);
   }
 
   getReadingDataForSegment(bookId: string, number: number) {
