@@ -4,13 +4,15 @@ import { Observable, Subject, map, merge, shareReplay, switchMap, tap } from 'rx
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
 import { BookService } from 'src/app/features/library/services/book.service';
-import { ReadingDataApiService } from './../../api/services/reading-data-api.service';
-import { ExercisesProgressStateService } from './exercises-progress-state.service';
-import { CurrentExerciseService } from './current-exercise.service';
+import { ReadingDataApiService } from '../../../api/services/reading-data-api.service';
+import { ExercisesProgressStateService } from '../exercises-progress-state.service';
+import { CurrentExerciseService } from '../current-exercise.service';
+import { ReadingDataStateService } from './reading-data-state.service';
 
 @Injectable()
 export class ReadingDataService {
   private readonly readingDataApiService = inject(ReadingDataApiService);
+  readonly #readingDataState = inject(ReadingDataStateService);
   private readonly bookService = inject(BookService);
   private readonly progressService = inject(ExercisesProgressStateService);
   private readonly state = inject(ExercisesStateService);
@@ -53,7 +55,7 @@ export class ReadingDataService {
     }),
     map(data => {
       const { newUnlocked, ...readingData } = data;
-      return readingData;
+      return readingData as ReadingDataI;
     })
   );
   readonly readingData$: Observable<ReadingDataI | null> = merge(
@@ -63,8 +65,11 @@ export class ReadingDataService {
     this.readingDataFromComplete$
   ).pipe(
     tap((data) => {
-      this.bookService.readingData.set(data);
-      this.progressService.exercisesProgress$.next(data?.exercisesProgress);
+      if (!data) {
+        return;
+      }
+      this.#readingDataState.updateReadingData(data);
+      this.progressService.exercisesProgress$.next(data.exercisesProgress);
     }),
     shareReplay()
   );

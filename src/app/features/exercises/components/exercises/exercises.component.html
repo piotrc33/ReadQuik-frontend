@@ -8,7 +8,7 @@
     <book-info
       [book]="bookService.currentBookData()"
       [segment]="bookService.segmentData()"
-      (changedSegment)="readingDataService.changeSegmentAction$.next($event)"
+      (changedSegment)="changeSegment($event)"
     ></book-info>
 
     <exercise-info

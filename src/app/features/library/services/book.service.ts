@@ -1,9 +1,9 @@
-import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
+import { Injectable, Signal, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { FiltersI } from 'src/app/api/model/library/filters.i';
 import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i';
-import { ReadingDataI } from 'src/app/api/model/reading-data.i';
+import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { BookDataI } from '../../../api/model/library/book-data.i';
 import { SegmentI } from '../../../api/model/segment.i';
@@ -14,21 +14,22 @@ import { TextService } from '../../exercises/services/text.service';
 export class BookService {
   private readonly textService = inject(TextService);
   private readonly bookApiService = inject(BookApiService);
+  readonly #readingDataState = inject(ReadingDataStateService);
 
-  readonly readingData: WritableSignal<ReadingDataI | null> = signal(null);
-
-  readonly currentBookData: Signal<BookDataI | undefined> = computed(() => this.readingData()?.bookData);
+  readonly currentBookData: Signal<BookDataI | undefined> = computed(
+    () => this.#readingDataState.readingData()?.bookData
+  );
   readonly currentBookId = computed(() => {
     const currentBook = this.currentBookData();
     return currentBook ? currentBook._id : '';
   });
 
   readonly segmentData: Signal<SegmentI | undefined> = computed(
-    () => this.readingData()?.segment
+    () => this.#readingDataState.readingData()?.segment
   );
 
   readonly currentSegment: Signal<SegmentI | null> = computed(() => {
-    const readingData = this.readingData();
+    const readingData = this.#readingDataState.readingData()
     return readingData ? readingData.segment : null;
   });
 
@@ -61,15 +62,4 @@ export class BookService {
   ): Observable<NewBookResponseI> {
     return this.bookApiService.addBook(bookData, bookSegments);
   }
-
-  // addTag(newTag: string): Observable<TagI> {
-  //   const url = `${baseUrl}/books/add-tag`;
-  //   const newBook = {
-  //     newTag,
-  //   };
-  //   const body = JSON.stringify(newBook);
-  //   return this.http.post<TagI>(url, body, {
-  //     headers: this.headers,
-  //   });
-  // }
 }

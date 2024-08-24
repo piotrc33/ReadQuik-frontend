@@ -6,10 +6,10 @@ import { TextInputWithValidationComponent } from './components/text-input-with-v
 import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
 import { RelativeDatePipe } from './pipes/relative-date.pipe';
 import { DialogComponent } from './components/dialog/dialog.component';
-import { ReadingDataService } from './services/reading-data.service';
 import { CurrentExerciseService } from './services/current-exercise.service';
 import { ResultsService } from './services/results.service';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ReadingDataService } from './services/reading-data/reading-data.service';
 
 const exportedComponents = [
   RelativeDatePipe,

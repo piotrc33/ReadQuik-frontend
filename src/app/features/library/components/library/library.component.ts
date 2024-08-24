@@ -8,9 +8,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Subject, merge, switchMap } from 'rxjs';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
 import { FiltersI } from '../../../../api/model/library/filters.i';
 import { BookService } from '../../services/book.service';
+import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 
 @Component({
   selector: 'app-library',
@@ -21,7 +21,7 @@ import { BookService } from '../../services/book.service';
 export class LibraryComponent {
   private readonly router = inject(Router);
   public readonly bookService = inject(BookService);
-  public readonly readingDataService = inject(ReadingDataService);
+  readonly #readingDataService = inject(ReadingDataService);
 
   allBooks$ = this.bookService.getBooks();
 
@@ -35,7 +35,7 @@ export class LibraryComponent {
   );
 
   chooseBook(bookId: string) {
-    this.readingDataService.changeBookAction$.next(bookId);
+    this.#readingDataService.changeBookAction$.next(bookId);
     this.router.navigate(['/app/exercises']);
   }
 }

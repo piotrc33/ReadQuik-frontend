@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { BookService } from 'src/app/features/library/services/book.service';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
 import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
-import { ReadingDataService } from 'src/app/shared/services/reading-data.service';
+import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 import { ResultsService } from 'src/app/shared/services/results.service';
 import { ExerciseFlowService } from '../../services/exercise-flow.service';
 import { ExercisesStateService } from '../../services/exercises-state.service';
@@ -15,9 +15,9 @@ import { InstructionsService } from '../../services/instructions.service';
 })
 export class ExercisesComponent implements OnInit {
   readonly bookService = inject(BookService);
-  readonly readingDataService = inject(ReadingDataService);
   readonly flowService = inject(ExerciseFlowService);
   readonly exerciseNumber = this.currentExerciseService.exerciseNumber;
+  readonly #readingData = inject(ReadingDataService);
 
   constructor(
     public readonly state: ExercisesStateService,
@@ -30,5 +30,9 @@ export class ExercisesComponent implements OnInit {
   ngOnInit(): void {
     this.resultsService.loadRecentResultsAction$.next();
     this.currentExerciseService.initialExerciseNumberAction$.next();
+  }
+
+  changeSegment(segmentNumber: number) {
+    this.#readingData.changeSegmentAction$.next(segmentNumber);
   }
 }
