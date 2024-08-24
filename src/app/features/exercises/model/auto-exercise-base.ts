@@ -7,9 +7,10 @@ import {
   inject,
 } from '@angular/core';
 import { filter, interval, takeUntil, tap } from 'rxjs';
-import { ResultsService } from 'src/app/shared/services/results.service';
+
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
+import { RecentResultsState } from '../services/recent-results/recent-results.state';
 import { Exercise } from './exercise';
 import { ExerciseModeT } from './exercise-mode.type';
 
@@ -17,13 +18,13 @@ import { ExerciseModeT } from './exercise-mode.type';
   template: '',
 })
 export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
-  readonly resultsService = inject(ResultsService);
+  readonly recentResultsState = inject(RecentResultsState);
   readonly bookService = inject(BookService);
 
   @Input()
   mode: ExerciseModeT = 'manual';
 
-  autoSpeed = computed(() => this.resultsService.last3Avg() * 1.2);
+  autoSpeed = computed(() => this.recentResultsState.last3Avg() * 1.2);
 
   nextPhraseInterval$ = interval(
     getAverageTimeoutMs(

@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExercisesComponent } from '../exercises/components/exercises/exercises.component';
-import { readingDataResolver } from './reading-data.resolver';
+import { readingDataResolver } from './resolvers/reading-data.resolver';
+import { recentResultsResolver } from './resolvers/recent-results.resolver';
 
 const routes: Routes = [
   {
     path: 'exercises',
     component: ExercisesComponent,
     resolve: {
-      data: readingDataResolver,
+      readingData: readingDataResolver,
+      recentResults: recentResultsResolver
     },
     loadChildren: () =>
       import('../exercises/exercises-routing.module').then(

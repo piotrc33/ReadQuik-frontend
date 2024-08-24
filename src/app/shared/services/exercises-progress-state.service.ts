@@ -1,28 +1,29 @@
 import { Injectable, Signal, computed, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import {
   Observable,
-  ReplaySubject,
   Subject,
   combineLatest,
   filter,
   map,
-  tap,
+  tap
 } from 'rxjs';
 import { SingleProgressI } from 'src/app/api/model/progress/single-progress.i';
 import { CurrentExerciseService } from './current-exercise.service';
-import { Router } from '@angular/router';
+import { ReadingDataStateService } from './reading-data/reading-data-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExercisesProgressStateService {
+  readonly #readingDataState = inject(ReadingDataStateService);
   private readonly currentExerciseService = inject(CurrentExerciseService);
   private readonly router = inject(Router);
 
-  readonly exercisesProgress$ = new ReplaySubject<
-    SingleProgressI[] | undefined
-  >(1);
+  readonly exercisesProgress$ = toObservable(computed(() => {
+    return this.#readingDataState.readingData()?.exercisesProgress
+  }));
 
   private readonly currentExerciseProgress$: Observable<
     SingleProgressI | undefined

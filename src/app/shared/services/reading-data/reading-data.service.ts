@@ -4,7 +4,6 @@ import { Observable, Subject, map, merge, shareReplay, switchMap, tap } from 'rx
 import { ReadingDataI } from 'src/app/api/model/reading-data.i';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
 import { ReadingDataApiService } from '../../../api/services/reading-data-api.service';
-import { ExercisesProgressStateService } from '../exercises-progress-state.service';
 import { CurrentExerciseService } from '../current-exercise.service';
 import { ReadingDataStateService } from './reading-data-state.service';
 
@@ -12,7 +11,6 @@ import { ReadingDataStateService } from './reading-data-state.service';
 export class ReadingDataService {
   private readonly readingDataApiService = inject(ReadingDataApiService);
   readonly #readingDataState = inject(ReadingDataStateService);
-  private readonly progressService = inject(ExercisesProgressStateService);
   private readonly state = inject(ExercisesStateService);
   private readonly currentExerciseService = inject(CurrentExerciseService);
 
@@ -61,7 +59,6 @@ export class ReadingDataService {
         return;
       }
       this.#readingDataState.updateReadingData(data);
-      this.progressService.exercisesProgress$.next(data.exercisesProgress);
     }),
     shareReplay()
   );
