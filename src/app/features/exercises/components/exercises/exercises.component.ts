@@ -1,10 +1,8 @@
-import { Component, OnInit, Signal, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
-import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 import { BookService } from 'src/app/features/library/services/book.service';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
 import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
-import { ResultsService } from 'src/app/shared/services/results.service';
 import { ExerciseFlowService } from '../../services/exercise-flow.service';
 import { InstructionsService } from '../../services/instructions.service';
 
@@ -18,12 +16,10 @@ export class ExercisesComponent implements OnInit {
   readonly #progressState = inject(ExercisesProgressStateService);
   readonly #currentExerciseService = inject(CurrentExerciseService);
   readonly #flowService = inject(ExerciseFlowService);
-  readonly #resultsService = inject(ResultsService);
   readonly #instructionService = inject(InstructionsService);
   readonly exerciseNumber = this.#currentExerciseService.exerciseNumber;
 
   ngOnInit(): void {
-    this.#resultsService.loadRecentResultsAction$.next();
     this.#currentExerciseService.initialExerciseNumberAction$.next();
   }
 
@@ -49,10 +45,6 @@ export class ExercisesComponent implements OnInit {
 
   startExercise() {
     this.#flowService.startExerciseAction$.next();
-  }
-
-  get recentResults(): Signal<RecentResultI[]> {
-    return this.#resultsService.recentResults;
   }
 
   get instructionsOpened(): boolean {

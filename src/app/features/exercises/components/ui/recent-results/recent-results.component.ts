@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
+
 import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
+import { ResultsService } from 'src/app/shared/services/results.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -11,9 +13,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [CommonModule, SharedModule, TranslocoModule, RouterModule],
   templateUrl: './recent-results.component.html',
   styleUrl: './recent-results.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecentResultsComponent {
-  @Input()
-  recentResults?: Signal<RecentResultI[]>;
+export class RecentResultsComponent implements OnInit {
+  readonly #resultsService = inject(ResultsService);
+
+  ngOnInit(): void {
+    this.#resultsService.loadRecentResultsAction$.next();
+  }
+
+  get recentResults(): RecentResultI[] {
+    return this.#resultsService.recentResults();
+  }
 }
