@@ -3,11 +3,7 @@
     <exercise-nav [totalUnlocked]="unlockedExercisesCount"></exercise-nav>
   </div>
   <div class="content">
-    <book-info
-      [book]="currentBookData"
-      [segment]="segmentData"
-      (changedSegment)="changeSegment($event)"
-    ></book-info>
+    <book-info></book-info>
 
     <exercise-info
       [exerciseNumber]="exerciseNumber()"
@@ -17,10 +13,7 @@
       (instructionsOpened)="openInstructions()"
       (startedExercise)="startExercise()"
     ></exercise-info>
-    <app-dialog
-      (close)="closeInstructions()"
-      *ngIf="instructionsOpened"
-    >
+    <app-dialog (close)="closeInstructions()" *ngIf="instructionsOpened">
       <instruction
         *ngIf="currentInstructionObject as instructionObject"
         content

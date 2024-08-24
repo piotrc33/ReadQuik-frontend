@@ -24,7 +24,7 @@ import { RepetitionIndicatorComponent } from './components/ui/repetition-indicat
 import { ExerciseFlowService } from './services/exercise-flow.service';
 import { PercentBarService } from './services/percent-bar.service';
 import { RecentResultsComponent } from './components/ui/recent-results/recent-results.component';
-import { BookInfoComponent } from './components/ui/book-info/book-info.component';
+import { BookInfoComponent } from './components/book-info/book-info.component';
 import { ExerciseInfoComponent } from './components/ui/exercise-info/exercise-info.component';
 
 @NgModule({

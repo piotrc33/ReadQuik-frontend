@@ -1,15 +1,12 @@
 import { Component, OnInit, Signal, inject } from '@angular/core';
 
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { SegmentI } from 'src/app/api/model/segment.i';
+import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 import { BookService } from 'src/app/features/library/services/book.service';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
 import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
-import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 import { ResultsService } from 'src/app/shared/services/results.service';
 import { ExerciseFlowService } from '../../services/exercise-flow.service';
 import { InstructionsService } from '../../services/instructions.service';
-import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 
 @Component({
   selector: 'exercises',
@@ -18,7 +15,6 @@ import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
 })
 export class ExercisesComponent implements OnInit {
   readonly #bookService = inject(BookService);
-  readonly #readingData = inject(ReadingDataService);
   readonly #progressState = inject(ExercisesProgressStateService);
   readonly #currentExerciseService = inject(CurrentExerciseService);
   readonly #flowService = inject(ExerciseFlowService);
@@ -31,10 +27,6 @@ export class ExercisesComponent implements OnInit {
     this.#currentExerciseService.initialExerciseNumberAction$.next();
   }
 
-  changeSegment(segmentNumber: number) {
-    this.#readingData.changeSegmentAction$.next(segmentNumber);
-  }
-
   get unlockedExercisesCount(): number {
     return this.#progressState.unlockedExercisesCount();
   }
@@ -45,14 +37,6 @@ export class ExercisesComponent implements OnInit {
 
   get isCurrentExerciseUnlocked(): boolean {
     return this.#progressState.isCurrentExerciseUnlocked();
-  }
-
-  get currentBookData(): BookDataI | undefined {
-    return this.#bookService.currentBookData();
-  }
-
-  get segmentData(): SegmentI | undefined {
-    return this.#bookService.segmentData();
   }
 
   get wordPhrases(): string[] {

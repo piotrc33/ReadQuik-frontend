@@ -23,7 +23,7 @@
         / {{ book.totalSegments }}
         <button
           class="small ternary switch-button"
-          (click)="changedSegment.emit(segmentNumber.valueAsNumber)"
+          (click)="changeSegment(segmentNumber.valueAsNumber)"
         >
           {{ t("switch") }}
         </button>
