@@ -6,21 +6,10 @@
     <book-info></book-info>
 
     <exercise-info
-      [exerciseNumber]="exerciseNumber()"
       [repetitions]="currentExerciseRepetitions ?? 0"
       [isExerciseUnlocked]="isCurrentExerciseUnlocked"
-      [isTextLoaded]="wordPhrases.length > 0"
-      (instructionsOpened)="openInstructions()"
       (startedExercise)="startExercise()"
     ></exercise-info>
-    <app-dialog (close)="closeInstructions()" *ngIf="instructionsOpened">
-      <instruction
-        *ngIf="currentInstructionObject as instructionObject"
-        content
-        [instructionNumber]="exerciseNumber()"
-        [instructionObject]="instructionObject"
-      ></instruction>
-    </app-dialog>
 
     <exercise-panel *ngIf="exerciseOpened"></exercise-panel>
 
