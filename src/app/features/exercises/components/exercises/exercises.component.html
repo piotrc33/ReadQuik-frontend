@@ -1,44 +1,36 @@
 <div class="exercises" *transloco="let t">
   <div class="nav">
-    <exercise-nav
-      [totalUnlocked]="progressState.unlockedExercisesCount()"
-    ></exercise-nav>
+    <exercise-nav [totalUnlocked]="unlockedExercisesCount"></exercise-nav>
   </div>
   <div class="content">
     <book-info
-      [book]="bookService.currentBookData()"
-      [segment]="bookService.segmentData()"
+      [book]="currentBookData"
+      [segment]="segmentData"
       (changedSegment)="changeSegment($event)"
     ></book-info>
 
     <exercise-info
       [exerciseNumber]="exerciseNumber()"
-      [repetitions]="progressState.currentExerciseRepetitions() ?? 0"
-      [isExerciseUnlocked]="progressState.isCurrentExerciseUnlocked()"
-      [isTextLoaded]="bookService.wordPhrases().length > 0"
-      (instructionsOpened)="
-        instructionService.openInstructionsAction$.next(true)
-      "
-      (startedExercise)="flowService.startExerciseAction$.next()"
+      [repetitions]="currentExerciseRepetitions ?? 0"
+      [isExerciseUnlocked]="isCurrentExerciseUnlocked"
+      [isTextLoaded]="wordPhrases.length > 0"
+      (instructionsOpened)="openInstructions()"
+      (startedExercise)="startExercise()"
     ></exercise-info>
     <app-dialog
-      (close)="instructionService.openInstructionsAction$.next(false)"
-      *ngIf="instructionService.instructionsOpened()"
+      (close)="closeInstructions()"
+      *ngIf="instructionsOpened"
     >
       <instruction
-        *ngIf="
-          instructionService.currentInstructionObject() as instructionObject
-        "
+        *ngIf="currentInstructionObject as instructionObject"
         content
         [instructionNumber]="exerciseNumber()"
         [instructionObject]="instructionObject"
       ></instruction>
     </app-dialog>
 
-    <exercise-panel *ngIf="flowService.exerciseOpened()"></exercise-panel>
+    <exercise-panel *ngIf="exerciseOpened"></exercise-panel>
 
-    <recent-results
-      [recentResults]="resultsService.recentResults"
-    ></recent-results>
+    <recent-results [recentResults]="recentResults"></recent-results>
   </div>
 </div>
