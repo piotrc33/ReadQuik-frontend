@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ExerciseFlowService } from '../../../services/exercise-flow.service';
-import { ExercisesStateService } from '../../../services/exercises-state.service';
 import { PercentBarService } from '../../../services/percent-bar.service';
 import { CurrentExerciseService } from './../../../../../shared/services/current-exercise.service';
 
@@ -10,11 +9,29 @@ import { CurrentExerciseService } from './../../../../../shared/services/current
   styleUrls: ['./exercise-panel.component.scss'],
 })
 export class ExercisePanelComponent {
-  public readonly flowService = inject(ExerciseFlowService);
-  public readonly percentService = inject(PercentBarService);
+  readonly #flowService = inject(ExerciseFlowService);
+  readonly #percentService = inject(PercentBarService);
+  readonly #currentExerciseService = inject(CurrentExerciseService);
 
-  constructor(
-    public state: ExercisesStateService,
-    public currentExerciseService: CurrentExerciseService
-  ) {}
+  closePanel() {
+    this.#flowService.exitAction$.next();
+  }
+
+  get exerciseNumber(): number {
+    return this.#currentExerciseService.exerciseNumber();
+  }
+
+  get progressBarPercentWidth(): number {
+    return this.#percentService.paged()
+      ? this.#percentService.pagedPercent()
+      : this.#percentService.progressPercent();
+  }
+
+  get exerciseMode() {
+    return this.#flowService.exerciseMode();
+  }
+
+  nextAction() {
+    this.#flowService.nextAction$.next();
+  }
 }

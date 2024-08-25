@@ -7,15 +7,15 @@ import { CurrentExerciseService } from 'src/app/shared/services/current-exercise
 
 @Injectable()
 export class InstructionsService {
-  private readonly http = inject(HttpClient);
-  private readonly currentExerciseService = inject(CurrentExerciseService);
-  private readonly cookieService = inject(CookieService);
+  readonly #http = inject(HttpClient);
+  readonly #currentExerciseService = inject(CurrentExerciseService);
+  readonly #cookieService = inject(CookieService);
 
   constructor() {
     effect(() => {
       if (this.instructionsOpened()) {
-        this.cookieService.set(
-          `instruction${this.currentExerciseService.exerciseNumber()}Opened`,
+        this.#cookieService.set(
+          `instruction${this.#currentExerciseService.exerciseNumber()}Opened`,
           'true',
           2,
           '/'
@@ -25,9 +25,9 @@ export class InstructionsService {
   }
 
   private readonly shouldOpenInstruction$ =
-    this.currentExerciseService.exerciseNumber$.pipe(
+    this.#currentExerciseService.exerciseNumber$.pipe(
       map((exNum) => {
-        const cookieValue: string = this.cookieService.get(
+        const cookieValue: string = this.#cookieService.get(
           `instruction${exNum}Opened`
         );
         const instructionsOpenedInPast: boolean = cookieValue
@@ -44,13 +44,13 @@ export class InstructionsService {
   );
 
   readonly currentInstructionObject = toSignal(
-    this.currentExerciseService.exerciseNumber$.pipe(
+    this.#currentExerciseService.exerciseNumber$.pipe(
       switchMap((exNum) => this.getCurrentExerciseInstructions(exNum))
     )
   );
 
   private getCurrentExerciseInstructions(exNum: number): Observable<any> {
-    return this.http
+    return this.#http
       .get<any>('assets/i18n/en.json')
       .pipe(map((val) => val.instructions['instruction' + exNum]));
   }

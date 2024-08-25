@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject, input } from '@angular/core';
 import { BookService } from 'src/app/features/library/services/book.service';
-import { InstructionsService } from '../../../services/instructions.service';
+import { InstructionsService } from '../../../services/instructions/instructions.service';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
 
 @Component({

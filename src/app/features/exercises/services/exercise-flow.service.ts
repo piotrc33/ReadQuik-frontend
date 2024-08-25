@@ -19,18 +19,20 @@ import {
 import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { KeyboardService } from './keyboard.service';
+import { SaveService } from './save.service';
 
 @Injectable()
 export class ExerciseFlowService {
-  private readonly keyService = inject(KeyboardService);
-  private readonly bookService = inject(BookService);
+  readonly #keyService = inject(KeyboardService);
+  readonly #bookService = inject(BookService);
+  readonly #saveService = inject(SaveService);
 
   exerciseMode: WritableSignal<ExerciseModeT> = signal('manual');
   startTime!: number;
 
   readonly nextAction$ = new Subject<void>();
   readonly manualMoveToNextPhrase$: Observable<void> = merge(
-    this.keyService.forwardingPress$,
+    this.#keyService.forwardingPress$,
     this.nextAction$
   ).pipe(
     filter(() => this.exerciseMode() === 'manual'),
@@ -67,13 +69,18 @@ export class ExerciseFlowService {
     this.completedLastPage$,
     this.manualMoveToNextPhrase$.pipe(
       filter(
-        () => this.phraseNumber() === this.bookService.wordPhrases().length
+        () => this.phraseNumber() === this.#bookService.wordPhrases().length
       )
     )
-  ).pipe(share());
+  ).pipe(
+    share(),
+    tap(() => {
+      this.#saveService.getUserWpmAction.next(this.startTime);
+    })
+  );
 
   readonly exitAction$ = new Subject<void>();
-  readonly quitExercise$ = merge(this.keyService.exitPress$, this.exitAction$);
+  readonly quitExercise$ = merge(this.#keyService.exitPress$, this.exitAction$);
 
   private readonly closedExercise$ = merge(
     this.quitExercise$,
@@ -113,7 +120,7 @@ export class ExerciseFlowService {
     this.autoNextAction$
       .pipe(
         filter(
-          () => this.phraseNumber() === this.bookService.wordPhrases().length
+          () => this.phraseNumber() === this.#bookService.wordPhrases().length
         ),
         tap(() => this.resetPhraseNumberAction$.next()),
         map(() => true)

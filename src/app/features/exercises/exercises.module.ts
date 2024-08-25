@@ -18,7 +18,7 @@ import { ExercisesRoutingModule } from './exercises-routing.module';
 import { ExercisesStateService } from './services/exercises-state.service';
 import { KeyboardService } from './services/keyboard.service';
 import { TextService } from './services/text.service';
-import { InstructionsService } from './services/instructions.service';
+import { InstructionsService } from './services/instructions/instructions.service';
 import { AdviceComponent } from './components/ui/advice/advice.component';
 import { RepetitionIndicatorComponent } from './components/ui/repetition-indicator/repetition-indicator.component';
 import { ExerciseFlowService } from './services/exercise-flow.service';
