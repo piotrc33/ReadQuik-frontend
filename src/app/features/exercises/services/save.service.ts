@@ -8,6 +8,7 @@ import { ReadingDataService } from 'src/app/shared/services/reading-data/reading
 import { ResultsService } from 'src/app/shared/services/results.service';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
+import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class SaveService {
   readonly #currentExerciseService = inject(CurrentExerciseService);
   readonly #resultsService = inject(ResultsService);
   readonly #readingDataService = inject(ReadingDataService);
+  readonly #readingDataState = inject(ReadingDataStateService);
 
   constructor() {
     this.#dataForSave$.pipe(takeUntilDestroyed()).subscribe((saveData) => {
@@ -47,9 +49,9 @@ export class SaveService {
     map((wpm) => {
       return {
         wpm: wpm,
-        bookId: this.#bookService.currentBookId(),
+        bookId: this.#readingDataState.currentBookId(),
         exerciseNumber: this.#currentExerciseService.exerciseNumber(),
-        lastSegmentNumber: this.#bookService.currentSegment()?.number || 1,
+        lastSegmentNumber: this.#readingDataState.segmentNumber(),
       };
     })
   );

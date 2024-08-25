@@ -1,5 +1,5 @@
 <section class="book" *transloco="let t">
-  @if (book && segment) {
+  @if (book) {
     <div class="header">
       <h2 class="title">
         {{ book.title }}
@@ -17,13 +17,13 @@
           [max]="book.totalSegments"
           type="number"
           class="input small"
-          [value]="segment.number"
-          #segmentNumber
+          [value]="segmentNumber"
+          #segmentNumberInput
         />
         / {{ book.totalSegments }}
         <button
           class="small ternary switch-button"
-          (click)="changeSegment(segmentNumber.valueAsNumber)"
+          (click)="changeSegment(segmentNumberInput.valueAsNumber)"
         >
           {{ t("switch") }}
         </button>

@@ -8,9 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 
-import { SegmentI } from 'src/app/api/model/book/segment.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { BookService } from 'src/app/features/library/services/book.service';
+import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -29,15 +28,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookInfoComponent {
-  readonly #bookService = inject(BookService);
   readonly #readingData = inject(ReadingDataService);
+  readonly #readingDataState = inject(ReadingDataStateService);
 
   get book(): BookDataI | undefined {
-    return this.#bookService.currentBookData();
+    return this.#readingDataState.bookData();
   }
 
-  get segment(): SegmentI | undefined {
-    return this.#bookService.segmentData();
+  get segmentNumber(): number | undefined {
+    return this.#readingDataState.segmentNumber();
   }
 
   changeSegment(segmentNumber: number) {
