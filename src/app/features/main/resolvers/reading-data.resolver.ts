@@ -8,8 +8,9 @@ import { ReadingDataStateService } from 'src/app/shared/services/reading-data/re
 export const readingDataResolver: ResolveFn<ReadingDataI> = () => {
   const readingDataApi = inject(ReadingDataApiService);
   const readingDataState = inject(ReadingDataStateService);
+  const state = readingDataState.readingData();
 
-  return readingDataApi
+  return state ? state : readingDataApi
     .getInitialReadingData()
     .pipe(
       tap((readingData) => readingDataState.updateReadingData(readingData))

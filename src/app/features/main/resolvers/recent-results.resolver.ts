@@ -8,8 +8,9 @@ import { tap } from 'rxjs';
 export const recentResultsResolver: ResolveFn<RecentResultI[]> = () => {
   const resultsApi = inject(ResultsApiService);
   const recentResultsState = inject(RecentResultsState);
+  const state = recentResultsState.recentResults();
 
-  return resultsApi
+  return state.length > 0 ? state : resultsApi
     .getRecentResults()
     .pipe(
       tap((recentResults) =>

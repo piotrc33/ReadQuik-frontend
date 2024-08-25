@@ -16,9 +16,9 @@ export class BookService {
   private readonly bookApiService = inject(BookApiService);
   readonly #readingDataState = inject(ReadingDataStateService);
 
-  readonly currentBookData: Signal<BookDataI | undefined> = computed(
-    () => this.#readingDataState.readingData()?.bookData
-  );
+  readonly currentBookData: Signal<BookDataI | undefined> = computed(() => {
+    return this.#readingDataState.readingData()?.bookData;
+  });
   readonly currentBookId = computed(() => {
     const currentBook = this.currentBookData();
     return currentBook ? currentBook._id : '';
@@ -29,7 +29,7 @@ export class BookService {
   );
 
   readonly currentSegment: Signal<SegmentI | null> = computed(() => {
-    const readingData = this.#readingDataState.readingData()
+    const readingData = this.#readingDataState.readingData();
     return readingData ? readingData.segment : null;
   });
 
