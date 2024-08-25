@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SegmentI } from '../../../api/model/segment.i';
+import { SegmentI } from '../../../api/model/book/segment.i';
 
 @Injectable()
 export class TextService {

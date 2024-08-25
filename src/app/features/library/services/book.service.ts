@@ -6,7 +6,7 @@ import { NewBookResponseI } from 'src/app/api/model/progress/new-book-response.i
 import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 import { BookSegmentsI } from '../../../api/model/book-segments.i';
 import { BookDataI } from '../../../api/model/library/book-data.i';
-import { SegmentI } from '../../../api/model/segment.i';
+import { SegmentI } from '../../../api/model/book/segment.i';
 import { BookApiService } from '../../../api/services/book-api.service';
 import { TextService } from '../../exercises/services/text.service';
 

@@ -1,4 +1,4 @@
-import { SegmentI } from "./segment.i";
+import { SegmentI } from "./book/segment.i";
 
 export interface BookSegmentsI {
   segments: SegmentI[];

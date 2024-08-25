@@ -15,9 +15,10 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, take } from 'rxjs';
+
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
+import { SegmentI } from 'src/app/api/model/book/segment.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { SegmentI } from 'src/app/api/model/segment.i';
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from '../../services/book.service';

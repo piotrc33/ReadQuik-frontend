@@ -8,8 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 
+import { SegmentI } from 'src/app/api/model/book/segment.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { SegmentI } from 'src/app/api/model/segment.i';
 import { BookService } from 'src/app/features/library/services/book.service';
 import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -41,6 +41,6 @@ export class BookInfoComponent {
   }
 
   changeSegment(segmentNumber: number) {
-    this.#readingData.changeSegmentAction$.next(segmentNumber);
+    this.#readingData.changeSegmentAction.next(segmentNumber);
   }
 }
