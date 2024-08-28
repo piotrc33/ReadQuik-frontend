@@ -11,10 +11,12 @@ import { baseUrl } from 'src/app/shared/variables';
   providedIn: 'root'
 })
 export class BookApiService {
-  private readonly headers = { 'Content-Type': 'application/json' };
-  private readonly http = inject(HttpClient);
+  readonly #headers = { 'Content-Type': 'application/json' };
+  readonly #http = inject(HttpClient);
 
-  readonly tags$ = this.http.get<string[]>(`${baseUrl}/books/all-tags`);
+  getTags(): Observable<string[]> {
+    return this.#http.get<string[]>(`${baseUrl}/books/all-tags`);
+  }
 
   getFilteredBooks(filters: FiltersI): Observable<BookDataI[]> {
     let params = new HttpParams();
@@ -23,12 +25,12 @@ export class BookApiService {
     params = params.set('tags', filters.tags.join(','));
     params = params.set('language', filters.language);
 
-    return this.http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
+    return this.#http.get<BookDataI[]>(`${baseUrl}/books/filter`, { params });
   }
 
   getBooks(): Observable<BookDataI[]> {
     const url = `${baseUrl}/books`;
-    return this.http.get<BookDataI[]>(url);
+    return this.#http.get<BookDataI[]>(url);
   }
 
   addBook(
@@ -40,8 +42,8 @@ export class BookApiService {
       ...bookData,
       ...bookSegments,
     };
-    return this.http.post<NewBookResponseI>(url, newBook, {
-      headers: this.headers,
+    return this.#http.post<NewBookResponseI>(url, newBook, {
+      headers: this.#headers,
     });
   }
 }

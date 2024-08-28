@@ -1,10 +1,10 @@
 <div class="exercise2 horizontal-exercise">
-  @for (item of bookService.wordPhrases(); track $index) {
+  @for (phrase of wordPhrases(); track $index) {
     <span
       class="phrase"
       [ngClass]="flowService.phraseNumber() === $index ? 'active' : 'inactive'"
       [ngStyle]="{ 'left.px': leftOffset() }"
-      >{{ item }}
+      >{{ phrase }}
     </span>
   }
 </div>

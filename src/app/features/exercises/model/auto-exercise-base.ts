@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import { filter, interval, takeUntil, tap } from 'rxjs';
 
+import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
 import { BookService } from '../../library/services/book.service';
 import { RecentResultsState } from '../services/recent-results/recent-results.state';
 import { Exercise } from './exercise';
 import { ExerciseModeT } from './exercise-mode.type';
-import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 
 @Component({
   template: '',
@@ -22,6 +22,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   readonly recentResultsState = inject(RecentResultsState);
   readonly bookService = inject(BookService);
   readonly #readingDataState = inject(ReadingDataStateService);
+  
 
   @Input()
   mode: ExerciseModeT = 'manual';
@@ -31,7 +32,7 @@ export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
   nextPhraseInterval$ = interval(
     getAverageTimeoutMs(
       this.#readingDataState.segmentText().length,
-      this.bookService.wordPhrases().length,
+      this.wordPhrases().length,
       this.autoSpeed()
     )
   ).pipe(

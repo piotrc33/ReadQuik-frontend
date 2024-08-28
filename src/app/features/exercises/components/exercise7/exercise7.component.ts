@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  inject
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   Observable,
@@ -13,7 +8,7 @@ import {
   merge,
   scan,
   switchMap,
-  timer
+  timer,
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { PercentBarService } from '../../services/percent-bar.service';
@@ -79,7 +74,7 @@ export class Exercise7Component
   );
 
   private readonly isLastPage$ = this.flowService.manualMoveToNextPhrase$.pipe(
-    filter(() => this.isLastPage()),
+    filter(() => this.isLastPage())
   );
 
   constructor() {
@@ -92,11 +87,9 @@ export class Exercise7Component
       this.flowService.completedLastPage$.next();
     });
 
-    this.subs.add = this.flowService.completedAutoMode$.subscribe(
-      () => {
-        this.#percentService.paged.set(true);
-      }
-    );
+    this.subs.add = this.flowService.completedAutoMode$.subscribe(() => {
+      this.#percentService.paged.set(true);
+    });
   }
 
   override ngOnDestroy(): void {
@@ -108,10 +101,8 @@ export class Exercise7Component
   wordIndexes: number[] = [];
   override ngOnInit(): void {
     super.ngOnInit();
-    for (let i = 0; i < this.bookService.phrasesWithNewlines().length; i++) {
-      if (
-        !this.textService.isNewline(this.bookService.phrasesWithNewlines()[i])
-      ) {
+    for (let i = 0; i < this.phrasesWithNewlines().length; i++) {
+      if (!this.textService.isNewline(this.phrasesWithNewlines()[i])) {
         this.wordIndexes.push(i);
       }
     }

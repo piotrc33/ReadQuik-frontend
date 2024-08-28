@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ExercisesComponent } from '../exercises/components/exercises/exercises.component';
 import { readingDataResolver } from './resolvers/reading-data.resolver';
 import { recentResultsResolver } from './resolvers/recent-results.resolver';
+import { tagsResolver } from './resolvers/tags.resolver';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
     component: ExercisesComponent,
     resolve: {
       readingData: readingDataResolver,
-      recentResults: recentResultsResolver
+      recentResults: recentResultsResolver,
     },
     loadChildren: () =>
       import('../exercises/exercises-routing.module').then(
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'library',
+    resolve: {
+      tags: tagsResolver
+    },
     loadChildren: () =>
       import('../library/library-routing.module').then(
         (m) => m.LibraryRoutingModule

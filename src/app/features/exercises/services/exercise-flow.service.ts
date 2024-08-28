@@ -16,15 +16,15 @@ import {
   share,
   tap,
 } from 'rxjs';
-import { BookService } from '../../library/services/book.service';
 import { ExerciseModeT } from '../model/exercise-mode.type';
 import { KeyboardService } from './keyboard.service';
+import { PhrasesStateService } from './phrases-state.service';
 import { SaveService } from './save.service';
 
 @Injectable()
 export class ExerciseFlowService {
   readonly #keyService = inject(KeyboardService);
-  readonly #bookService = inject(BookService);
+  readonly #phrasesService = inject(PhrasesStateService);
   readonly #saveService = inject(SaveService);
 
   exerciseMode: WritableSignal<ExerciseModeT> = signal('manual');
@@ -69,7 +69,7 @@ export class ExerciseFlowService {
     this.completedLastPage$,
     this.manualMoveToNextPhrase$.pipe(
       filter(
-        () => this.phraseNumber() === this.#bookService.wordPhrases().length
+        () => this.phraseNumber() === this.#phrasesService.wordPhrases().length
       )
     )
   ).pipe(
@@ -120,7 +120,8 @@ export class ExerciseFlowService {
     this.autoNextAction$
       .pipe(
         filter(
-          () => this.phraseNumber() === this.#bookService.wordPhrases().length
+          () =>
+            this.phraseNumber() === this.#phrasesService.wordPhrases().length
         ),
         tap(() => this.resetPhraseNumberAction$.next()),
         map(() => true)

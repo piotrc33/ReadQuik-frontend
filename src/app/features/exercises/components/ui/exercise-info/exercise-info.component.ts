@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, injec
 import { BookService } from 'src/app/features/library/services/book.service';
 import { InstructionsService } from '../../../services/instructions/instructions.service';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
+import { PhrasesStateService } from '../../../services/phrases-state.service';
 
 @Component({
   selector: 'exercise-info',
@@ -10,7 +11,7 @@ import { CurrentExerciseService } from 'src/app/shared/services/current-exercise
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExerciseInfoComponent implements OnInit {
-  readonly #bookService = inject(BookService);
+  readonly #phrasesService = inject(PhrasesStateService);
   readonly #instructionService = inject(InstructionsService);
   readonly #currentExerciseService = inject(CurrentExerciseService);
 
@@ -25,7 +26,7 @@ export class ExerciseInfoComponent implements OnInit {
   }
 
   get isTextLoaded(): boolean {
-    return this.#bookService.wordPhrases().length > 0;
+    return this.#phrasesService.wordPhrases().length > 0;
   }
 
   get exerciseNumber() {

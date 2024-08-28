@@ -34,9 +34,9 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
 
   override ngOnInit(): void {
     super.ngOnInit();
-    for (let i = 0; i < this.bookService.phrasesWithNewlines().length; i++) {
+    for (let i = 0; i < this.phrasesWithNewlines().length; i++) {
       if (
-        !this.textService.isNewline(this.bookService.phrasesWithNewlines()[i])
+        !this.textService.isNewline(this.phrasesWithNewlines()[i])
       ) {
         this.wordIndexes.push(i);
       }

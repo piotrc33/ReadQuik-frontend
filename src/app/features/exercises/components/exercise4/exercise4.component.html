@@ -1,21 +1,20 @@
 <div class="exercise4">
   <div class="text" [style.top.px]="pageYPosition()">
-    <ng-container *ngFor="let phrase of bookService.phrasesWithNewlines(); index as i">
-      <ng-container *ngIf="!textService.isNewline(phrase); else newline">
+    <!-- TODO: make shared component for this exercise and ex7 -->
+    @for (phrase of phrasesWithNewlines(); track $index) { 
+      @if (!textService.isNewline(phrase)) {
         <span
           class="phrase"
           [ngClass]="
-            wordIndexes[flowService.phraseNumber()] === i
+            wordIndexes[flowService.phraseNumber()] === $index
               ? 'active'
               : 'inactive'
           "
           >{{ phrase }}</span
         >
-      </ng-container>
-
-      <ng-template #newline>
+      } @else {
         <br>
-      </ng-template>
-    </ng-container>
+      }
+    }
   </div>
 </div>

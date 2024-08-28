@@ -1,6 +1,6 @@
 <div class="library" *transloco="let t; read: 'library'">
   <filters
-    [tags]="bookService.tags() || null"
+    [tags]="tags()"
     (filter)="filtering$.next($event)"
   ></filters>
 

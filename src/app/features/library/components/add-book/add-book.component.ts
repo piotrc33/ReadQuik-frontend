@@ -13,8 +13,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subject, take } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, map, take } from 'rxjs';
 
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { SegmentI } from 'src/app/api/model/book/segment.i';
@@ -23,6 +23,7 @@ import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-add-book',
@@ -34,6 +35,7 @@ export class AddBookComponent implements OnDestroy {
   readonly text = inject(TextService);
   readonly fb = inject(FormBuilder);
   readonly router = inject(Router);
+  readonly #route = inject(ActivatedRoute);
 
   readonly destroy$ = new Subject<void>();
   readonly bookForm: FormGroup<AddBookFormI> = this.fb.nonNullable.group({
@@ -45,7 +47,9 @@ export class AddBookComponent implements OnDestroy {
   }) as FormGroup<AddBookFormI>;
 
   file?: File;
-  tags: Signal<string[] | undefined> = this.bookService.tags;
+  tags: Signal<string[]> = toSignal(
+    this.#route.data.pipe(map((data) => data['tags']))
+  );
 
   @ViewChild('newTagInput') newTagInput?: ElementRef;
 

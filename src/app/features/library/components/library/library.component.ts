@@ -5,8 +5,8 @@ import {
   inject,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
-import { Subject, merge, switchMap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, map, merge, switchMap } from 'rxjs';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { FiltersI } from '../../../../api/model/library/filters.i';
 import { BookService } from '../../services/book.service';
@@ -22,6 +22,7 @@ export class LibraryComponent {
   private readonly router = inject(Router);
   public readonly bookService = inject(BookService);
   readonly #readingDataService = inject(ReadingDataService);
+  readonly #route = inject(ActivatedRoute);
 
   allBooks$ = this.bookService.getBooks();
 
@@ -32,6 +33,10 @@ export class LibraryComponent {
 
   books: Signal<BookDataI[] | undefined> = toSignal(
     merge(this.allBooks$, this.filteredBooks$)
+  );
+
+  tags: Signal<string[]> = toSignal(
+    this.#route.data.pipe(map((data) => data['tags']))
   );
 
   chooseBook(bookId: string) {
