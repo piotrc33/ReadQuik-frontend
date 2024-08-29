@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SignupComponent } from './components/signup/signup.component';
 import { RouterModule } from '@angular/router';
@@ -12,22 +12,15 @@ import { AuthContainerComponent } from './components/ui/auth-container/auth-cont
 import { AuthRoutingModule } from './auth-routing.module';
 import { TranslocoModule } from '@ngneat/transloco';
 
-@NgModule({
-  declarations: [
-    LoginComponent,
-    SignupComponent,
-    AuthPanelComponent,
-    AuthContainerComponent,
-  ],
-  imports: [
-    ReactiveFormsModule,
-    HttpClientModule,
-    SharedModule,
-    RouterModule,
-    CommonModule,
-    AuthRoutingModule,
-    TranslocoModule,
-  ],
-  providers: [AuthService],
-})
+@NgModule({ declarations: [
+        LoginComponent,
+        SignupComponent,
+        AuthPanelComponent,
+        AuthContainerComponent,
+    ], imports: [ReactiveFormsModule,
+        SharedModule,
+        RouterModule,
+        CommonModule,
+        AuthRoutingModule,
+        TranslocoModule], providers: [AuthService, provideHttpClient(withInterceptorsFromDi())] })
 export class AuthModule {}
