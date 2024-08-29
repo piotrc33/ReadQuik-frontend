@@ -1,16 +1,14 @@
 import {
   Component,
   Input,
-  OnDestroy,
   OnInit,
   computed,
-  inject,
+  inject
 } from '@angular/core';
 import { filter, interval, takeUntil, tap } from 'rxjs';
 
 import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
-import { BookService } from '../../library/services/book.service';
 import { RecentResultsState } from '../services/recent-results/recent-results.state';
 import { Exercise } from './exercise';
 import { ExerciseModeT } from './exercise-mode.type';
@@ -18,16 +16,15 @@ import { ExerciseModeT } from './exercise-mode.type';
 @Component({
   template: '',
 })
-export class AutoExerciseBase extends Exercise implements OnInit, OnDestroy {
-  readonly recentResultsState = inject(RecentResultsState);
-  readonly bookService = inject(BookService);
+export class AutoExerciseBase extends Exercise implements OnInit {
+  readonly #recentResultsState = inject(RecentResultsState);
   readonly #readingDataState = inject(ReadingDataStateService);
   
 
   @Input()
   mode: ExerciseModeT = 'manual';
 
-  autoSpeed = computed(() => this.recentResultsState.last3Avg() * 1.2);
+  autoSpeed = computed(() => this.#recentResultsState.last3Avg() * 1.2);
 
   nextPhraseInterval$ = interval(
     getAverageTimeoutMs(
