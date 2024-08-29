@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
   Observable,
   combineLatest,
@@ -8,7 +8,7 @@ import {
   merge,
   scan,
   switchMap,
-  timer,
+  timer
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { PercentBarService } from '../../services/percent-bar.service';
@@ -29,24 +29,18 @@ export class Exercise7Component
 
   exerciseTextElement?: HTMLElement;
   textBox?: DOMRect;
-  panelBox?: DOMRect;
   toScroll: number = 0;
-
-  private readonly panelBox$ = timer(2).pipe(
-    map(() => this.state.panelContentElement?.getBoundingClientRect())
-  );
-  readonly panelBoxSignal = toSignal(this.panelBox$);
 
   private readonly activeBox$ = this.flowService.movedToNextPhrase$.pipe(
     switchMap(() => timer(2)),
     map(() =>
       this.el.nativeElement.querySelector('.active')?.getBoundingClientRect()
-    )
+    ),
   );
 
   private readonly nextPage$: Observable<boolean> = combineLatest([
     this.activeBox$,
-    this.panelBox$,
+    toObservable(this.state.panelBox),
   ]).pipe(
     filter(([activeBox, panelBox]) => {
       return activeBox?.y! > panelBox?.bottom!;
@@ -61,7 +55,7 @@ export class Exercise7Component
   ).pipe(
     scan((position, val) => {
       if (val === 0) return 0;
-      return position - this.panelBoxSignal()?.height!;
+      return position - this.state.panelBox()?.height!;
     }, 0)
   );
   readonly pageYPosition = toSignal(this.pageYPosition$);
@@ -111,15 +105,14 @@ export class Exercise7Component
   }
 
   ngAfterViewInit(): void {
-    this.panelBox = this.state.panelContentElement?.getBoundingClientRect();
     this.exerciseTextElement = this.el.nativeElement.querySelector('.text');
     this.textBox = this.exerciseTextElement?.getBoundingClientRect();
-    this.toScroll = this.textBox!.bottom - this.panelBox!.bottom + 360;
+    this.toScroll = this.textBox!.bottom - this.state.panelBox()!.bottom + 360;
   }
 
   isLastPage(): boolean {
     this.textBox = this.exerciseTextElement?.getBoundingClientRect();
-    const result = this.textBox!.bottom < this.panelBox!.bottom;
+    const result = this.textBox!.bottom < this.state.panelBox()!.bottom;
     return result;
   }
 }

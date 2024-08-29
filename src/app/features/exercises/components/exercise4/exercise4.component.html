@@ -6,7 +6,7 @@
         <span
           class="phrase"
           [ngClass]="
-            wordIndexes[flowService.phraseNumber()] === $index
+            wordIndexes[phraseNumber] === $index
               ? 'active'
               : 'inactive'
           "

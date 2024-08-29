@@ -5,17 +5,16 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
   Observable,
+  combineLatest,
   filter,
   map,
   merge,
   scan,
-  share,
   switchMap,
-  timer,
-  zip
+  timer
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { TextService } from '../../services/text.service';
@@ -43,23 +42,16 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
     }
   }
 
-  private readonly panelBox$ = this.flowService.movedToNextPhrase$.pipe(
-    switchMap(() => timer(2).pipe()),
-    map(() => this.state.panelContentElement?.getBoundingClientRect()),
-    share()
-  );
-  readonly panelBox = toSignal(this.panelBox$);
-
   private readonly activeBox$ = this.flowService.movedToNextPhrase$.pipe(
     switchMap(() => timer(2)),
     map(() =>
       this.el.nativeElement.querySelector('.active')?.getBoundingClientRect()
-    )
+    ),
   );
 
-  private readonly nextPage$: Observable<boolean> = zip([
+  private readonly nextPage$: Observable<boolean> = combineLatest([
     this.activeBox$,
-    this.panelBox$,
+    toObservable(this.state.panelBox),
   ]).pipe(
     map(([activeBox, panelBox]) => {
       return activeBox?.y! > panelBox?.bottom!;
@@ -73,7 +65,7 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
   ).pipe(
     scan((position, val) => {
       if (val === 0) return 0;
-      return position - this.panelBox()?.height!;
+      return position - this.state.panelBox()?.height!;
     }, 0)
   );
   readonly pageYPosition = toSignal(this.pageYPosition$, { initialValue: 0 });

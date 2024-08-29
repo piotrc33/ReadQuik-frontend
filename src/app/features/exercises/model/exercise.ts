@@ -10,13 +10,21 @@ import { PhrasesStateService } from '../services/phrases-state.service';
 })
 export class Exercise implements OnDestroy {
   public readonly state = inject(ExercisesStateService);
-  protected readonly flowService = inject(ExerciseFlowService);
+  readonly flowService = inject(ExerciseFlowService);
   readonly #phrasesService = inject(PhrasesStateService);
   subs = new SubscriptionContainer();
 
   protected readonly wordPhrases = this.#phrasesService.wordPhrases;
   protected readonly phrasesWithNewlines =
     this.#phrasesService.phrasesWithNewlines;
+
+  get phraseNumber() {
+    return this.flowService.phraseNumber();
+  }
+
+  get exerciseMode() {
+    return this.flowService.exerciseMode();
+  }
 
   ngOnDestroy(): void {
     this.subs.dispose();

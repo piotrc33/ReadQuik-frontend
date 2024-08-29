@@ -2,7 +2,7 @@
   @for (phrase of wordPhrases(); track $index) {
     <span
       class="phrase"
-      [ngClass]="flowService.phraseNumber() === $index ? 'active' : 'inactive'"
+      [ngClass]="phraseNumber === $index ? 'active' : 'inactive'"
       [ngStyle]="{ 'left.px': leftOffset() }"
       >{{ phrase }}
     </span>

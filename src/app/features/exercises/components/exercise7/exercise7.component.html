@@ -6,8 +6,8 @@
           class="phrase"
           [ngClass]="$index % 2 === 0 ? 'strong' : ''"
           [class.active]="
-            wordIndexes[flowService.phraseNumber()] === $index &&
-            flowService.exerciseMode() === 'auto'
+            wordIndexes[phraseNumber] === $index &&
+            exerciseMode === 'auto'
           "
           >{{ phrase }}
         </span>

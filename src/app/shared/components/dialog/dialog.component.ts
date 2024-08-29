@@ -14,8 +14,9 @@ export class DialogComponent {
   close = new EventEmitter<void>();
 
   ngOnInit(): void {
-    this.#state.panelContentElement =
-      this.#el.nativeElement.querySelector('.dialog-content');
+    this.#state.updatePanelElement(
+      this.#el.nativeElement.querySelector('.dialog-content')
+    );
   }
 
   @HostListener('document:keydown.escape', ['$event'])
