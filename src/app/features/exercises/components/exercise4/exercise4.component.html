@@ -3,15 +3,18 @@
     <!-- TODO: make shared component for this exercise and ex7 -->
     @for (phrase of phrasesWithNewlines(); track $index) { 
       @if (!textService.isNewline(phrase)) {
-        <span
-          class="phrase"
-          [ngClass]="
-            wordIndexes[phraseNumber] === $index
-              ? 'active'
-              : 'inactive'
-          "
+        @if (wordIndexes[phraseNumber] === $index) {
+          <span
+          #activePhrase
+          class="phrase active"
           >{{ phrase }}</span
         >
+        } @else {
+          <span
+            class="phrase inactive"
+            >{{ phrase }}</span
+          >
+        }
       } @else {
         <br>
       }

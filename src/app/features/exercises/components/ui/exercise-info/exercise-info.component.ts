@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, inject, input } from '@angular/core';
-import { BookService } from 'src/app/features/library/services/book.service';
-import { InstructionsService } from '../../../services/instructions/instructions.service';
+import { ChangeDetectionStrategy, Component, OnInit, inject, input, output } from '@angular/core';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
+import { InstructionsService } from '../../../services/instructions/instructions.service';
 import { PhrasesStateService } from '../../../services/phrases-state.service';
 
 @Component({
@@ -18,8 +17,7 @@ export class ExerciseInfoComponent implements OnInit {
   repetitions = input<number>(0);
   isExerciseUnlocked = input<boolean>(false);
 
-  @Output()
-  startedExercise = new EventEmitter<void>();
+  startedExercise = output();
 
   ngOnInit(): void {
     this.#currentExerciseService.initialExerciseNumberAction$.next();

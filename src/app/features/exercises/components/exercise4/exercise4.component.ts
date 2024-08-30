@@ -3,19 +3,12 @@ import {
   Component,
   ElementRef,
   OnInit,
+  computed,
   inject,
+  viewChild,
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import {
-  Observable,
-  combineLatest,
-  filter,
-  map,
-  merge,
-  scan,
-  switchMap,
-  timer
-} from 'rxjs';
+import { Observable, combineLatest, filter, map, merge, scan } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { TextService } from '../../services/text.service';
 
@@ -26,31 +19,20 @@ import { TextService } from '../../services/text.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Exercise4Component extends AutoExerciseBase implements OnInit {
-  private readonly el = inject(ElementRef);
   readonly textService = inject(TextService);
+  readonly wordIndexes = this.phrasesWithNewlines()
+    .map((phrase, i) => {
+      return !this.textService.isNewline(phrase) ? i : undefined;
+    })
+    .filter((el) => el !== undefined);
 
-  readonly wordIndexes: number[] = [];
-
-  override ngOnInit(): void {
-    super.ngOnInit();
-    for (let i = 0; i < this.phrasesWithNewlines().length; i++) {
-      if (
-        !this.textService.isNewline(this.phrasesWithNewlines()[i])
-      ) {
-        this.wordIndexes.push(i);
-      }
-    }
-  }
-
-  private readonly activeBox$ = this.flowService.movedToNextPhrase$.pipe(
-    switchMap(() => timer(2)),
-    map(() =>
-      this.el.nativeElement.querySelector('.active')?.getBoundingClientRect()
-    ),
-  );
+  private readonly activeElement = viewChild<ElementRef>('activePhrase');
+  readonly #activeBox = computed(() => {
+    return this.activeElement()?.nativeElement.getBoundingClientRect();
+  });
 
   private readonly nextPage$: Observable<boolean> = combineLatest([
-    this.activeBox$,
+    toObservable(this.#activeBox),
     toObservable(this.state.panelBox),
   ]).pipe(
     map(([activeBox, panelBox]) => {
