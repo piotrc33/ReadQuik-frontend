@@ -12,7 +12,6 @@ import {
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { PercentBarService } from '../../services/percent-bar.service';
-import { TextService } from '../../services/text.service';
 
 @Component({
   selector: 'exercise7',
@@ -23,7 +22,6 @@ export class Exercise7Component
   extends AutoExerciseBase
   implements AfterViewInit
 {
-  readonly textService = inject(TextService);
   readonly el = inject(ElementRef);
   readonly #percentService = inject(PercentBarService);
 
@@ -92,7 +90,6 @@ export class Exercise7Component
     this.#percentService.pagedPercent.set(0);
   }
 
-  wordIndexes: number[] = [];
   override ngOnInit(): void {
     super.ngOnInit();
     for (let i = 0; i < this.phrasesWithNewlines().length; i++) {

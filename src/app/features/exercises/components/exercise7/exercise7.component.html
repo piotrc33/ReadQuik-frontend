@@ -1,18 +1,21 @@
 <div class="exercise7">
-  <div class="text" [style.top.px]="pageYPosition()">
-    @for (phrase of phrasesWithNewlines(); track $index) { 
+  <div class="text" #text [style.top.px]="pageYPosition()">
+    @for (phrase of phrasesWithNewlines(); track $index) {
       @if (!textService.isNewline(phrase)) {
-        <span
-          class="phrase"
-          [ngClass]="$index % 2 === 0 ? 'strong' : ''"
-          [class.active]="
-            wordIndexes[phraseNumber] === $index &&
-            exerciseMode === 'auto'
-          "
-          >{{ phrase }}
-        </span>
+        @if (wordIndexes[phraseNumber] === $index && exerciseMode === 'auto') {
+          <span
+            #activePhrase
+            class="phrase active"
+            [ngClass]="$index % 2 === 0 ? 'strong' : ''">
+            {{ phrase }}
+          </span>
+        } @else {
+          <span class="phrase" [ngClass]="$index % 2 === 0 ? 'strong' : ''">
+            {{ phrase }}
+          </span>
+        }
       } @else {
-        <br>
+        <br />
       }
     }
   </div>

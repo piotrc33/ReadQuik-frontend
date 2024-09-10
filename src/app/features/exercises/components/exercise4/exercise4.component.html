@@ -1,22 +1,15 @@
 <div class="exercise4">
   <div class="text" [style.top.px]="pageYPosition()">
     <!-- TODO: make shared component for this exercise and ex7 -->
-    @for (phrase of phrasesWithNewlines(); track $index) { 
+    @for (phrase of phrasesWithNewlines(); track $index) {
       @if (!textService.isNewline(phrase)) {
         @if (wordIndexes[phraseNumber] === $index) {
-          <span
-          #activePhrase
-          class="phrase active"
-          >{{ phrase }}</span
-        >
+          <span #activePhrase class="phrase active">{{ phrase }}</span>
         } @else {
-          <span
-            class="phrase inactive"
-            >{{ phrase }}</span
-          >
+          <span class="phrase inactive">{{ phrase }}</span>
         }
       } @else {
-        <br>
+        <br />
       }
     }
   </div>

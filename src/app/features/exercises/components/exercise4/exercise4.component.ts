@@ -4,13 +4,11 @@ import {
   ElementRef,
   OnInit,
   computed,
-  inject,
-  viewChild,
+  viewChild
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Observable, combineLatest, filter, map, merge, scan } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
-import { TextService } from '../../services/text.service';
 
 @Component({
   selector: 'exercise4',
@@ -19,12 +17,6 @@ import { TextService } from '../../services/text.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Exercise4Component extends AutoExerciseBase implements OnInit {
-  readonly textService = inject(TextService);
-  readonly wordIndexes = this.phrasesWithNewlines()
-    .map((phrase, i) => {
-      return !this.textService.isNewline(phrase) ? i : undefined;
-    })
-    .filter((el) => el !== undefined);
 
   private readonly activeElement = viewChild<ElementRef>('activePhrase');
   readonly #activeBox = computed(() => {
@@ -38,7 +30,7 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
     map(([activeBox, panelBox]) => {
       return activeBox?.y! > panelBox?.bottom!;
     }),
-    filter((nextPage) => nextPage === true)
+    filter(nextPage => nextPage === true)
   );
 
   private readonly pageYPosition$ = merge(
