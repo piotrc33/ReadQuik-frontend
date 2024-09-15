@@ -9,6 +9,7 @@ import {
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Observable, combineLatest, filter, map, merge, scan } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
+import { TextUtils } from 'src/app/utils/text.utils';
 
 @Component({
   selector: 'exercise4',
@@ -17,7 +18,6 @@ import { AutoExerciseBase } from '../../model/auto-exercise-base';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Exercise4Component extends AutoExerciseBase implements OnInit {
-
   private readonly activeElement = viewChild<ElementRef>('activePhrase');
   readonly #activeBox = computed(() => {
     return this.activeElement()?.nativeElement.getBoundingClientRect();
@@ -43,4 +43,8 @@ export class Exercise4Component extends AutoExerciseBase implements OnInit {
     }, 0)
   );
   readonly pageYPosition = toSignal(this.pageYPosition$, { initialValue: 0 });
+
+  isNewline(phrase: string) {
+    return TextUtils.isNewline(phrase);
+  }
 }

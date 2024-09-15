@@ -13,6 +13,4 @@ export class ExercisesStateService {
   readonly panelBox = computed(() => {
     return this.#panelContentElement()?.getBoundingClientRect();
   })
-
-  activeElement?: HTMLElement;
 }

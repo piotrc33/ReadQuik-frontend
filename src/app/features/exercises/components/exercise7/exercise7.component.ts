@@ -12,6 +12,7 @@ import {
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { PercentBarService } from '../../services/percent-bar.service';
+import { TextUtils } from 'src/app/utils/text.utils';
 
 @Component({
   selector: 'exercise7',
@@ -93,7 +94,7 @@ export class Exercise7Component
   override ngOnInit(): void {
     super.ngOnInit();
     for (let i = 0; i < this.phrasesWithNewlines().length; i++) {
-      if (!this.textService.isNewline(this.phrasesWithNewlines()[i])) {
+      if (!TextUtils.isNewline(this.phrasesWithNewlines()[i])) {
         this.wordIndexes.push(i);
       }
     }
@@ -111,5 +112,9 @@ export class Exercise7Component
     this.textBox = this.exerciseTextElement?.getBoundingClientRect();
     const result = this.textBox!.bottom < this.state.panelBox()!.bottom;
     return result;
+  }
+
+  isNewline(phrase: string) {
+    return TextUtils.isNewline(phrase);
   }
 }

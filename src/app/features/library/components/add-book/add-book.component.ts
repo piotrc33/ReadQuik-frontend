@@ -20,10 +20,10 @@ import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { SegmentI } from 'src/app/api/model/book/segment.i';
 import { BookDataI } from 'src/app/api/model/library/book-data.i';
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
-import { TextService } from '../../../exercises/services/text.service';
 import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { TextUtils } from 'src/app/utils/text.utils';
 
 @Component({
   selector: 'app-add-book',
@@ -32,7 +32,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class AddBookComponent implements OnDestroy {
   readonly bookService = inject(BookService);
-  readonly text = inject(TextService);
   readonly fb = inject(FormBuilder);
   readonly router = inject(Router);
   readonly #route = inject(ActivatedRoute);
@@ -69,7 +68,7 @@ export class AddBookComponent implements OnDestroy {
         fileReader.result &&
         typeof fileReader.result === 'string'
       ) {
-        const segments: SegmentI[] = this.text.splitTextIntoSegments(
+        const segments: SegmentI[] = TextUtils.splitTextIntoSegments(
           fileReader.result
         );
         const newBookData: BookDataI = {

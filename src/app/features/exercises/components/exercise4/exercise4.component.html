@@ -2,7 +2,7 @@
   <div class="text" [style.top.px]="pageYPosition()">
     <!-- TODO: make shared component for this exercise and ex7 -->
     @for (phrase of phrasesWithNewlines(); track $index) {
-      @if (!textService.isNewline(phrase)) {
+      @if (!isNewline(phrase)) {
         @if (wordIndexes[phraseNumber] === $index) {
           <span #activePhrase class="phrase active">{{ phrase }}</span>
         } @else {

@@ -3,8 +3,8 @@ import { SubscriptionContainer } from 'src/app/utils/subscription-container';
 import { ExerciseFlowService } from '../services/exercise-flow.service';
 import { ExercisesStateService } from '../services/exercises-state.service';
 import { PhrasesStateService } from '../services/phrases-state.service';
-import { TextService } from '../services/text.service';
 import { PercentBarService } from '../services/percent-bar.service';
+import { TextUtils } from 'src/app/utils/text.utils';
 
 @Component({
   selector: 'app-exercise',
@@ -14,7 +14,6 @@ export class Exercise implements OnDestroy {
   public readonly state = inject(ExercisesStateService);
   readonly flowService = inject(ExerciseFlowService);
   readonly #phrasesService = inject(PhrasesStateService);
-  protected readonly textService = inject(TextService);
   protected readonly percentService = inject(PercentBarService);
   subs = new SubscriptionContainer();
 
@@ -24,7 +23,7 @@ export class Exercise implements OnDestroy {
 
   readonly wordIndexes = this.phrasesWithNewlines()
     .map((phrase, i) => {
-      return !this.textService.isNewline(phrase) ? i : undefined;
+      return !TextUtils.isNewline(phrase) ? i : undefined;
     })
     .filter(el => el !== undefined);
 

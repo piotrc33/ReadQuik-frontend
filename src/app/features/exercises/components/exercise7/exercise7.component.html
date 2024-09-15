@@ -1,7 +1,7 @@
 <div class="exercise7">
   <div class="text" #text [style.top.px]="pageYPosition()">
     @for (phrase of phrasesWithNewlines(); track $index) {
-      @if (!textService.isNewline(phrase)) {
+      @if (!isNewline(phrase)) {
         @if (wordIndexes[phraseNumber] === $index && exerciseMode === 'auto') {
           <span
             #activePhrase
