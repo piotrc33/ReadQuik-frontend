@@ -27,7 +27,6 @@ describe('TextUtils', () => {
     });
   });
 
-
   describe('removeNewlines', () => {
     it('should remove newline characters from array of words', () => {
       const input = ['Hey', '\n', 'this', 'is', '\n\n', 'sample'];
@@ -58,11 +57,42 @@ Maecenas vitae nibh in ipsum`;
     it('should create 5 segments for 5 paragraphs and small segment length (20)', () => {
       const result = TextUtils.splitTextIntoSegments(text, 20);
       expect(result.length).toEqual(5);
-    })
+    });
 
     it('should return first segment with segment number equal to one', () => {
       const result = TextUtils.splitTextIntoSegments(text, 20);
       expect(result[0].number).toEqual(1);
-    })
+    });
+  });
+
+  describe('getFragmentsWithNewlines', () => {
+    const paragraphs = `
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel aliquet neque, id interdum dolor. Sed sed tortor et libero pharetra efficitur quis nec ex. Etiam luctus ipsum massa, et lobortis urna euismod ac. Duis quis aliquet leo, ac ultrices ipsum. Integer sed aliquam risus. Sed sollicitudin posuere nibh eget facilisis. Sed commodo ut nulla a viverra. Praesent feugiat pretium quam.
+
+Etiam ac sagittis tellus. Quisque imperdiet dui bibendum urna mollis tristique. Aenean fringilla rutrum sapien et suscipit. Donec nec fermentum magna. Curabitur suscipit gravida ipsum sed suscipit. Morbi consequat mi eu imperdiet luctus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames`;
+
+    const maxWordsInFragment = 4;
+    it('should contain newline characters - for this scenario 3 of them', () => {
+      const result = TextUtils.getFragmentsWithNewlines(
+        paragraphs,
+        maxWordsInFragment
+      );
+      const newlineCount = result.filter(fragment =>
+        TextUtils.isNewline(fragment)
+      ).length;
+      expect(newlineCount).toEqual(3);
+    });
+
+    it('none of the phrases should be longer than maxWordsInFragment variable', () => {
+      const result = TextUtils.getFragmentsWithNewlines(
+        paragraphs,
+        maxWordsInFragment
+      );
+      const tooLongPhrasesCount = result.filter(fragment => {
+        const words = fragment.trim().split(/\s+/);
+        return words.length > maxWordsInFragment
+      }).length;
+      expect(tooLongPhrasesCount).toEqual(0);
+    });
   });
 });

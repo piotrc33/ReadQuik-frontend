@@ -1,14 +1,14 @@
 import { SegmentI } from '../api/model/book/segment.i';
 
 export class TextUtils {
-  static getFragmentsWithNewlines(text: string): string[] {
+  static getFragmentsWithNewlines(text: string, maxWordsInFragment: number): string[] {
     let fragments: string[] = [];
     let piped: string = text.replace(/[,.?!;…]+/g, '$&|');
     piped = piped.replace(/\S+$/gm, '$&|'); // adding pipe at the end
     piped = piped.replace(/(?<!^)(?<=[,.?!;…]\s+)—/gm, '$&|');
     fragments = this.#splitByNewlines(piped);
     fragments = this.#splitByPipes(fragments);
-    fragments = this.#splitLongFragments(fragments);
+    fragments = this.#splitLongFragments(fragments, maxWordsInFragment);
 
     return fragments;
   }
@@ -68,10 +68,10 @@ export class TextUtils {
     return result;
   }
 
-  static #splitLongFragments(fragments: string[]): string[] {
+  static #splitLongFragments(fragments: string[], maxWordsInFragment: number): string[] {
     let result: string[] = [];
     fragments.forEach(frag => {
-      const split = this.#splitTextByNWords(frag, 4);
+      const split = this.#splitTextByNWords(frag, maxWordsInFragment);
       result = result.concat(split);
     });
     return result;
