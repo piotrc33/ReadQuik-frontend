@@ -1,6 +1,6 @@
 import { AvailableLanguages } from "src/app/shared/types/available-languages.t";
 
-export interface BookDataI {
+export interface BookData {
   _id: string,
   title: string,
   author: string,

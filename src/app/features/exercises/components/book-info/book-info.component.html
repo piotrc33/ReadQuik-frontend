@@ -1,36 +1,33 @@
 <section class="book" *transloco="let t">
-  @if (book) {
-    <div class="header">
-      <h2 class="title">
-        {{ book.title }}
-      </h2>
-      <div class="author">{{ book.author }}</div>
+  <div class="header">
+    <h2 class="title">
+      {{ book.title }}
+    </h2>
+    <div class="author">{{ book.author }}</div>
+  </div>
+  <div>
+    <img class="cover" [src]="book.coverUrl" alt="cover" />
+  </div>
+  <div class="segment">
+    <div class="label">Segment:</div>
+    <div class="choose">
+      <input
+        min="1"
+        [max]="book.totalSegments"
+        type="number"
+        class="input small"
+        [value]="segmentNumber"
+        #segmentNumberInput />
+      / {{ book.totalSegments }}
+      <button
+        class="small ternary switch-button"
+        (click)="changeSegment(segmentNumberInput.valueAsNumber)">
+        {{ t('switch') }}
+      </button>
     </div>
-    <div>
-      <img class="cover" [src]="book.coverUrl" alt="cover" />
-    </div>
-    <div class="segment">
-      <div class="label">Segment:</div>
-      <div class="choose">
-        <input
-          min="1"
-          [max]="book.totalSegments"
-          type="number"
-          class="input small"
-          [value]="segmentNumber"
-          #segmentNumberInput
-        />
-        / {{ book.totalSegments }}
-        <button
-          class="small ternary switch-button"
-          (click)="changeSegment(segmentNumberInput.valueAsNumber)"
-        >
-          {{ t("switch") }}
-        </button>
-      </div>
-    </div>
-  }
+  </div>
+
   <button routerLink="/app/library" class="secondary change-button">
-    {{ t("changeBook") }}
+    {{ t('changeBook') }}
   </button>
 </section>

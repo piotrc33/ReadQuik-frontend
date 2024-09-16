@@ -1,13 +1,7 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  computed,
-  inject
-} from '@angular/core';
+import { Component, Input, OnInit, computed, inject } from '@angular/core';
 import { filter, interval, takeUntil, tap } from 'rxjs';
 
-import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
+import { ReadingDataFacade } from 'src/app/shared/services/reading-data/reading-data.facade';
 import { getAverageTimeoutMs } from 'src/app/utils/utils';
 import { RecentResultsState } from '../services/recent-results/recent-results.state';
 import { Exercise } from './exercise';
@@ -18,8 +12,7 @@ import { ExerciseModeT } from './exercise-mode.type';
 })
 export class AutoExerciseBase extends Exercise implements OnInit {
   readonly #recentResultsState = inject(RecentResultsState);
-  readonly #readingDataState = inject(ReadingDataStateService);
-  
+  readonly #readingDataFacade = inject(ReadingDataFacade);
 
   @Input()
   mode: ExerciseModeT = 'manual';
@@ -28,7 +21,7 @@ export class AutoExerciseBase extends Exercise implements OnInit {
 
   nextPhraseInterval$ = interval(
     getAverageTimeoutMs(
-      this.#readingDataState.segmentText().length,
+      this.#readingDataFacade.segmentText().length,
       this.wordPhrases().length,
       this.autoSpeed()
     )

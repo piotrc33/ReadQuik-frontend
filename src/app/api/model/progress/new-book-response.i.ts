@@ -1,7 +1,7 @@
-import { BookDataI } from "../library/book-data.i";
+import { BookData } from "../library/book-data.i";
 import { BookSegmentsI } from "../book-segments.i";
 
 export interface NewBookResponseI {
-  bookData: BookDataI;
+  bookData: BookData;
   bookSegments: BookSegmentsI
 }

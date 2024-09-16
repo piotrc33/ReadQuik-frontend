@@ -1,17 +1,17 @@
 <ng-container *transloco="let t; read: 'library'">
-  <div class="book-card" *ngIf="book">
-    <img [src]="book.coverUrl" alt="cover" />
+  <div class="book-card">
+    <img [src]="book().coverUrl" alt="cover" />
     <div class="info-container">
-      <div class="title">{{ book.title }}</div>
-      <div class="author">{{ book.author }}</div>
+      <div class="title">{{ book().title }}</div>
+      <div class="author">{{ book().author }}</div>
       <div class="language-container">
         {{ t('language') }}:
         <span class="code-and-flag"
-          >{{ t(book.language) }} {{ flags[book.language] }}</span
+          >{{ t(book().language) }} {{ flags[book().language] }}</span
         >
       </div>
       <div class="tags" *transloco="let t; read: 'library.tagList'">
-        <ng-container *ngFor="let tag of book.tags">
+        <ng-container *ngFor="let tag of book().tags">
           <pill>{{ t(tag) }}</pill>
         </ng-container>
       </div>

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Observable, Subject, map, merge, switchMap, tap } from 'rxjs';
 
-import { ReadingDataI } from 'src/app/api/model/reading-data.i';
+import { ReadingData } from 'src/app/api/model/reading-data.i';
 import { SaveData } from 'src/app/api/model/save-data.model';
 import { ReadingDataApiService } from '../../../api/services/reading-data-api.service';
 import { CurrentExerciseService } from '../current-exercise.service';
@@ -53,11 +53,11 @@ export class ReadingDataService {
     }),
     map((data) => {
       const { newUnlocked, ...readingData } = data;
-      return readingData as ReadingDataI;
+      return readingData as ReadingData;
     })
   );
 
-  readonly readingData$: Observable<ReadingDataI> = merge(
+  readonly readingData$: Observable<ReadingData> = merge(
     this.#readingDataFromBookId$,
     this.#readingDataFromSegmentChange$,
     this.#readingDataFromComplete$

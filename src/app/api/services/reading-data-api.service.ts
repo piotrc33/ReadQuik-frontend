@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from 'src/app/shared/variables';
-import { ReadingDataI } from '../model/reading-data.i';
+import { ReadingData } from '../model/reading-data.i';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -10,19 +10,19 @@ import { HttpClient } from '@angular/common/http';
 export class ReadingDataApiService {
   private readonly http = inject(HttpClient);
 
-  getNextReadingData(bookId: string): Observable<ReadingDataI> {
+  getNextReadingData(bookId: string): Observable<ReadingData> {
     const url = `${baseUrl}/books/reading-data/${bookId}`;
-    return this.http.get<ReadingDataI>(url);
+    return this.http.get<ReadingData>(url);
   }
 
-  getInitialReadingData(): Observable<ReadingDataI> {
+  getInitialReadingData(): Observable<ReadingData> {
     const url = `${baseUrl}/initial-data`;
-    return this.http.get<ReadingDataI>(url);
+    return this.http.get<ReadingData>(url);
   }
 
   getReadingDataForSegment(bookId: string, number: number) {
     const url = `${baseUrl}/books/book/${bookId}/segments/${number}`;
-    return this.http.get<ReadingDataI>(url);
+    return this.http.get<ReadingData>(url);
   }
 
   completeExercise(data: {
@@ -31,7 +31,7 @@ export class ReadingDataApiService {
     bookId: string;
     lastSegmentNumber: number;
   }) {
-    return this.http.post<ReadingDataI & { newUnlocked: boolean }>(
+    return this.http.post<ReadingData & { newUnlocked: boolean }>(
       `${baseUrl}/progress/complete-exercise`,
       data
     );

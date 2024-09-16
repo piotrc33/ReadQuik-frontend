@@ -1,7 +1,7 @@
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { FiltersI } from '../../../../api/model/library/filters.i';
+import { Filters } from '../../../../api/model/library/filters.i';
 
 @Component({
   selector: 'filters',
@@ -14,7 +14,7 @@ export class FiltersComponent {
   @Input() tags: string[] | null = [];
 
   @Output()
-  filter = new EventEmitter<FiltersI>();
+  filter = new EventEmitter<Filters>();
 
   readonly filterForm = this.fb.nonNullable.group({
     title: '',

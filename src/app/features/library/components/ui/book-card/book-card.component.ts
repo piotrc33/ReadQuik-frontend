@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
+import { Component, EventEmitter, Output, input } from '@angular/core';
+import { BookData } from 'src/app/api/model/library/book-data.i';
 import { flags } from 'src/app/shared/misc/flags';
 
 @Component({
@@ -10,8 +10,7 @@ import { flags } from 'src/app/shared/misc/flags';
 export class BookCardComponent {
   readonly flags = flags;
 
-  @Input({required: true})
-  book?: BookDataI;
+  book = input.required<BookData>();
 
   @Output()
   choose = new EventEmitter<void>();

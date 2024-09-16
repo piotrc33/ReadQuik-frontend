@@ -18,7 +18,7 @@ import { Subject, map, take } from 'rxjs';
 
 import { BookSegmentsI } from 'src/app/api/model/book-segments.i';
 import { SegmentI } from 'src/app/api/model/book/segment.i';
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
+import { BookData } from 'src/app/api/model/library/book-data.i';
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { BookService } from '../../services/book.service';
 import { AddBookFormI } from './add-book-form.i';
@@ -71,7 +71,7 @@ export class AddBookComponent implements OnDestroy {
         const segments: SegmentI[] = TextUtils.splitTextIntoSegments(
           fileReader.result
         );
-        const newBookData: BookDataI = {
+        const newBookData: BookData = {
           _id: '', // mongo adds id by itself
           ...this.bookForm.getRawValue(),
           totalSegments: segments.length,

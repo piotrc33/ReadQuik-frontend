@@ -7,10 +7,10 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, map, merge, switchMap } from 'rxjs';
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { FiltersI } from '../../../../api/model/library/filters.i';
+import { BookData } from 'src/app/api/model/library/book-data.i';
+import { ReadingDataFacade } from 'src/app/shared/services/reading-data/reading-data.facade';
+import { Filters } from '../../../../api/model/library/filters.i';
 import { BookService } from '../../services/book.service';
-import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
 
 @Component({
   selector: 'app-library',
@@ -19,19 +19,19 @@ import { ReadingDataService } from 'src/app/shared/services/reading-data/reading
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LibraryComponent {
-  private readonly router = inject(Router);
-  public readonly bookService = inject(BookService);
-  readonly #readingDataService = inject(ReadingDataService);
+  readonly #router = inject(Router);
+  readonly #bookService = inject(BookService);
+  readonly #readingDataFacade = inject(ReadingDataFacade);
   readonly #route = inject(ActivatedRoute);
 
-  allBooks$ = this.bookService.getBooks();
+  allBooks$ = this.#bookService.getBooks();
 
-  filtering$ = new Subject<FiltersI>();
+  filtering$ = new Subject<Filters>();
   filteredBooks$ = this.filtering$.pipe(
-    switchMap((filters: FiltersI) => this.bookService.getFilteredBooks(filters))
+    switchMap((filters: Filters) => this.#bookService.getFilteredBooks(filters))
   );
 
-  books: Signal<BookDataI[] | undefined> = toSignal(
+  books: Signal<BookData[] | undefined> = toSignal(
     merge(this.allBooks$, this.filteredBooks$)
   );
 
@@ -40,7 +40,7 @@ export class LibraryComponent {
   );
 
   chooseBook(bookId: string) {
-    this.#readingDataService.changeBookAction.next(bookId);
-    this.router.navigate(['/app/exercises']);
+    this.#readingDataFacade.chooseBook(bookId);
+    this.#router.navigate(['/app/exercises']);
   }
 }

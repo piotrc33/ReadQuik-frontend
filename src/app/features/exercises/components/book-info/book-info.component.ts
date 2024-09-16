@@ -1,16 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 
-import { BookDataI } from 'src/app/api/model/library/book-data.i';
-import { ReadingDataStateService } from 'src/app/shared/services/reading-data/reading-data-state.service';
-import { ReadingDataService } from 'src/app/shared/services/reading-data/reading-data.service';
+import { BookData } from 'src/app/api/model/library/book-data.i';
+import { ReadingDataFacade } from 'src/app/shared/services/reading-data/reading-data.facade';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -28,18 +23,17 @@ import { SharedModule } from 'src/app/shared/shared.module';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookInfoComponent {
-  readonly #readingData = inject(ReadingDataService);
-  readonly #readingDataState = inject(ReadingDataStateService);
+  readonly #readingDataFacade = inject(ReadingDataFacade);
 
-  get book(): BookDataI | undefined {
-    return this.#readingDataState.bookData();
+  get book(): BookData {
+    return this.#readingDataFacade.bookData();
   }
 
-  get segmentNumber(): number | undefined {
-    return this.#readingDataState.segmentNumber();
+  get segmentNumber(): number {
+    return this.#readingDataFacade.segmentNumber();
   }
 
   changeSegment(segmentNumber: number) {
-    this.#readingData.changeSegmentAction.next(segmentNumber);
+    this.#readingDataFacade.changeSegment(segmentNumber);
   }
 }
