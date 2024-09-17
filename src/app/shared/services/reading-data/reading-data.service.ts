@@ -34,7 +34,7 @@ export class ReadingDataService {
     this.changeSegmentAction.pipe(
       switchMap((segmentNumber) =>
         this.#readingDataApiService.getReadingDataForSegment(
-          this.#readingDataState.readingData()?.bookData._id || '',
+          this.#readingDataState.readingData().bookData._id,
           segmentNumber
         )
       )

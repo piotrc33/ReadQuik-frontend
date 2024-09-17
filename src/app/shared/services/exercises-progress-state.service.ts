@@ -22,7 +22,7 @@ export class ExercisesProgressStateService {
   private readonly router = inject(Router);
 
   readonly exercisesProgress$ = toObservable(computed(() => {
-    return this.#readingDataState.readingData()?.exercisesProgress
+    return this.#readingDataState.readingData().exercisesProgress
   }));
 
   private readonly currentExerciseProgress$: Observable<
@@ -32,7 +32,7 @@ export class ExercisesProgressStateService {
     this.currentExerciseService.exerciseNumber$,
   ]).pipe(
     map(([progressArray, exNum]) => {
-      return progressArray?.find((item) => item.exerciseNumber === exNum);
+      return progressArray.find((item) => item.exerciseNumber === exNum);
     })
   );
 

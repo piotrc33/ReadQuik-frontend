@@ -3,7 +3,7 @@ import { Point } from 'chart.js/dist/core/core.controller';
 import { differenceInDays, isSameDay, parseISO } from 'date-fns';
 import { DataPoint, linear } from 'regression';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
-import { ResultsService } from 'src/app/shared/services/results.service';
+import { ResultsFacade } from 'src/app/shared/services/results/results.facade';
 import { TimeSpanT } from './time-span.t';
 
 @Component({
@@ -13,12 +13,12 @@ import { TimeSpanT } from './time-span.t';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProgressComponent {
-  private readonly resultsService = inject(ResultsService);
+  readonly #resultsFacade = inject(ResultsFacade);
 
   timeSpan$ = new BehaviorSubject<TimeSpanT>('all');
 
   points$: Observable<Point[]> = combineLatest([
-    this.resultsService.allResults$,
+    this.#resultsFacade.allResults$,
     this.timeSpan$,
   ]).pipe(
     map(([results, timeSpan]) => {

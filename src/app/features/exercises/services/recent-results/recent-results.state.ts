@@ -1,13 +1,13 @@
 import { Injectable, WritableSignal, computed, signal } from '@angular/core';
-import { RecentResultI } from 'src/app/api/model/progress/recent-result.i';
+import { RecentResult } from 'src/app/api/model/progress/recent-result.i';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RecentResultsState {
-  readonly #recentResults: WritableSignal<RecentResultI[]> = signal([]);
+  readonly #recentResults: WritableSignal<RecentResult[]> = signal([]);
 
-  updateRecentResults(newRecentResults: RecentResultI[]) {
+  updateRecentResults(newRecentResults: RecentResult[]) {
     this.#recentResults.set(newRecentResults);
   }
 

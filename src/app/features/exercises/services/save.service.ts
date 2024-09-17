@@ -5,7 +5,7 @@ import { SaveData } from 'src/app/api/model/save-data.model';
 import { CurrentExerciseService } from 'src/app/shared/services/current-exercise.service';
 import { ExercisesProgressStateService } from 'src/app/shared/services/exercises-progress-state.service';
 import { ReadingDataFacade } from 'src/app/shared/services/reading-data/reading-data.facade';
-import { ResultsService } from 'src/app/shared/services/results.service';
+import { ResultsFacade } from 'src/app/shared/services/results/results.facade';
 import { calculateSpeed } from 'src/app/utils/utils';
 import { PhrasesStateService } from './phrases-state.service';
 
@@ -15,14 +15,14 @@ import { PhrasesStateService } from './phrases-state.service';
 export class SaveService {
   readonly #progressService = inject(ExercisesProgressStateService);
   readonly #currentExerciseService = inject(CurrentExerciseService);
-  readonly #resultsService = inject(ResultsService);
+  readonly #resultsFacade = inject(ResultsFacade);
   readonly #readingDataFacade = inject(ReadingDataFacade);
   readonly #phrasesService = inject(PhrasesStateService);
 
   constructor() {
     this.#dataForSave$.pipe(takeUntilDestroyed()).subscribe(saveData => {
       this.#readingDataFacade.getNextReadingData(saveData);
-      this.#resultsService.getRecentResultsAction.next();
+      this.#resultsFacade.getRecentResults();
     });
   }
 
