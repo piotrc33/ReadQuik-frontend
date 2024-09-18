@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-auth-panel',
@@ -6,9 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./auth-panel.component.scss']
 })
 export class AuthPanelComponent {
-
-  constructor() { }
-
-  @Input() title?: string;
-
+  title = input<string>('');
 }

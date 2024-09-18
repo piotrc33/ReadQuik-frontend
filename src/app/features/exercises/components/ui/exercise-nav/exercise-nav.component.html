@@ -1,10 +1,11 @@
 <div class="exercises-nav">
-  <a
-    *ngFor="let _ of [].constructor(8); let i = index"
-    class="exercise-link"
-    [ngClass]="i < totalUnlocked ? 'unlocked' : 'locked'"
-    routerLinkActive="active"
-    [routerLink]="'./' + (i + 1)"
-    >{{ i + 1 }}</a
-  >
+  @for (_ of [].constructor(8); track $index; let i = $index) {
+    <a
+      class="exercise-link"
+      [ngClass]="i < totalUnlocked() ? 'unlocked' : 'locked'"
+      routerLinkActive="active"
+      [routerLink]="'./' + (i + 1)"
+      >{{ i + 1 }}</a
+    >
+  }
 </div>

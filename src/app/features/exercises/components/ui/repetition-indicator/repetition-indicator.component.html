@@ -1,8 +1,5 @@
-<div class="repetition-indicator" *ngIf="totalCount && activeCount !== undefined">
-  @for (i of [].constructor(totalCount); track $index) {
-    <div
-      [class.active]="$index < activeCount"
-      class="circle"
-    ></div>
+<div class="repetition-indicator">
+  @for (i of [].constructor(totalCount()); track $index) {
+    <div [class.active]="$index < activeCount()" class="circle"></div>
   }
 </div>

@@ -13,6 +13,7 @@ export class ExerciseInfoComponent implements OnInit {
   readonly #phrasesService = inject(PhrasesStateService);
   readonly #instructionService = inject(InstructionsService);
   readonly #currentExerciseService = inject(CurrentExerciseService);
+  readonly levelsAvailable = 10;
 
   repetitions = input<number>(0);
   isExerciseUnlocked = input<boolean>(false);
@@ -31,8 +32,8 @@ export class ExerciseInfoComponent implements OnInit {
     return this.#currentExerciseService.exerciseNumber();
   }
 
-  get currentInstructionObject(): any {
-    return this.#instructionService.currentInstructionObject();
+  get instructionKeys(): string[] {
+    return Object.keys(this.#instructionService.currentInstructionObject());
   }
 
   get instructionsOpened(): boolean {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, computed, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, input } from '@angular/core';
 import { filter, interval, takeUntil, tap } from 'rxjs';
 
 import { ReadingDataFacade } from 'src/app/shared/services/reading-data/reading-data.facade';
@@ -14,8 +14,7 @@ export class AutoExerciseBase extends Exercise implements OnInit {
   readonly #recentResultsState = inject(RecentResultsState);
   readonly #readingDataFacade = inject(ReadingDataFacade);
 
-  @Input()
-  mode: ExerciseModeT = 'manual';
+  mode = input<ExerciseModeT>('manual');
 
   autoSpeed = computed(() => this.#recentResultsState.last3Avg() * 1.2);
 
@@ -36,6 +35,6 @@ export class AutoExerciseBase extends Exercise implements OnInit {
 
   ngOnInit(): void {
     this.subs.add = this.nextPhraseInterval$.subscribe();
-    this.flowService.exerciseMode.set(this.mode);
+    this.flowService.exerciseMode.set(this.mode());
   }
 }

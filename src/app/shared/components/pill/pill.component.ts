@@ -1,23 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'pill',
   templateUrl: './pill.component.html',
   styleUrls: ['./pill.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PillComponent {
-  @Input()
-  clickable: boolean = false;
+  isActive = input<boolean>(false);
+  clickable = input<boolean>(false);
 
-  @Output()
-  clicked = new EventEmitter<void>();
-
-  @Input()
-  isActive: boolean = false;
+  clicked = output();
 
   handleClick() {
-    if (!this.clickable) return;
+    if (!this.clickable()) return;
     this.clicked.emit();
-    this.isActive = !this.isActive;
   }
 }

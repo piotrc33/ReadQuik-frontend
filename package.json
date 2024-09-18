@@ -29,6 +29,7 @@
     "jwt-decode": "^4.0.0",
     "ng2-charts": "^5.0.4",
     "ngx-cookie-service": "^17.0.1",
+    "ngxtension": "^4.0.0",
     "regression": "^2.0.1",
     "rxjs": "^7.8.1",
     "tslib": "^2.3.0",

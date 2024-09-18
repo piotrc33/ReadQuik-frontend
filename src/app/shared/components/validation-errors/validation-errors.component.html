@@ -1,19 +1,19 @@
-@if (errors) {
-<ng-container *transloco="let t; read: 'validationErrors'">
-  <div class="error-info" *ngIf="errors['required']">
-    {{ t("requiredField") }}
-  </div>
-  <div class="error-info" *ngIf="errors['email']">
-    {{ t("invalidEmail") }}
-  </div>
-  <div class="error-info" *ngIf="errors['minlength']">
-    {{ t("minLength") + errors["minlength"].requiredLength }}
-  </div>
-  <div class="error-info" *ngIf="errors['maxlength']">
-    {{ t("maxLength") + errors["maxlength"].requiredLength }}
-  </div>
-  <div class="error-info" *ngIf="errors['forbiddenCharacters']">
-    {{ t("forbiddenCharacters") }}
-  </div>
-</ng-container>
+@if (errors(); as errors) {
+  <ng-container *transloco="let t; read: 'validationErrors'">
+    <div class="error-info" *ngIf="errors['required']">
+      {{ t('requiredField') }}
+    </div>
+    <div class="error-info" *ngIf="errors['email']">
+      {{ t('invalidEmail') }}
+    </div>
+    <div class="error-info" *ngIf="errors['minlength']">
+      {{ t('minLength') + errors['minlength'].requiredLength }}
+    </div>
+    <div class="error-info" *ngIf="errors['maxlength']">
+      {{ t('maxLength') + errors['maxlength'].requiredLength }}
+    </div>
+    <div class="error-info" *ngIf="errors['forbiddenCharacters']">
+      {{ t('forbiddenCharacters') }}
+    </div>
+  </ng-container>
 }

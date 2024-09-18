@@ -8,7 +8,7 @@ import {
   merge,
   scan,
   switchMap,
-  timer
+  timer,
 } from 'rxjs';
 import { AutoExerciseBase } from '../../model/auto-exercise-base';
 import { PercentBarService } from '../../services/percent-bar.service';
@@ -34,7 +34,7 @@ export class Exercise7Component
     switchMap(() => timer(2)),
     map(() =>
       this.el.nativeElement.querySelector('.active')?.getBoundingClientRect()
-    ),
+    )
   );
 
   private readonly nextPage$: Observable<boolean> = combineLatest([
@@ -60,7 +60,7 @@ export class Exercise7Component
   readonly pageYPosition = toSignal(this.pageYPosition$);
 
   private readonly pagedProgressPercent$ = this.pageYPosition$.pipe(
-    map((yPos) => {
+    map(yPos => {
       const percent = Math.round((-yPos / this.toScroll) * 100);
       return percent > 100 ? 100 : percent;
     })
@@ -72,7 +72,7 @@ export class Exercise7Component
 
   constructor() {
     super();
-    this.subs.add = this.pagedProgressPercent$.subscribe((percent) => {
+    this.subs.add = this.pagedProgressPercent$.subscribe(percent => {
       this.#percentService.pagedPercent.set(percent);
     });
 
@@ -99,7 +99,7 @@ export class Exercise7Component
       }
     }
 
-    this.#percentService.paged.set(this.mode === 'manual' ? true : false);
+    this.#percentService.paged.set(this.mode() === 'manual' ? true : false);
   }
 
   ngAfterViewInit(): void {

@@ -2,26 +2,23 @@
   class="filters"
   [formGroup]="filterForm"
   (ngSubmit)="searchBooks()"
-  *transloco="let t; read: 'library'"
->
+  *transloco="let t; read: 'library'">
   <text-input-with-validation
     size="medium"
     [label]="t('title')"
-    [control]="filterForm.controls['title']"
-  ></text-input-with-validation>
+    [control]="filterForm.controls['title']"></text-input-with-validation>
 
   <text-input-with-validation
     size="medium"
     [label]="t('author')"
-    [control]="filterForm.controls['author']"
-  ></text-input-with-validation>
+    [control]="filterForm.controls['author']"></text-input-with-validation>
 
   <div class="input-container">
-    <label for="language" class="input-label">{{ t("language") }}</label>
+    <label for="language" class="input-label">{{ t('language') }}</label>
     <select class="select medium" formControlName="language">
-      <option value="">{{ t("any") }}</option>
-      <option value="Polish">{{ t("Polish") }}</option>
-      <option value="English">{{ t("English") }}</option>
+      <option value="">{{ t('any') }}</option>
+      <option value="Polish">{{ t('Polish') }}</option>
+      <option value="English">{{ t('English') }}</option>
     </select>
   </div>
 
@@ -29,18 +26,16 @@
     <button
       type="button"
       class="secondary"
-      (click)="dropdownOpened = !dropdownOpened"
-    >
-      {{ t("tags") }}
+      (click)="dropdownOpened = !dropdownOpened">
+      {{ t('tags') }}
       <img class="icon svg" src="./assets/images/tag.svg" alt="tag" />
     </button>
     <div *ngIf="dropdownOpened" class="dropdown-panel">
-      <section class="dropdown-header">{{ t("tags") }}</section>
+      <section class="dropdown-header">{{ t('tags') }}</section>
       <section
         class="dropdown-content"
-        *transloco="let t; read: 'library.tagList'"
-      >
-        <ng-container *ngFor="let tag of tags">
+        *transloco="let t; read: 'library.tagList'">
+        <ng-container *ngFor="let tag of tags()">
           <pill
             [isActive]="tagsFormArray.value.includes(tag)"
             [clickable]="true"
@@ -53,16 +48,15 @@
   </div>
 
   <button type="submit" class="primary">
-    {{ t("search") }}
+    {{ t('search') }}
     <img
       class="icon svg"
       src="./assets/images/magnifying-glass.svg"
-      alt="magnifying-glass"
-    />
+      alt="magnifying-glass" />
   </button>
 
   <button class="secondary add-book" routerLink="add-book">
-    {{ t("addBook") }}
+    {{ t('addBook') }}
     <img class="icon svg" src="./assets/images/plus.svg" alt="plus" />
   </button>
 </form>

@@ -1,5 +1,5 @@
 import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Filters } from '../../../../api/model/library/filters.i';
 
@@ -11,7 +11,7 @@ import { Filters } from '../../../../api/model/library/filters.i';
 export class FiltersComponent {
   readonly fb = inject(FormBuilder);
 
-  @Input() tags: string[] | null = [];
+  tags = input<string[]>([]);
 
   @Output()
   filter = new EventEmitter<Filters>();

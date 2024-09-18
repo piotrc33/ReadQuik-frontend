@@ -44,6 +44,7 @@
   <div class="tags" *transloco="let t; read: 'library.tagList'">
     <pill
       *ngFor="let tag of tags()"
+      [isActive]="tagsFormArray.value.includes(tag)"
       [clickable]="isTagClickable(tag)"
       (clicked)="handlePill(tag)"
       >{{ t(tag) }}</pill

@@ -1,8 +1,10 @@
 <div class="input-container">
-  <label class="input-label">{{ label }}</label>
-  <input [type]="inputType" class="input {{ size }}" [formControl]="control" />
+  <label class="input-label">{{ label() }}</label>
+  <input
+    [type]="inputType()"
+    class="input {{ size() }}"
+    [formControl]="control()" />
   <validation-errors
-    *ngIf="control.touched"
-    [errors]="control.errors"
-  ></validation-errors>
+    *ngIf="control().touched"
+    [errors]="control().errors"></validation-errors>
 </div>
