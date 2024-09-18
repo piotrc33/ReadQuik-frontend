@@ -31,12 +31,13 @@ export class LibraryComponent {
     switchMap((filters: Filters) => this.#bookService.getFilteredBooks(filters))
   );
 
-  books: Signal<BookData[] | undefined> = toSignal(
-    merge(this.allBooks$, this.filteredBooks$)
+  books: Signal<BookData[]> = toSignal(
+    merge(this.allBooks$, this.filteredBooks$),
+    { initialValue: [] }
   );
 
   tags: Signal<string[]> = toSignal(
-    this.#route.data.pipe(map((data) => data['tags']))
+    this.#route.data.pipe(map(data => data['tags']))
   );
 
   chooseBook(bookId: string) {

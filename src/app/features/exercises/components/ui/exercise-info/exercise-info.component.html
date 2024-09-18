@@ -23,18 +23,18 @@
     </button>
   </div>
 
-  <app-dialog (close)="closeInstructions()" *ngIf="instructionsOpened">
-    <instruction
-      content
-      *ngIf="instructionKeys"
-      [instructionNumber]="exerciseNumber"
-      [instructionKeys]="instructionKeys"></instruction>
-  </app-dialog>
+  @if (instructionsOpened) {
+    <app-dialog (close)="closeInstructions()">
+      <instruction
+        content
+        [instructionNumber]="exerciseNumber"
+        [instructionKeys]="instructionKeys"></instruction>
+    </app-dialog>
+  }
 
-  <button
-    class="primary start-button"
-    *ngIf="isTextLoaded"
-    (click)="startedExercise.emit()">
-    {{ t('start') }}
-  </button>
+  @if (isTextLoaded) {
+    <button class="primary start-button" (click)="startedExercise.emit()">
+      {{ t('start') }}
+    </button>
+  }
 </section>

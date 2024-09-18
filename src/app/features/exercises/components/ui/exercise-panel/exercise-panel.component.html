@@ -1,20 +1,21 @@
 <app-dialog
   (close)="closePanel()"
   [style.font-size.px]="exerciseNumber < 5 ? 18 : 16"
->
+  >
   <router-outlet content></router-outlet>
   <ng-container footer *transloco="let t">
     <div
       class="progress-bar"
       [style.width]="progressBarPercentWidth + '%'"
     ></div>
-    <button
-      class="secondary"
-      *ngIf="exerciseMode === 'manual'"
-      (click)="nextAction()"
-      (keydown.space)="$event.preventDefault()"
-    >
-      {{ exerciseNumber < 7 ? t("nextPhrase") : t("nextPage") }}
-    </button>
+    @if (exerciseMode === 'manual') {
+      <button
+        class="secondary"
+        (click)="nextAction()"
+        (keydown.space)="$event.preventDefault()"
+        >
+        {{ exerciseNumber < 7 ? t("nextPhrase") : t("nextPage") }}
+      </button>
+    }
   </ng-container>
 </app-dialog>

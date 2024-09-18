@@ -11,7 +11,9 @@
       (startedExercise)="startExercise()"
     ></exercise-info>
 
-    <exercise-panel *ngIf="exerciseOpened"></exercise-panel>
+    @if (exerciseOpened) {
+      <exercise-panel></exercise-panel>
+    }
 
     <recent-results></recent-results>
   </div>

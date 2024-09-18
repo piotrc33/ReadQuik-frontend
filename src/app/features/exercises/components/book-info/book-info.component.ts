@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,12 +12,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
   selector: 'book-info',
   standalone: true,
   imports: [
-    CommonModule,
     SharedModule,
     TranslocoModule,
     RouterModule,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './book-info.component.html',
   styleUrl: './book-info.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

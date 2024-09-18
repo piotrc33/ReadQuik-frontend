@@ -1,16 +1,11 @@
 <div class="library" *transloco="let t; read: 'library'">
-  <filters
-    [tags]="tags()"
-    (filter)="filtering$.next($event)"
-  ></filters>
+  <filters [tags]="tags()" (filter)="filtering$.next($event)"></filters>
 
-  <section class="book-list" *ngIf="books(); else loading">
-    <book-card
-      *ngFor="let book of books()"
-      [book]="book"
-      (choose)="chooseBook(book._id)"
-    ></book-card>
+  <section class="book-list">
+    @for (book of books(); track book) {
+      <book-card [book]="book" (choose)="chooseBook(book._id)"></book-card>
+    } @empty {
+      {{ t('loadingBooks') }}
+    }
   </section>
-  
-  <ng-template #loading>{{ t("loadingBooks") }}</ng-template>
 </div>

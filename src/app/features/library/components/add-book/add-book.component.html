@@ -2,13 +2,13 @@
   [formGroup]="bookForm"
   class="add-book"
   *transloco="let t; read: 'library'"
->
+  >
   <img
     class="back clickable icon svg medium"
     src="assets/images/arrow-left.svg"
     alt="left arrow"
     routerLink="/app/library"
-  />
+    />
 
   <h1 class="page-title">{{ t("addBook") }}</h1>
 
@@ -42,20 +42,21 @@
   </div>
 
   <div class="tags" *transloco="let t; read: 'library.tagList'">
-    <pill
-      *ngFor="let tag of tags()"
-      [isActive]="tagsFormArray.value.includes(tag)"
-      [clickable]="isTagClickable(tag)"
-      (clicked)="handlePill(tag)"
-      >{{ t(tag) }}</pill
-    >
-  </div>
-  <button
-    class="primary"
-    (click)="upload()"
-    [class.disabled]="bookForm.invalid || this.file === undefined"
-    [disabled]="bookForm.invalid || this.file === undefined"
-  >
-    {{ t("upload") }}
-  </button>
-</form>
+    @for (tag of tags(); track tag) {
+      <pill
+        [isActive]="tagsFormArray.value.includes(tag)"
+        [clickable]="isTagClickable(tag)"
+        (clicked)="handlePill(tag)"
+        >{{ t(tag) }}</pill
+        >
+      }
+    </div>
+    <button
+      class="primary"
+      (click)="upload()"
+      [class.disabled]="bookForm.invalid || this.file === undefined"
+      [disabled]="bookForm.invalid || this.file === undefined"
+      >
+      {{ t("upload") }}
+    </button>
+  </form>

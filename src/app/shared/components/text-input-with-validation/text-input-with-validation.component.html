@@ -4,7 +4,8 @@
     [type]="inputType()"
     class="input {{ size() }}"
     [formControl]="control()" />
-  <validation-errors
-    *ngIf="control().touched"
+  @if (control().touched) {
+    <validation-errors
     [errors]="control().errors"></validation-errors>
+  }
 </div>

@@ -8,16 +8,16 @@
         {{ t('language') }}:
         <span class="code-and-flag"
           >{{ t(book().language) }} {{ flags[book().language] }}</span
-        >
+          >
+        </div>
+        <div class="tags" *transloco="let t; read: 'library.tagList'">
+          @for (tag of book().tags; track tag) {
+            <pill>{{ t(tag) }}</pill>
+          }
+        </div>
+        <button class="choose-btn secondary small" (click)="choose.emit()">
+          {{ t('choose') }}
+        </button>
       </div>
-      <div class="tags" *transloco="let t; read: 'library.tagList'">
-        <ng-container *ngFor="let tag of book().tags">
-          <pill>{{ t(tag) }}</pill>
-        </ng-container>
-      </div>
-      <button class="choose-btn secondary small" (click)="choose.emit()">
-        {{ t('choose') }}
-      </button>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
