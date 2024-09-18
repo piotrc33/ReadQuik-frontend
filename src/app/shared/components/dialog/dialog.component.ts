@@ -1,4 +1,10 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  output,
+} from '@angular/core';
 import { ExercisesStateService } from 'src/app/features/exercises/services/exercises-state.service';
 
 @Component({
@@ -9,9 +15,7 @@ import { ExercisesStateService } from 'src/app/features/exercises/services/exerc
 export class DialogComponent {
   readonly #state = inject(ExercisesStateService);
   readonly #el = inject(ElementRef);
-
-  @Output()
-  close = new EventEmitter<void>();
+  readonly close = output();
 
   ngOnInit(): void {
     this.#state.updatePanelElement(

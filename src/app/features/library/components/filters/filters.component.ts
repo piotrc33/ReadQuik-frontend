@@ -1,20 +1,19 @@
-import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
-import { Component, EventEmitter, Output, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { AvailableLanguages } from 'src/app/shared/types/available-languages.t';
 import { Filters } from '../../../../api/model/library/filters.i';
 
 @Component({
   selector: 'filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FiltersComponent {
   readonly fb = inject(FormBuilder);
 
-  tags = input<string[]>([]);
-
-  @Output()
-  filter = new EventEmitter<Filters>();
+  readonly tags = input<string[]>([]);
+  readonly filter = output<Filters>();
 
   readonly filterForm = this.fb.nonNullable.group({
     title: '',
