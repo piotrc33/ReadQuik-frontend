@@ -1,8 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Point } from 'chart.js/dist/core/core.controller';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { differenceInDays, isSameDay, parseISO } from 'date-fns';
 import { DataPoint, linear } from 'regression';
-import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { ResultsFacade } from 'src/app/shared/services/results/results.facade';
 import { TimeSpanT } from './time-span.t';
 
@@ -14,48 +18,47 @@ import { TimeSpanT } from './time-span.t';
 })
 export class ProgressComponent {
   readonly #resultsFacade = inject(ResultsFacade);
+  readonly timeSpan = signal<TimeSpanT>('all');
 
-  timeSpan$ = new BehaviorSubject<TimeSpanT>('all');
+  updateTimeSpan(newSpan: TimeSpanT) {
+    this.timeSpan.set(newSpan);
+  }
 
-  points$: Observable<Point[]> = combineLatest([
-    this.#resultsFacade.allResults$,
-    this.timeSpan$,
-  ]).pipe(
-    map(([results, timeSpan]) => {
-      const dateFiltered = results.filter(res => {
-        switch(timeSpan) {
-          case('all'): return true;
-          case('week'): return differenceInDays(new Date(), parseISO(res.date)) < 7;
-          case('day'): return isSameDay(new Date(), parseISO(res.date));
-        }
-      });
+  readonly points = computed(() => {
+    const dateFiltered = this.#resultsFacade.allResults().filter(res => {
+      switch (this.timeSpan()) {
+        case 'all':
+          return true;
+        case 'week':
+          return differenceInDays(new Date(), parseISO(res.date)) < 7;
+        case 'day':
+          return isSameDay(new Date(), parseISO(res.date));
+      }
+    });
 
-      return dateFiltered.map((item, index) => {
-        return {
-          x: index + 1,
-          y: item.wpm,
-        };
-      });
-    })
-  );
+    return dateFiltered.map((item, index) => {
+      return {
+        x: index + 1,
+        y: item.wpm,
+      };
+    });
+  });
 
-  regressionPoints$: Observable<Point[]> = this.points$.pipe(
-    map((results) => {
-      const dataPoints: DataPoint[] = results.map(point => [
-        point.x,
-        point.y,
-      ]);
+  readonly regressionPoints = computed(() => {
+    const dataPoints: DataPoint[] = this.points().map(point => [
+      point.x,
+      point.y,
+    ]);
 
-      const result = linear(dataPoints, { order: 2 });
+    const result = linear(dataPoints, { order: 2 });
 
-      const regressionLinePoints = result.points.map((item, index) => {
-        return {
-          x: index + 1,
-          y: item[1],
-        };
-      });
+    const regressionLinePoints = result.points.map((item, index) => {
+      return {
+        x: index + 1,
+        y: item[1],
+      };
+    });
 
-      return regressionLinePoints;
-    })
-  );
+    return regressionLinePoints;
+  });
 }

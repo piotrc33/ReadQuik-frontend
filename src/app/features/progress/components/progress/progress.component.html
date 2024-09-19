@@ -1,40 +1,28 @@
-<ng-container *transloco="let t">
-  @if ({
-    points: points$ | async,
-    regressionPoints: regressionPoints$ | async
-    }; as vm) {
-    <section class="chart-section">
-      @if (
-        vm.points && vm.points.length > 0 && vm.regressionPoints) {
-        <chart
-          [dataPoints]="vm.points"
-          [regressionPoints]="vm.regressionPoints"
-        ></chart>
-      } @else {
-        <div class="no-data">
-          {{ t("noData") }}
-        </div>
-      }
-      <div class="buttons">
-        <button
-          [ngClass]="timeSpan$.value === 'all' ? 'primary' : 'secondary'"
-          (click)="timeSpan$.next('all')"
-          >
-          {{ t("allTime") }}
-        </button>
-        <button
-          [ngClass]="timeSpan$.value === 'week' ? 'primary' : 'secondary'"
-          (click)="timeSpan$.next('week')"
-          >
-          {{ t("last7days") }}
-        </button>
-        <button
-          [ngClass]="timeSpan$.value === 'day' ? 'primary' : 'secondary'"
-          (click)="timeSpan$.next('day')"
-          >
-          {{ t("today") }}
-        </button>
-      </div>
-    </section>
+<section class="chart-section" *transloco="let t">
+  @if (points().length > 0) {
+    <chart
+      [dataPoints]="points()"
+      [regressionPoints]="regressionPoints()"></chart>
+  } @else {
+    <div class="no-data">
+      {{ t('noData') }}
+    </div>
   }
-</ng-container>
+  <div class="buttons">
+    <button
+      [ngClass]="timeSpan() === 'all' ? 'primary' : 'secondary'"
+      (click)="updateTimeSpan('all')">
+      {{ t('allTime') }}
+    </button>
+    <button
+      [ngClass]="timeSpan() === 'week' ? 'primary' : 'secondary'"
+      (click)="updateTimeSpan('week')">
+      {{ t('last7days') }}
+    </button>
+    <button
+      [ngClass]="timeSpan() === 'day' ? 'primary' : 'secondary'"
+      (click)="updateTimeSpan('day')">
+      {{ t('today') }}
+    </button>
+  </div>
+</section>

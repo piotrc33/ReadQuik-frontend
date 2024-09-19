@@ -15,7 +15,7 @@ export class ReadingDataService {
   readonly #currentExerciseService = inject(CurrentExerciseService);
 
   constructor() {
-    this.readingData$.pipe(takeUntilDestroyed()).subscribe((data) => {
+    this.readingData$.pipe(takeUntilDestroyed()).subscribe(data => {
       this.#readingDataState.updateReadingData(data);
     });
   }
@@ -26,24 +26,23 @@ export class ReadingDataService {
     this.changeBookAction,
     this.nextReadingDataForBookAction$
   ).pipe(
-    switchMap((bookId) => this.#readingDataApiService.getNextReadingData(bookId))
+    switchMap(bookId => this.#readingDataApiService.getNextReadingData(bookId))
   );
 
   readonly changeSegmentAction = new Subject<number>();
-  readonly #readingDataFromSegmentChange$ =
-    this.changeSegmentAction.pipe(
-      switchMap((segmentNumber) =>
-        this.#readingDataApiService.getReadingDataForSegment(
-          this.#readingDataState.readingData().bookData._id,
-          segmentNumber
-        )
+  readonly #readingDataFromSegmentChange$ = this.changeSegmentAction.pipe(
+    switchMap(segmentNumber =>
+      this.#readingDataApiService.getReadingDataForSegment(
+        this.#readingDataState.readingData().bookData._id,
+        segmentNumber
       )
-    );
+    )
+  );
 
   readonly getNextReadingDataAction = new Subject<SaveData>();
   readonly #readingDataFromComplete$ = this.getNextReadingDataAction.pipe(
-    switchMap((data) => this.#readingDataApiService.completeExercise(data)),
-    tap((data) => {
+    switchMap(data => this.#readingDataApiService.completeExercise(data)),
+    tap(data => {
       if (data.newUnlocked) {
         const current = this.#currentExerciseService.exerciseNumber();
         this.#currentExerciseService.nextExerciseNumberFromNewUnlockedAction$.next(
@@ -51,7 +50,7 @@ export class ReadingDataService {
         );
       }
     }),
-    map((data) => {
+    map(data => {
       const { newUnlocked, ...readingData } = data;
       return readingData as ReadingData;
     })

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  inject,
+} from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs';
@@ -14,21 +19,18 @@ import { AuthService } from '../../services/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  readonly loginForm: FormGroup<LoginFormI> = this.fb.nonNullable.group({
+  readonly #fb = inject(UntypedFormBuilder);
+  readonly #authService = inject(AuthService);
+  readonly #router = inject(Router);
+  readonly loginForm: FormGroup<LoginFormI> = this.#fb.nonNullable.group({
     email: ['', [Validators.required, CustomValidators.email]],
     password: ['', Validators.required],
   });
 
   showLoginError = signal<boolean>(false);
 
-  constructor(
-    private readonly fb: UntypedFormBuilder,
-    private readonly authService: AuthService,
-    private readonly router: Router
-  ) {}
-
   onSubmit() {
-    this.authService
+    this.#authService
       .login(this.loginForm.getRawValue())
       .pipe(
         catchError((error: any) => {
@@ -39,8 +41,8 @@ export class LoginComponent {
       )
       .subscribe((res: LoginResponseI) => {
         if (res.loginSuccessful) {
-          this.authService.saveToken(res.jwtToken);
-          this.router.navigate(['']);
+          this.#authService.saveToken(res.jwtToken);
+          this.#router.navigate(['']);
           this.showLoginError.set(false);
         }
       });

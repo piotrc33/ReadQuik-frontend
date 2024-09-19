@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { UserI } from 'src/app/api/model/auth/user.i';
@@ -11,23 +11,22 @@ import { baseUrl } from 'src/app/shared/variables';
 
 @Injectable()
 export class AuthService {
+  readonly #http = inject(HttpClient);
+  readonly #router = inject(Router);
   headers = { 'content-type': 'application/json' };
 
   logout$ = new Subject<void>();
 
-  constructor(
-    private readonly http: HttpClient,
-    private readonly router: Router,
-  ) {}
-
   signup(user: UserI): Observable<UserI> {
     const url: string = `${baseUrl}/signup`;
-    return this.http.post<UserI>(url, user, { headers: this.headers });
+    return this.#http.post<UserI>(url, user, { headers: this.headers });
   }
 
   login(loginData: LoginDataI): Observable<LoginResponseI> {
     const url: string = `${baseUrl}/login`;
-    return this.http.post<LoginResponseI>(url, loginData, { headers: this.headers });
+    return this.#http.post<LoginResponseI>(url, loginData, {
+      headers: this.headers,
+    });
   }
 
   getUsername(): string {
@@ -48,6 +47,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/auth/login']);
+    this.#router.navigate(['/auth/login']);
   }
 }

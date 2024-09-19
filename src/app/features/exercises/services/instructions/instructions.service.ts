@@ -26,7 +26,7 @@ export class InstructionsService {
 
   private readonly shouldOpenInstruction$ =
     this.#currentExerciseService.exerciseNumber$.pipe(
-      map((exNum) => {
+      map(exNum => {
         const cookieValue: string = this.#cookieService.get(
           `instruction${exNum}Opened`
         );
@@ -45,13 +45,13 @@ export class InstructionsService {
 
   readonly currentInstructionObject = toSignal(
     this.#currentExerciseService.exerciseNumber$.pipe(
-      switchMap((exNum) => this.getCurrentExerciseInstructions(exNum))
+      switchMap(exNum => this.getCurrentExerciseInstructions(exNum))
     )
   );
 
   private getCurrentExerciseInstructions(exNum: number): Observable<any> {
     return this.#http
       .get<any>('assets/i18n/en.json')
-      .pipe(map((val) => val.instructions['instruction' + exNum]));
+      .pipe(map(val => val.instructions['instruction' + exNum]));
   }
 }

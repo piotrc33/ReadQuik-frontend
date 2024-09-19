@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { firstValueFrom } from 'rxjs';
 
 import { ResultsApiService } from 'src/app/api/services/results-api.service';
@@ -18,5 +19,5 @@ export class ResultsFacade {
     this.#recentResultsState.updateRecentResults(recentResults);
   }
 
-  readonly allResults$ = this.#resultsApi.getAllResults();
+  readonly allResults = toSignal(this.#resultsApi.getAllResults(), { initialValue: [] });
 }
